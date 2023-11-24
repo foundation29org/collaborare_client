@@ -7,7 +7,8 @@
     <div class="offset-md-3 col-lg-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Refines the list of key elements of {{disease.name}} </h4>
+                <h4 class="card-title">Refines the list of key elements of {{disease.name}} 
+                    <button class="btn btn-danger btn-sm float-right" (click)="deleteDisease()">Delete condition</button></h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -36,7 +37,7 @@
                     </div>
                 </div>
                 <div class="card-footer pt-0 pb-4 center-elements">
-                    <button class="btn btn-primary" (click)="saveItems()"><i
+                    <button class="btn btn-primary" (click)="updateItems()"><i
                         class="fa fa-save"></i> <span class="ml-1">{{'generics.Save changes' | translate }}</span></button>
                 </div>
             </div>
@@ -44,15 +45,61 @@
     </div>
 </div>
 <div *ngIf="loadedItems && !haveInfo">
-    <div class="col-md-12">
+    <div class="offset-lg-3 col-lg-6">
         <div class="card">
             <div class="card-body">
-                <div class="alert alert-danger" role="alert">
-                    <h4 class="alert-heading">Warning!</h4>
-                    <p>
-                        {{'generics.The patient does not have any information yet' | translate }}
-                    </p>
-                </div>
+                <div class=" no-padding">
+                    <div class="position-relative">
+                      <h4>Search and select the disease you want to cure</h4>
+                      <i class="fa fa-search info fa-1_7x align-middle" (click)="onKey($event)"></i>
+                      <input type="text" #inputDisease id="searchDiseaseField"
+                        class="ml-1 form-control data-hj-allow fielddisease" name="searchDiseaseField"
+                        style="width: 84% !important;display: inline !important;border-radius: 25px;height: 45px;"
+                        [(ngModel)]="searchDiseaseField" (keyup)="onKey($event)" (paste)="onKey($event)"
+                        placeholder="{{'dashboardpatient.Search condition' | translate }}"
+                        (focusout)="focusOutFunctionDiseases()">
+                      <span *ngIf="searchDiseaseField.length>0" (click)="clearsearchDiseaseField();"
+                        style="position: relative;left: -44px;"><i class="fa fa-times ml-1"
+                          style="color: #70757a;"></i></span>
+                    </div>
+                    <div>
+                      <div class="center-elements" *ngIf="callListOfDiseases">
+                        <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+                      </div>
+                      <div class="form-group mt-2" *ngIf="!callListOfDiseases">
+                        <span *ngIf="listOfFilteredDiseases.length>0">
+                          <div class="table-cont">
+                            <table class="table mb-0 border" aria-labelledby="rare disease"
+                              style="background-color: #ffffff !important;">
+                              <tbody class="tableList">
+                                <tr *ngFor="let disease of listOfFilteredDiseases ; let i = index" class="d-flex">
+                                  <td class="col-md-12 dropdown-item" id="{{disease.id}}"
+                                    (click)="showMoreInfoDiagnosePopup(i);" style="cursor: pointer;"
+                                    title="{{'generics.More information' | translate }} ({{disease.id}})">
+                                    <span>{{disease.name}}</span>
+                                    <!--<span *ngIf="disease.source!='synonyms'">{{disease.name}}</span>
+                                        <span *ngIf="disease.source=='synonyms'"> {{disease.itemCompared}} ({{'generics.Synonyms' | translate}}: {{disease.name}})</span>-->
+                                    <span *ngIf="disease.synonyms">
+                                      <span *ngIf="disease.synonyms.length>0">
+                                        <span *ngFor="let synonym of disease.synonyms | myfilter:searchDiseaseField">
+                                          <span class="d-block font-small-3" style="font-weight: 200;"> - {{synonym}}</span>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </span>
+                        <span *ngIf="nothingFoundDisease">
+                          <span *ngIf="(searchDiseaseField).trim().length>3">
+                            <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>

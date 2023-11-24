@@ -29,12 +29,6 @@
               <p class="d-none">{{'menu.Dashboard' | translate }}</p>
             </a>
           </li>
-          <li class="nav-item" [ngClass]="{'active': actualUrl === '/pages/support'}">
-            <a class="nav-link" routerLink="/pages/support" title="{{'support.support' | translate }}">
-              <i class="fa fa-envelope-o font-medium-3" [ngClass]="(actualUrl==='/pages/support')?'white':'grey'"></i>
-              <p class="d-none">{{'support.support' | translate }}</p>
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" (click)="logout()" title="{{'navbar.Logout' | translate }}">
               <i class="fa fa-power-off font-medium-3"></i>
