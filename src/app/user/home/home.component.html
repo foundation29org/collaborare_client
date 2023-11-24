@@ -1,0 +1,59 @@
+<div *ngIf="!loadedItems">
+    <div class="mt-4 mx-auto center-elements" style="max-width: 40rem !important;">
+        <em class="fa fa-spinner fa-spin fa-3x fa-fw primary"></em>
+    </div>
+</div>
+<div *ngIf="loadedItems && haveInfo" class="row p-3">
+    <div class="offset-md-3 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Refines the list of key elements of {{disease.name}} </h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <p>Add, reorder, or remove key characteristics for the disease. The higher up the list, the more
+                        relevant it is.</p>
+                    <p>Use the drag-and-drop function on the ☰ icon to reorder and customise these lists according to
+                        your criteria and experience, contributing to a richer and more diverse knowledge.</p>
+                    <div class="row">
+                        <div class="col-sm-12 mb-2 mb-sm-0 container">
+                            <div class="add-item-form">
+                                <input type="text" class="form-control w-50 d-inline" [(ngModel)]="newItemName"
+                                    (keyup.enter)="addNewItem()" placeholder="Name of the new element">
+                                <button class="btn btn-primary" (click)="addNewItem()">{{'generics.Add' | translate
+                                    }}</button>
+                            </div>
+                            <ul class="list-group" [dragula]="'ITEMS'">
+                                <li *ngFor="let item of disease.items; let i = index" class="list-group-item"
+                                    #listItem>
+                                    <span class="handle mr-1">☰</span>
+                                    {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
+                                    <button class="btn btn-danger btn-sm float-right"
+                                        (click)="removeItem(item)">{{'generics.Delete' | translate }}</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer pt-0 pb-4 center-elements">
+                    <button class="btn btn-primary" (click)="saveItems()"><i
+                        class="fa fa-save"></i> <span class="ml-1">{{'generics.Save changes' | translate }}</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="loadedItems && !haveInfo">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p>
+                        {{'generics.The patient does not have any information yet' | translate }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

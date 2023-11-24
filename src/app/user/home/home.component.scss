@@ -1,0 +1,27 @@
+.handle {
+    cursor: move;
+    margin-right: 10px;
+  }
+  
+  .list-group-item {
+    align-items: center;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+
+  .trash {
+    border: 2px dashed red;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .add-item-form {
+    margin-bottom: 20px;
+  }
+  
+  .add-item-form input {
+    margin-right: 10px;
+  }

@@ -1,0 +1,155 @@
+{
+  "menu":{
+    "Dashboard": "Home",
+    "Login": "Login"
+  },
+  "login":{
+    "Login": "Login",
+    "Account is temporarily locked": "Account is temporarily locked for two hours",
+    "Login failed": "Login failed",
+    "Account activated": "Account activated",
+    "Log In": "Log In",
+    "almost done": "We're almost done!",
+    "login link": "We have sent a login link to your email address.",
+    "p1": "Open your inbox and look for an email from Collaborare.",
+    "p2": "Click the link within the email to complete the login process. <strong>Please note that this link is valid for 5 minutes only.</strong>",
+    "p3": "If you don't see the email, check your spam or junk folder. If you still can't find it or the link has expired, please login again.",
+    "The token is invalid": "The token is invalid or has expired.",
+    "Sign in again": "Sign in again"
+  },
+  "registration":{
+    "Privacy Policy": "Privacy policy"
+  },
+  "generics":{
+    "The patient does not have any information yet": "The patient does not have any information yet",
+    "Share": "Share",
+    "Email": "Email",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Delete": "Delete",
+    "Deleted successfully": "Deleted successfully",
+    "No, cancel": "No, cancel",
+    "Data saved successfully": "Data saved successfully.",
+    "Data saved fail": "The data has not been saved. Please, try again.",
+    "Basic Data": "Basic Data",
+    "Yes": "Yes",
+    "No": "No",
+    "The session has expired": "The session has expired",
+    "notpermission": "You do not have permissions!",
+    "sessionClosed": "The session has been closed due to inactivity",
+    "Warning": "Warning!",
+    "error try again": "An error has occurred, please try again",
+    "Submit": "Submit",
+    "entervalidemail": "Please enter a valid email!",
+    "required": "This field is required",
+    "fieldsRequired": "Fields marked with * are required",
+    "requiredfieldsmissing": "Some required fields are missing!",
+    "Are you sure?": "Are you sure?",
+    "Add": "Add",
+    "Date": "Date",
+    "Back": "Back",
+    "Close": "Close",
+    "More information": "Further information",
+    "Preparing to upload": "Preparing to upload",
+    "Copied to the clipboard": "Copied to the clipboard",
+    "Save changes": "Save changes",
+    "Search": "Search"
+  },
+  "navbar":{
+    "Logout": "Logout"
+  },
+  "errors":{
+    "The user does not exist": "The user does not exist",
+    "The session has been closed": "The session has been closed"
+  },
+  "policy": {
+    "CONTENT": "CONTENT",
+    "step1": "Who is the one responsible for the processing of your data?",
+    "step2": "With what purpose will your personal data be treated and for how long?",
+    "step3": "What is the legitimation of the treatment of data?",
+    "step4": "What rights does the interested one have?",
+    "step5": "Assignment of data",
+    "step1-1": "In accordance with current regulations, the interested party is informed that the information provided will be processed by Fundación 29 de Febrero (hereinafter, 'F29'), whose contact information is as follows",
+    "step1-2": "Registered office",
+    "step2-1": "When users provide personal data through the forms on Collaborare, their personal data will be processed for the following purposes",
+    "step2-2": "When users provide personal data through the user account creation form, the purpose is to manage the registration and administration of the user account registered in the application. For this, your personal data will be processed until you inform us of your wish to cancel your status as a registered user of Collaborare.",
+    "step2-3": "Unless you indicate your will against, the legal preservation terms of the personal data indicated above will apply, so it is your responsibility to keep them updated, since they will be used to make communications about the additions, deletions or modifications of accounts registered.",
+    "step3-1": "Your data will be treated on the basis of the execution of the contract in the cases of user registration: without the processing of these data we could not carry out the aforementioned services.",
+    "step4-1": "The interested party has the right to",
+    "step4-2": "Get confirmation about whether personal data concerning you or not is being processed in F29.",
+    "step4-3": "Access your personal data.",
+    "step4-4": "Rectify inaccurate or incomplete data.",
+    "step4-5": "Request the cancellation of your data when, among other reasons, the data is no longer necessary for the purposes for which it was collected.",
+    "step4-6": "To the portability of your data.",
+    "step4-7": "The exercise of these rights must be done through the email support@foundation29.org.",
+    "step5-1": "The personal data provided will not be transferred to third parties without prior authorization by the owner of the same.",
+    "other1": "Notwithstanding the foregoing, the interested party may contact F29 through support@foundation29.org",
+    "other2": "Likewise, when the interested party considers that the exercise of their rights has not been effective, they may file a complaint with the Spanish Agency for Data Protection."
+  },
+  "support": {
+    "support": "Support",
+    "New message": "New message",
+    "Subject": "Subject",
+    "Message": "Message",
+    "New File": "New file",
+    "Send": "Send",
+    "Old messages": "Old messages",
+    "Uploading a capture can help us a lot": "Uploading a capture can help us a lot"
+  },
+  "dashboardpatient": {
+    "Search condition": "Type the name of your condition",
+    "Nothing found. Try again.": "Nothing found. Try again."
+  },
+  "seo":{
+    "home":{
+      "keywords": "Decentralized data, health data, Collaborare, rare diseases, disease, epilepsy, seizures, genetic disease",
+      "description": "Decentralized health data container where data is always with the patient. We also help patient groups to collect PROMs in aggregate form, with privacy as a top priority.",
+      "title": "Collaborare: Giving the power of data back to patients."
+    }
+  },
+  "prereg":{
+    "title": "This is how we manage data",
+    "subtitle": "You need to read the complete text of the Privacy Policy for legal purposes, but we really don't like this requirement so we made a summary for you.",
+    "t1": "Which data is shared",
+    "a1": "Collaborare will only know your name, last name and email. Your patient group may receive anonymous medical information to support research in your disease. You can finally participate directly with your knowledge!",
+    "t2": "Who has access",
+    "a2.1": "You may share your medical data anonymously with your Patient Organization by granting access to it. You can also send anonymous copies to whoever you want.",
+    "t3": "Where is your data",
+    "a3": "Collaborare will store only name and contact information, while your medical data will be stored where you choose. You can store it in your device or in your cloud storage provider. Collaborare will help you with this. We call this folder your own data container.",
+    "t4": "Who else uses your data",
+    "a4": "Nobody else has access to your data. Your data is yours and is safe.",
+    "t6": "What data is shared with F29?",
+    "a6": "Collaborare collects basic user information data. In order to provide you with Collaborare’s services, we collect your name and email. All the other data that you include in Collaborare is stored in your own device or your own cloud storage service, so F29 does not have access to it.",
+    "readPolicy": "Read the full version of the Privacy Policy here"
+  },
+  "termsDravet":{
+    "title": "Privacy policy",
+    "t1": "Who is the one responsible for the processing of your data?",
+    "a1.1": "In accordance with current regulations, the interested party is informed that the information provided will be processed by Dravet Syndrome European Federation (hereinafter, 'DSEF), whose contact information is as follows:",
+    "a1.2": "Registered office: c/o Irena Bibic, Don Rafaela Radice 11, 21 251 Zrnovnica, Split, Croatia",
+    "a1.3": "Email: info@dravet.eu",
+    "t2": "What data is shared with DSEF?",
+    "a2": "Only anonymous data is shared with DSEF. In your personal data container, data that identifies you as a person is separated from medical data. This medical data is effectively anonymous and can be shared without revealing your identity. This is the data that is periodically sent to DSEF.",
+    "t3": "How often is data shared with DSEF?",
+    "a3": "Your personal data container is continuously synchronizing with the aggregated data container stored by DSEF. So new data will be sent once you update your container information. Depending on the situation, it can be sent right away or once a day.",
+    "t4": "With what purpose will your anonymous data be treated and for how long?",
+    "a4.1": "When users provide anonymous data through the connection established between their personal data container and DSEF’s data container, their anonymous data will be processed for the following purposes:",
+    "a4.2": "Your anonymous data will be aggregated with the data from other Collaborare users.",
+    "a4.3": "The aggregated data will be used for multiple research projects to identify the key traits of Dravet syndrome patients and to provide evidence about the quality of life of Dravet syndrome families.",
+    "t5": "What is the legitimation of the treatment of data?",
+    "a5": "Your data will be treated on the basis of your expressed enrollment into the research program.",
+    "t6": "What rights does the interested one have?",
+    "a6.1": "The interested party has the right to:",
+    "a6.2": "Rectify inaccurate or incomplete data.",
+    "a6.3": "Request the cancellation of your data when, among other reasons, the data is no longer necessary for the purposes for which it was collected.",
+    "a6.4": "To the portability of your data.",
+    "a6.5": "The exercise of these rights must be done through the email info@dravet.eu.",
+    "t7": "Assignment of data",
+    "a7": "The personal data provided will not be transferred to third parties without prior authorization by the owner of the same.",
+    "footer1": "Notwithstanding the foregoing, the interested party may contact DSEF through info@dravet.eu",
+    "footer2": "Likewise, when the interested party considers that the exercise of their rights has not been effective, they may file a complaint with the Croatian Agency for Data Protection."
+  },
+  "open":{
+    "Public sharing": "Share"
+  }
+}

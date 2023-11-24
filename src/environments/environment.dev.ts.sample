@@ -1,0 +1,4 @@
+export const environment = {
+    production: false,
+    api: undefined,  //Server URL: 'http://<direction>:<port>'
+};

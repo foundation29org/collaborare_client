@@ -1,0 +1,20 @@
+.alert-yellow{
+  border-color: #f1da1f !important;
+  background-color: #f9c448 !important;
+  color: #000 !important;
+}
+
+::ng-deep .swal2-content{
+  text-align: initial !important;
+}
+@media ( max-width: 380px ){
+
+  .centerdiv{
+    clear: both;
+    float: none !important;
+  }
+}
+
+::ng-deep .swal2-modal .swal2-confirm{
+  background-color: #343a40 !important;
+}
