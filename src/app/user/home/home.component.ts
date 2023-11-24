@@ -51,6 +51,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   newItemName: string = '';
   disease: any = { "id": "", "name": "", "items": []} ;
 
+  nothingFoundDisease: boolean = false;
+  searchDiseaseField: string = '';
+  actualInfoOneDisease: any = {};
+  private subscriptionDiseasesCall: Subscription = new Subscription();
+  private subscriptionDiseasesNotFound: Subscription = new Subscription();
+  callListOfDiseases: boolean = false;
+  listOfFilteredDiseases: any = [];
+  selectedDiseaseIndex: number = -1;
+  loadingOneDisease: boolean = false;
+
   constructor(public translate: TranslateService, public toastr: ToastrService, private dragulaService: DragulaService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
     this.orphacode = this.authService.getOrphacode()
@@ -145,11 +155,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       }));
   }
 
-  saveItems() {
+  updateItems() {
     var info = {
       "items": this.disease.items
     }
-    this.subscription.add(this.apiDx29ServerService.saveItems(this.disease._id , info)
+    this.subscription.add(this.apiDx29ServerService.updateItems(this.disease._id , info)
       .subscribe((res: any) => {
         this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
       }, (err) => {
@@ -157,7 +167,185 @@ export class HomeComponent implements OnInit, OnDestroy {
       }));
 
   }
-  
 
+  onKey(event: KeyboardEvent) {
+    if(event.key ==='ArrowLeft' || event.key ==='ArrowUp' || event.key ==='ArrowRight' || event.key ==='ArrowDown'){
+
+    }else{
+        this.nothingFoundDisease = false;
+        if (this.searchDiseaseField.trim().length > 3) {
+            if (this.subscriptionDiseasesCall) {
+                this.subscriptionDiseasesCall.unsubscribe();
+            }
+            if (this.subscriptionDiseasesNotFound) {
+                this.subscriptionDiseasesNotFound.unsubscribe();
+            }
+            this.callListOfDiseases = true;
+            var tempModelTimp = this.searchDiseaseField.trim();
+            var info = {
+                "text": tempModelTimp,
+                "lang": 'en'
+            }
+            this.subscriptionDiseasesCall= this.apiDx29ServerService.searchDiseases(info)
+                .subscribe((res: any) => {
+                    this.callListOfDiseases = false;
+                    if(res==null){
+                        this.nothingFoundDisease = true;
+                        this.listOfFilteredDiseases = [];
+                    }else{
+                        this.nothingFoundDisease = false;
+                        this.listOfFilteredDiseases = res;
+                        if(this.listOfFilteredDiseases.length == 0){
+                            this.nothingFoundDisease = true;
+                        }
+                    }
+                    
+                }, (err) => {
+                    console.log(err);
+                    this.nothingFoundDisease = false;
+                    this.callListOfDiseases = false;
+                });
+        } else {
+            this.callListOfDiseases = false;
+            this.listOfFilteredDiseases = [];
+        }
+    }
+}
+
+showMoreInfoDiagnosePopup(index){
+  this.loadingOneDisease = true;
+  this.selectedDiseaseIndex = index;
+  this.actualInfoOneDisease = this.listOfFilteredDiseases[this.selectedDiseaseIndex];
+  console.log(this.actualInfoOneDisease)
+  Swal.fire({
+      title: this.translate.instant("generics.Are you sure?"),
+      html: '<p class="mt-2">You have selected: '+this.actualInfoOneDisease.name+'</p><p class="mt-2">'+this.actualInfoOneDisease.id+'</p>',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#0CC27E',
+      confirmButtonText: 'Yes, I am sure.',
+      cancelButtonColor: '#FF586B',
+      cancelButtonText: this.translate.instant("generics.Cancel"),
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false
+  }).then((result) => {
+      if (result.value) {
+        this.cheackDisease(this.actualInfoOneDisease.id);
+          this.loadingOneDisease = false;
+
+      }
+      this.clearsearchDiseaseField();
+  });
+  
+}
+
+cheackDisease(id) {
+  this.subscription.add(this.apiDx29ServerService.getItems(id)
+    .subscribe((res: any) => {
+      console.log(res)
+      if(res.disease){
+        Swal.fire({
+          title: 'We are sorry',
+          html: '<p class="mt-2">This disease is already taken by another user</p>',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#0CC27E',
+          confirmButtonText: 'Ok',
+          showLoaderOnConfirm: true,
+          allowOutsideClick: false
+        }).then((result) => {
+            
+        }
+        );
+      }else{
+        this.saveItems();
+      }
+    }, (err) => {
+      console.log(err);
+    }));
+}
+
+saveItems() {
+  var info = {
+    "id": this.actualInfoOneDisease.id,
+    "name": this.actualInfoOneDisease.name,
+    "items": []
+  }
+  this.subscription.add(this.apiDx29ServerService.saveItems(this.authService.getIdUser(), info)
+    .subscribe((res: any) => {
+      console.log(res)
+      if(res.message == "You have successfully logged in"){
+        this.authService.setEnvironment(res.token);
+        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
+        if(res.eventdb){
+          this.authService.setOrphacode(res.eventdb);
+          this.orphacode = res.eventdb;
+        }      
+        this.loadItemsFromDatabase();
+      }else{
+        this.authService.logout();
+      }
+      
+    }, (err) => {
+      console.log(err);
+    }));
+
+}
+
+focusOutFunctionDiseases(){
+  //if (this.searchDiseaseField.trim().length > 3 && this.listOfFilteredDiseases.length==0 && !this.callListOfDiseases) {
+  if (this.searchDiseaseField.trim().length > 3 && !this.callListOfDiseases) {
+      //send text
+    
+  }
+}
+
+clearsearchDiseaseField(){
+  this.searchDiseaseField = "";
+  this.listOfFilteredDiseases = [];
+  this.callListOfDiseases = false;
+}
+  
+deleteDisease(){
+  Swal.fire({
+    title: this.translate.instant("generics.Are you sure?"),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#0CC27E',
+    cancelButtonColor: '#FF586B',
+    confirmButtonText: this.translate.instant("generics.Delete"),
+    cancelButtonText: this.translate.instant("generics.No, cancel"),
+    showLoaderOnConfirm: true,
+    allowOutsideClick: false
+  }).then((result) => {
+    if (result.value) {
+      this.confirmDeleteDisease();
+    }
+  });
+}
+confirmDeleteDisease(){
+  var info = {
+    "id": this.disease._id
+  }
+
+  this.subscription.add(this.apiDx29ServerService.deleteDisease(this.authService.getIdUser(), info)
+    .subscribe((res: any) => {
+      console.log(res)
+      if(res.message == "You have successfully logged in"){
+        this.authService.setEnvironment(res.token);
+        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
+        if(res.eventdb){
+          this.authService.setOrphacode(res.eventdb);
+          this.orphacode = res.eventdb;
+        }      
+        this.loadItemsFromDatabase();
+      }else{
+        this.authService.logout();
+      }
+      
+    }, (err) => {
+      console.log(err);
+    }));
+}
     
 }

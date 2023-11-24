@@ -17,7 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { SharedModule } from "app/shared/shared.module";
-import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
+
 
 
 @NgModule({
@@ -44,8 +44,7 @@ import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
         SharedModule
     ],
     declarations: [
-        WaitListPageComponent,
-        MyFilterPipe
+        WaitListPageComponent
     ]
 })
 export class WaitListPageModule { }

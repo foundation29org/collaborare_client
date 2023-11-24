@@ -31,6 +31,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { QRCodeModule } from 'angularx-qrcode';
 import { DragulaModule } from 'ng2-dragula';
+import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
 
 @NgModule({
     exports: [
@@ -64,7 +65,8 @@ import { DragulaModule } from 'ng2-dragula';
         DragulaModule.forRoot()
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        MyFilterPipe
     ]
 })
 export class UserModule { }
