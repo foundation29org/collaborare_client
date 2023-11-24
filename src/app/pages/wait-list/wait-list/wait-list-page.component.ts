@@ -122,6 +122,13 @@ onWindowScroll(event) {
       }));
   }
 
+  onKey(event: KeyboardEvent) {
+    this.nothingFoundDisease = false;
+    this.loadedItems = false;
+    this.haveInfo = false;
+    this.disease = { "id": "", "name": "", "items": []} ;
+  }
+
   openPolicy(policyPanel){
       let ngbModalOptions: NgbModalOptions = {
             windowClass: 'ModalClass-lg'// xl, lg, sm
