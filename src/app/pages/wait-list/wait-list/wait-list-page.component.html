@@ -49,7 +49,8 @@
     <div class="row m-0 pt-5" style="background: #f5f5f5;min-height: 93vh !important;">
       <div class="offset-lg-1 col-lg-10 mb-4 margin-0 text-center">
         <div class="col-lg-12">
-          <h3 class="text-bold-500 mt-4">Find your condition</h3>
+          <h3 class="text-bold-500 mt-4 mb-0">Find your condition</h3>
+          <p>Search by Orpha code</p>
           <div class="row">
             <div class="col-md-12 align-items-center text-center">
               <div class="align-items-end justify-content-center">
@@ -85,6 +86,13 @@
                             <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>
                           </span>
                         </span>
+                        <div *ngIf="disease.items.length ==0">
+                          <p>
+                            <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
+                                (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                          </p>
+                        </div>
+                        
                       </div>
                     </div>
                   </div>
