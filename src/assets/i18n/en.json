@@ -53,7 +53,8 @@
     "Preparing to upload": "Preparing to upload",
     "Copied to the clipboard": "Copied to the clipboard",
     "Save changes": "Save changes",
-    "Search": "Search"
+    "Search": "Search",
+    "Please wait": "Please wait"
   },
   "navbar":{
     "Logout": "Logout"
