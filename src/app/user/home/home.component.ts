@@ -124,6 +124,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  startEdit(item: any) {
+    item.isEditing = true;
+    item.editedName = item.name;
+  }
+
+  saveEdit(item: any) {
+      item.isEditing = false;
+      item.name = item.editedName;
+  }
+
+  cancelEdit(item: any) {
+      item.isEditing = false;
+  }
+
 
   async ngOnDestroy() {
     if (this.subscription) {

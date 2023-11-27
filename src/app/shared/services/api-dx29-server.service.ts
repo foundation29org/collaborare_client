@@ -21,6 +21,19 @@ export class ApiDx29ServerService {
       );
     }
 
+    searchItems(item){
+      return this.http.get(environment.api+'/api/searchdisease/'+item).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
     getItems(orphacode){
       return this.http.get(environment.api+'/api/disease/'+orphacode).pipe(
         map((res: any) => {
