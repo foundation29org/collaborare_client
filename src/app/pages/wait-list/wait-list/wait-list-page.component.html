@@ -50,23 +50,50 @@
       <div class="offset-lg-1 col-lg-10 mb-4 margin-0 text-center">
         <div class="col-lg-12">
           <h3 class="text-bold-500 mt-4 mb-0">Find your condition</h3>
-          <p>Search by Orpha code</p>
-          <div class="row">
+          <div class="row mt-2">
             <div class="col-md-12 align-items-center text-center">
               <div class="align-items-end justify-content-center">
                 <div class="position-relative">
-                  <i class="fa fa-search mr-1 primary fa-1_7x align-middle" (click)="loadItemsFromDatabase()"></i>
+                  <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
                   <input type="text" class="form-control w-50 d-inline" [(ngModel)]="searchDiseaseField"
+                    (keyup)="onKey2($event)" placeholder="Type the orphacode number. Ex:33069">
+                  <!--<input type="text" class="form-control w-50 d-inline" [(ngModel)]="searchDiseaseField"
                     (keyup.enter)="loadItemsFromDatabase()" placeholder="Type the orphacode number. Ex:33069" (keyup)="onKey($event)">
                   <button type="submit" class="ml-1 btn btn-primary" (click)="loadItemsFromDatabase()" >
                     {{'generics.Search' | translate }}
-                  </button>
+                  </button>-->
+                </div>
+                <div class="offset-lg-3 col-lg-6 no-padding">
+                  <div class="center-elements mt-2" *ngIf="callListOfDiseases">
+                    <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+                    <p>{{'generics.Please wait' | translate }}</p>
+                  </div>
+                  <div class="form-group mt-2" *ngIf="!callListOfDiseases">
+                    <span *ngIf="listOfFilteredDiseases.length>0">
+                      <div class="table-cont">
+                        <table class="table mb-0 border" aria-labelledby="rare disease"
+                          style="background-color: #ffffff !important;">
+                          <tbody class="tableList">
+                            <tr *ngFor="let disease of listOfFilteredDiseases ; let i = index" class="d-flex">
+                              <td class="col-md-12 dropdown-item" id="{{disease.id}}"
+                                (click)="selectDisease(i);" style="cursor: pointer;">
+                                <span>{{disease.name}}</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </span>
+                    <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3">
+                      <p>Nothing found. Try another search.</p>
+                      <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+                      <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
+                                (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                    </span>
+                  </div>
                 </div>
                 <div class="offset-lg-3 col-lg-6 no-padding">
                   <div>
-                    <div class="center-elements" *ngIf="callListOfDiseases">
-                      <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
-                    </div>
                     <div class="form-group mt-2" *ngIf="!callListOfDiseases">
                       <div *ngIf="disease.name !=''">
                         <h4 class="text-bold-500 mt-4">{{disease.name}}</h4>
@@ -80,19 +107,11 @@
                       <div *ngIf="loadedItems">
                         <div *ngIf="disease.items.length ==0">
                           <p class="mt-4">No items found</p>
-                        </div>
-                        <span *ngIf="disease.name ==''">
-                          <span *ngIf="(searchDiseaseField).trim().length>3">
-                            <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>
-                          </span>
-                        </span>
-                        <div *ngIf="disease.items.length ==0">
                           <p>
                             <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                                 (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
                           </p>
                         </div>
-                        
                       </div>
                     </div>
                   </div>

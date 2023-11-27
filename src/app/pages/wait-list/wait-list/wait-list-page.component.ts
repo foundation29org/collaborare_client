@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Clipboard } from "@angular/cdk/clipboard"
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -35,9 +36,13 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
   disease: any = { "id": "", "name": "", "items": []} ;
-
+  searchSubject = new Subject<string>();
+  listOfFilteredDiseases: any = [];
   constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService) {
-
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchText => this.loadItemsFromDatabase(searchText));
   }
 
   ngOnInit(): void {
@@ -95,7 +100,42 @@ onWindowScroll(event) {
   }
 
 
-  loadItemsFromDatabase() {
+  onKey2(event: any): void {
+    // Emite el valor actual del campo de búsqueda
+    this.searchSubject.next(this.searchDiseaseField);
+  }
+  
+  loadItemsFromDatabase(searchText: string): void {
+    if (!searchText) {
+      // Manejar el estado cuando no hay texto
+      return;
+    }
+    this.disease = { "id": "", "name": "", "items": []} ;
+    this.callListOfDiseases = true;
+    this.listOfFilteredDiseases = [];
+    this.apiDx29ServerService.searchItems(searchText)
+      .subscribe((res: any) => {
+        this.callListOfDiseases = false;
+        console.log(res)
+        if(res.diseases){
+          this.listOfFilteredDiseases = res.diseases;
+        }else{
+          this.listOfFilteredDiseases = [];
+        }
+      }, (err) => {
+        this.callListOfDiseases = false;
+        this.listOfFilteredDiseases = [];
+        // Manejar errores aquí
+        // ...
+      });
+  }
+
+  selectDisease(index){
+    this.disease = this.listOfFilteredDiseases[index];
+    this.listOfFilteredDiseases = [];
+  }
+
+  loadItemsFromDatabase2() {
     if(this.searchDiseaseField == '') return;
     if(this.searchDiseaseField.indexOf('ORPHA:')==-1){
       this.searchDiseaseField = 'ORPHA:'+this.searchDiseaseField;

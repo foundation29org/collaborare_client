@@ -4,11 +4,11 @@
     </div>
 </div>
 <div *ngIf="loadedItems && haveInfo" class="row p-3">
-    <div class="offset-md-3 col-lg-6">
+    <div class="col-sm-12 offset-md-2 col-md-8 offset-xl-3 col-xl-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Refines the list of key elements of {{disease.name}} 
-                    <button class="btn btn-danger btn-sm float-right" (click)="deleteDisease()">Delete condition</button></h4>
+                <button class="btn btn-danger btn-sm float-right" (click)="deleteDisease()">Delete condition</button>
+                <h4 class="card-title">Refines the list of key elements of {{disease.name}}</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -25,12 +25,24 @@
                                     }}</button>
                             </div>
                             <ul class="list-group" [dragula]="'ITEMS'">
-                                <li *ngFor="let item of disease.items; let i = index" class="list-group-item"
-                                    #listItem>
-                                    <span class="handle mr-1">☰</span>
-                                    {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
-                                    <button class="btn btn-danger btn-sm float-right"
-                                        (click)="removeItem(item)">{{'generics.Delete' | translate }}</button>
+                                <li *ngFor="let item of disease.items; let i = index" class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <!-- Columna para el texto -->
+                                        <div class="col-9">
+                                            <span class="handle mr-1">☰</span>
+                                            {{ i + 1 }}. 
+                                            <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
+                                            <input *ngIf="item.isEditing" type="text" class="form-control" [(ngModel)]="item.editedName" />
+                                        </div>
+                                
+                                        <!-- Columna para los botones -->
+                                        <div class="col-3 text-right">
+                                            <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
+                                            <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
+                                            <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
+                                            <button class="btn btn-primary btn-sm" (click)="saveEdit(item)" *ngIf="item.isEditing"><em class="fa fa-save"></em></button>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -50,7 +62,7 @@
             <div class="card-body">
                 <div class=" no-padding">
                     <div class="position-relative">
-                      <h4>Search and select the disease you want to cure</h4>
+                      <h4>Search and select the condition you want to contribute for</h4>
                       <i class="fa fa-search info fa-1_7x align-middle" (click)="onKey($event)"></i>
                       <input type="text" #inputDisease id="searchDiseaseField"
                         class="ml-1 form-control data-hj-allow fielddisease" name="searchDiseaseField"
