@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   listOfFilteredDiseases: any = [];
   selectedDiseaseIndex: number = -1;
   loadingOneDisease: boolean = false;
+  gettingItems: boolean = false;
 
   constructor(public translate: TranslateService, public toastr: ToastrService, private dragulaService: DragulaService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
@@ -240,10 +241,12 @@ showMoreInfoDiagnosePopup(index){
 }
 
 cheackDisease(id) {
+  this.gettingItems = true;
   this.subscription.add(this.apiDx29ServerService.getItems(id)
     .subscribe((res: any) => {
       console.log(res)
       if(res.disease){
+        this.gettingItems = false;
         Swal.fire({
           title: 'We are sorry',
           html: '<p class="mt-2">This disease is already taken by another user</p>',
@@ -262,6 +265,7 @@ cheackDisease(id) {
       }
     }, (err) => {
       console.log(err);
+      this.gettingItems = false;
     }));
 }
 
@@ -272,6 +276,7 @@ saveItems() {
   }
   this.subscription.add(this.apiDx29ServerService.saveItems(this.authService.getIdUser(), info)
     .subscribe((res: any) => {
+      this.gettingItems = false;
       console.log(res)
       if(res.message == "You have successfully logged in"){
         this.authService.setEnvironment(res.token);
@@ -287,6 +292,7 @@ saveItems() {
       
     }, (err) => {
       console.log(err);
+      this.gettingItems = false;
     }));
 
 }

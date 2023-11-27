@@ -63,10 +63,11 @@
                           style="color: #70757a;"></i></span>
                     </div>
                     <div>
-                      <div class="center-elements" *ngIf="callListOfDiseases">
+                      <div class="center-elements mt-2" *ngIf="callListOfDiseases || gettingItems">
                         <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+                        <p>{{'generics.Please wait' | translate }}</p>
                       </div>
-                      <div class="form-group mt-2" *ngIf="!callListOfDiseases">
+                      <div class="form-group mt-2" *ngIf="!callListOfDiseases && !gettingItems">
                         <span *ngIf="listOfFilteredDiseases.length>0">
                           <div class="table-cont">
                             <table class="table mb-0 border" aria-labelledby="rare disease"
