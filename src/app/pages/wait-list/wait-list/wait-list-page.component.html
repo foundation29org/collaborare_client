@@ -2,12 +2,9 @@
   <nav class="navbar navbar-expand-lg navbar-light header-navbar navbar-sticky"
     style="margin-left: 0px; width: 100% !important; background-color: #fff; box-shadow: 0 6px 0 0 rgba(0,0,0,.01),0 15px 32px 0 rgba(0,0,0,.06); min-height: 4.3rem;">
     <div class="container-fluid">
-      <div><span class="navbar-header-logos d-none d-sm-inline">
+      <div><span class="navbar-header-logos">
           <img src="assets/img/logo-lg-white.png" routerlink="/." class="logo-img-big pointer" style="cursor: pointer;"
-            tabindex="0" alt="logo dxgpt" width="43px" height="46px">
-        </span><span class="navbar-header-logos d-inline d-sm-none">
-          <img src="assets/img/logo.png" routerlink="/." class="logo-img pointer" style="cursor: pointer;" tabindex="0"
-            alt="logo dxgpt" width="43px" height="46px">
+            tabindex="0" alt="logo dxgpt" width="185px" height="46px">
         </span>
       </div>
       <div class="navbar-container pl-0">
@@ -25,7 +22,10 @@
   </nav>
   <div #section1 style="height: 100vh;">
     <div class="row m-0" style="min-height: 100vh !important;">
-      <div class="offset-md-3 col-md-6 flex-column">
+      <div class="col-md-6">
+        <img src="assets/img/header.webp" class="img-fluid" alt="hero">
+      </div>
+      <div class="col-md-6 flex-column">
         <div style="max-width: 500px;" class="box-text">
           <h4>Connecting Communities to Uncover Keys in Rare Diseases</h4>
           <p>Welcome to Collaborare, an initiative by EURORDIS to enhance rare disease research through community
@@ -55,8 +55,8 @@
               <div class="align-items-end justify-content-center">
                 <div class="position-relative">
                   <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
-                  <input type="text" class="form-control w-50 d-inline" [(ngModel)]="searchDiseaseField"
-                    (keyup)="onKey2($event)" placeholder="Type the orphacode number. Ex:33069">
+                  <input type="text" class="form-control w-50 d-inline border-custom" [(ngModel)]="searchDiseaseField"
+                    (keyup)="onKey2($event)" placeholder="Type the name or the orphacode number. Ex:33069">
                   <!--<input type="text" class="form-control w-50 d-inline" [(ngModel)]="searchDiseaseField"
                     (keyup.enter)="loadItemsFromDatabase()" placeholder="Type the orphacode number. Ex:33069" (keyup)="onKey($event)">
                   <button type="submit" class="ml-1 btn btn-primary" (click)="loadItemsFromDatabase()" >
