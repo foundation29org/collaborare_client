@@ -2,6 +2,9 @@ body {
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
 }
+.container-fluid{
+  background-color: #fff !important;
+}
 
 .fa-1_7x{
   font-size: 1.7em !important;
