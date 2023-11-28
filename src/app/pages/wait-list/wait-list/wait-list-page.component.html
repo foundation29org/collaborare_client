@@ -84,7 +84,7 @@
                         </table>
                       </div>
                     </span>
-                    <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3">
+                    <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3 && disease.name ==''">
                       <p>Nothing found. Try another search.</p>
                       <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
                       <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
