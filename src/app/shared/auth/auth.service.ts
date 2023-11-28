@@ -40,9 +40,9 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   getEnvironment():boolean{
-    if(localStorage.getItem('token')){
-      this.setAuthenticated(localStorage.getItem('token'));
-      const tokenPayload = decode(localStorage.getItem('token'));
+    if(localStorage.getItem('tokencollaborare')){
+      this.setAuthenticated(localStorage.getItem('tokencollaborare'));
+      const tokenPayload = decode(localStorage.getItem('tokencollaborare'));
       this.setIdUser(tokenPayload.sub);
       this.setExpToken(tokenPayload.exp);
       this.setRole(tokenPayload.role);
@@ -68,7 +68,7 @@ export class AuthService implements OnInit, OnDestroy {
     this.setRedirectUrl('/home')
     //this.setGroup(tokenPayload.group);
     //save localStorage
-    localStorage.setItem('token', token)
+    localStorage.setItem('tokencollaborare', token)
   }
 
   login(formValue: any): Observable<boolean> {
