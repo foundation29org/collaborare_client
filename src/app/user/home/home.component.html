@@ -4,7 +4,7 @@
     </div>
 </div>
 <div *ngIf="loadedItems && haveInfo" class="row p-3">
-    <div class="col-sm-12 offset-md-2 col-md-8 offset-xl-3 col-xl-6">
+    <div class="col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <div class="card">
             <div class="card-header">
                 <button class="btn btn-danger btn-sm float-right" (click)="deleteDisease()">Delete condition</button>
@@ -28,7 +28,7 @@
                                 <li *ngFor="let item of disease.items; let i = index" class="list-group-item">
                                     <div class="row align-items-center">
                                         <!-- Columna para el texto -->
-                                        <div class="col-9">
+                                        <div class="col-8 col-md-9">
                                             <span class="handle mr-1">☰</span>
                                             {{ i + 1 }}. 
                                             <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
@@ -36,7 +36,7 @@
                                         </div>
                                 
                                         <!-- Columna para los botones -->
-                                        <div class="col-3 text-right">
+                                        <div class="col-4 col-md-3 text-right">
                                             <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
                                             <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
                                             <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
@@ -61,7 +61,7 @@
         <div class="card">
             <div class="card-body">
                 <div class=" no-padding">
-                    <div class="position-relative">
+                    <div class="position-relative" *ngIf="!gettingItems">
                       <h4>Search and select the condition you want to contribute for</h4>
                       <i class="fa fa-search info fa-1_7x align-middle" (click)="onKey($event)"></i>
                       <input type="text" #inputDisease id="searchDiseaseField"
