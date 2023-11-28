@@ -197,6 +197,9 @@ footer{
   margin-top: 1em;
 }
 
+.btn {
+  font-weight: 600 !important;
+}
 
 .fa-1_7x{
   font-size: 1.7em !important;
