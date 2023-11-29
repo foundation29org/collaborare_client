@@ -132,7 +132,13 @@ onWindowScroll(event) {
 
   selectDisease(index){
     this.disease = this.listOfFilteredDiseases[index];
+    this.clearsearchDiseaseField();
+  }
+
+  clearsearchDiseaseField(){
+    this.searchDiseaseField = "";
     this.listOfFilteredDiseases = [];
+    this.callListOfDiseases = false;
   }
 
   loadItemsFromDatabase2() {
