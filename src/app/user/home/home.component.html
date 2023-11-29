@@ -26,6 +26,7 @@
                             </div>
                             <div cdkDropList class="list-group" (cdkDropListDropped)="drop($event)">
                               <div *ngFor="let item of disease.items; let i = index" cdkDrag class="list-group-item">
+                                <div *cdkDragPlaceholder class="custom-placeholder"></div>
                                 <div class="row align-items-center">
                                   <div class="col-8 col-md-9">
                                     <span class="handle mr-1">☰</span>
