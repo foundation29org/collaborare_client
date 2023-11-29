@@ -24,27 +24,24 @@
                                 <button class="btn btn-primary" (click)="addNewItem()">{{'generics.Add' | translate
                                     }}</button>
                             </div>
-                            <ul class="list-group" [dragula]="'ITEMS'">
-                                <li *ngFor="let item of disease.items; let i = index" class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <!-- Columna para el texto -->
-                                        <div class="col-8 col-md-9">
-                                            <span class="handle mr-1">☰</span>
-                                            {{ i + 1 }}. 
-                                            <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
-                                            <input *ngIf="item.isEditing" type="text" class="form-control" [(ngModel)]="item.editedName" />
-                                        </div>
-                                
-                                        <!-- Columna para los botones -->
-                                        <div class="col-4 col-md-3 text-right">
-                                            <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
-                                            <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
-                                            <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
-                                            <button class="btn btn-primary btn-sm" (click)="saveEdit(item)" *ngIf="item.isEditing"><em class="fa fa-save"></em></button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div cdkDropList class="list-group" (cdkDropListDropped)="drop($event)">
+                              <div *ngFor="let item of disease.items; let i = index" cdkDrag class="list-group-item">
+                                <div class="row align-items-center">
+                                  <div class="col-8 col-md-9">
+                                    <span class="handle mr-1">☰</span>
+                                    {{ i + 1 }}. 
+                                    <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
+                                    <input *ngIf="item.isEditing" type="text" class="form-control" [(ngModel)]="item.editedName" />
+                                </div>
+                                <div class="col-4 col-md-3 text-right">
+                                    <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
+                                    <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
+                                    <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
+                                    <button class="btn btn-primary btn-sm" (click)="saveEdit(item)" *ngIf="item.isEditing"><em class="fa fa-save"></em></button>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>

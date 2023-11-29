@@ -5,9 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { DragulaService } from 'ng2-dragula';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -62,21 +62,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadingOneDisease: boolean = false;
   gettingItems: boolean = false;
 
-  constructor(public translate: TranslateService, public toastr: ToastrService, private dragulaService: DragulaService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
+  constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
     this.orphacode = this.authService.getOrphacode()
   }
 
-  setupDragula() {
-    this.dragulaService.createGroup("ITEMS", {
-      moves: (el, container, handle) => {
-        return handle.classList.contains('handle');
-      }
-    });
-
-    this.dragulaService.drop("ITEMS").subscribe(({ name, el, target, source, sibling }) => {
-      this.updateListItemsOrder();
-    });
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.disease.items, event.previousIndex, event.currentIndex);
   }
 
   updateListItemsOrder() {
@@ -143,12 +135,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.dragulaService.destroy("ITEMS");
   }
 
   async ngOnInit() {
     this.loadItemsFromDatabase();
-    this.setupDragula();
   }
 
   loadItemsFromDatabase() {
