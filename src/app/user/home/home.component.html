@@ -3,7 +3,7 @@
         <em class="fa fa-spinner fa-spin fa-3x fa-fw primary"></em>
     </div>
 </div>
-<div *ngIf="loadedItems && haveInfo" class="row p-3">
+<div *ngIf="loadedItems && haveInfo" class="row pt-3 pb-3">
     <div class="col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <div class="card border round">
             <div class="card-header">
@@ -18,22 +18,26 @@
                         your criteria and experience, contributing to a richer and more diverse knowledge.</p>
                     <div class="row">
                         <div class="col-sm-12 mb-2 mb-sm-0 container">
-                            <div class="add-item-form">
-                                <input type="text" class="form-control w-50 d-inline" [(ngModel)]="newItemName"
-                                    (keyup.enter)="addNewItem()" placeholder="Name of the new element">
-                                <button class="btn btn-primary" (click)="addNewItem()">{{'generics.Add' | translate
-                                    }}</button>
+                          <div class="add-item-form mb-3 row">
+                            <div class="col-12 col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="newItemName"
+                                       (keyup.enter)="addNewItem()" placeholder="Name of the new element">
                             </div>
+                            <div class="col-12 col-sm-3 col-add">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
                             <div cdkDropList class="list-group" (cdkDropListDropped)="drop($event)">
                               <div *ngFor="let item of disease.items; let i = index" cdkDrag class="list-group-item">
+                                <div *cdkDragPlaceholder class="custom-placeholder"></div>
                                 <div class="row align-items-center">
-                                  <div class="col-8 col-md-9">
+                                  <div class="col-sm-9">
                                     <span class="handle mr-1">☰</span>
                                     {{ i + 1 }}. 
                                     <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
                                     <input *ngIf="item.isEditing" type="text" class="form-control" [(ngModel)]="item.editedName" />
                                 </div>
-                                <div class="col-4 col-md-3 text-right">
+                                <div class="col-buttons col-sm-3 text-right">
                                     <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
                                     <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
                                     <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
