@@ -488,6 +488,10 @@ mark{
     font-size: 1rem;
   }
 
+  .card, .form-control, form label {
+    font-size: 12px !important;
+  }
+
   .btn{
     font-size: 0.9rem;
   }
