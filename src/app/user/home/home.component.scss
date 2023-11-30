@@ -2,6 +2,11 @@
     cursor: move;
     margin-right: 10px;
   }
+  .handle:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
   
   .list-group-item {
     align-items: center;

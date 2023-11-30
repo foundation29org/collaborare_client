@@ -28,14 +28,14 @@
                             </div>
                         </div>
                             <div cdkDropList class="list-group" (cdkDropListDropped)="drop($event)">
-                              <div *ngFor="let item of disease.items; let i = index" cdkDrag class="list-group-item">
+                              <div *ngFor="let item of disease.items; let i = index" cdkDrag class="list-group-item" (cdkDragStarted)="dragStart($event)">
                                 <div *cdkDragPlaceholder class="custom-placeholder"></div>
-                                <div class="row align-items-center">
+                                <div class="handle row align-items-center">
                                   <div class="col-sm-9">
-                                    <span class="handle mr-1">☰</span>
+                                    <span class="mr-1">☰</span>
                                     {{ i + 1 }}. 
                                     <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
-                                    <input *ngIf="item.isEditing" type="text" class="form-control" [(ngModel)]="item.editedName" />
+                                    <input *ngIf="item.isEditing" (keyup.enter)="saveEdit(item)" type="text" class="form-control" [(ngModel)]="item.editedName" />
                                 </div>
                                 <div class="col-buttons col-sm-3 text-right">
                                     <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>

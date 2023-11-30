@@ -56,16 +56,11 @@
                 <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
                 <input type="text" class="form-control d-inline border-custom" style="border-radius: 25px;
                 height: 45px;width: 80%;" [(ngModel)]="searchDiseaseField"
-                  (keyup)="onKey2($event)" placeholder="Type the name or the orphacode number. Ex:33069"
+                  (keyup)="onKey2($event)" placeholder="Type the name or the orphacode number"
                   >
                   <span *ngIf="searchDiseaseField.length>0" class="pointer" (click)="clearsearchDiseaseField();"
                     style="position: relative;left: -44px;"><i class="fa fa-times ml-1"
                       style="color: #70757a;"></i></span>
-                <!--<input type="text" class="form-control w-50 d-inline" [(ngModel)]="searchDiseaseField"
-                  (keyup.enter)="loadItemsFromDatabase()" placeholder="Type the orphacode number. Ex:33069" (keyup)="onKey($event)">
-                <button type="submit" class="ml-1 btn btn-primary" (click)="loadItemsFromDatabase()" >
-                  {{'generics.Search' | translate }}
-                </button>-->
               </div>
               <div class="col-md-12 no-padding">
                 <div class="center-elements mt-2" *ngIf="callListOfDiseases">

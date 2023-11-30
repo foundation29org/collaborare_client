@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDragStart } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedDiseaseIndex: number = -1;
   loadingOneDisease: boolean = false;
   gettingItems: boolean = false;
+  bodyElement: HTMLElement = document.body;
 
   constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
@@ -68,7 +69,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    this.bodyElement.classList.remove('inheritCursors');
+    this.bodyElement.style.cursor = 'unset';
     moveItemInArray(this.disease.items, event.previousIndex, event.currentIndex);
+  }
+
+  dragStart(event: CdkDragStart) {
+    this.bodyElement.classList.add('inheritCursors');
+    this.bodyElement.style.cursor = 'grabbing';
   }
 
   updateListItemsOrder() {

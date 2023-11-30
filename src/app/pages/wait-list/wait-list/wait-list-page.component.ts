@@ -141,33 +141,6 @@ onWindowScroll(event) {
     this.callListOfDiseases = false;
   }
 
-  loadItemsFromDatabase2() {
-    if(this.searchDiseaseField == '') return;
-    if(this.searchDiseaseField.indexOf('ORPHA:')==-1){
-      this.searchDiseaseField = 'ORPHA:'+this.searchDiseaseField;
-    }
-    this.callListOfDiseases = true;
-    this.subscription.add(this.apiDx29ServerService.getItems(this.searchDiseaseField)
-      .subscribe((res: any) => {
-        console.log(res)
-        if(res.disease){
-          this.disease = res.disease;
-          this.haveInfo = true;
-          this.loadedItems = true;
-        }else{
-          console.log('entra')
-          this.nothingFoundDisease = true;
-          this.loadedItems = true;
-          this.haveInfo = false;
-          this.disease = { "id": "", "name": "", "items": []} ;
-        }
-        this.callListOfDiseases = false;
-      }, (err) => {
-        console.log(err);
-        this.callListOfDiseases = false;
-      }));
-  }
-
   onKey(event: KeyboardEvent) {
     this.nothingFoundDisease = false;
     this.loadedItems = false;
