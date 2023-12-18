@@ -15,6 +15,12 @@ body {
   scroll-snap-align: start;
 }
 
+.titleArrow{
+  width: 200px;
+  display: flex;
+  font-weight: 700;
+}
+
 .link-f29{
   float: left !important;
 }
@@ -84,7 +90,7 @@ i{
 
 
 .arrow-container{
-  width: 100px;
+  width: 150px;
   height: 100px;
   margin: 0 auto;
   position: absolute;
@@ -100,6 +106,7 @@ i{
   opacity: 0.5;
   border-radius: 50%;
   position: absolute;
+  left: 20px;
 }
 
 .arrow-2{
@@ -109,7 +116,7 @@ i{
   border-radius: 50%;
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: 40px;
   z-index: 1;
   display: table;
 }
