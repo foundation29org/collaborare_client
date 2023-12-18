@@ -1,5 +1,5 @@
 <div class="container-fluid d-flex flex-column">
-  <nav class="navbar navbar-expand-lg navbar-light header-navbar navbar-sticky"
+  <nav class="navbar navbar-expand-lg navbar-light header-navbar"
     style="margin-left: 0px; width: 100% !important; background-color: #fff; box-shadow: 0 6px 0 0 rgba(0,0,0,.01),0 15px 32px 0 rgba(0,0,0,.06); min-height: 4.3rem;">
     <div class="container-fluid">
       <div><span class="navbar-header-logos">
@@ -20,34 +20,93 @@
       </div>
     </div>
   </nav>
-  <div #section1 style="height: 100vh;">
+  <div #section1 class="mt-4" [ngClass]="(haveInfo)?'mar-custom':''">
     <div class="row m-0" style="min-height: 100vh !important;">
-      <div class="col-md-6">
+      <div class="col-md-6" [ngClass]="(!haveInfo)?'col-custom':''">
         <img src="assets/img/header.webp" class="img-fluid round" alt="hero">
       </div>
-      <div class="col-sm-12 col-md-6 flex-column">
-        <div style="max-width: 500px;" class="box-text">
+      <div class="col-sm-12 col-md-6 flex-column" [ngClass]="(!haveInfo)?'col-custom':''" >
+        <div class="box-text">
           <h4>Connecting Communities to Uncover Keys in Rare Diseases</h4>
           <p>Welcome to Collaborare, an initiative by EURORDIS to enhance rare disease research through community
             collaboration. Here, patients, healthcare experts, and researchers unite to identify and share ten key
             elements for each rare disease, driving towards deeper understanding and innovative solutions.</p>
 
 
-          <div class="d-none d-md-block arrow-container animated fadeInDown pointer" (click)="scrollToSection(1)">
-            <span class="titleArrow">Find your condition</span>
-            <div class="arrow-2 mt-3">
-              <i class="fa fa-angle-down"></i>
+            <div class="row align-items-end justify-content-center">
+              <h4 class="col-md-12 mt-4 mb-2">Find your condition</h4>
+              <div class="col-md-12 p-0">
+                <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
+                <input type="text" class="form-control d-inline border-custom" style="border-radius: 25px;
+                height: 45px;width: 80%;max-width: 500px;" [(ngModel)]="searchDiseaseField"
+                  (keyup)="onKey2($event)" placeholder="Type the name or the orphacode number"
+                  >
+                  <span *ngIf="searchDiseaseField.length>0" class="pointer" (click)="clearsearchDiseaseField();"
+                    style="position: relative;left: -44px;"><i class="fa fa-times ml-1"
+                      style="color: #70757a;"></i></span>
+              </div>
+              <div class="col-md-12 no-padding">
+                <div class="center-elements mt-2" *ngIf="callListOfDiseases">
+                  <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+                  <p>{{'generics.Please wait' | translate }}</p>
+                </div>
+                <div class="form-group mt-2" *ngIf="!callListOfDiseases" style="max-width: 500px;">
+                  <span *ngIf="listOfFilteredDiseases.length>0">
+                    <div class="table-cont">
+                      <table class="table mb-0 border" aria-labelledby="rare disease"
+                        style="background-color: #ffffff !important;">
+                        <tbody class="tableList">
+                          <tr *ngFor="let disease of listOfFilteredDiseases ; let i = index" class="d-flex">
+                            <td class="col-md-12 dropdown-item" id="{{disease.id}}"
+                              (click)="selectDisease(i);" style="cursor: pointer;">
+                              <span>{{disease.name}}</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </span>
+                  <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3 && disease.name ==''">
+                    <p>Nothing found. Try another search.</p>
+                    <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+                    <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
+                              (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-12 no-padding">
+                <div>
+                  <div class="form-group mt-2" *ngIf="!callListOfDiseases" style="max-width: 500px;">
+                    <div *ngIf="disease.name !=''">
+                      <h4 class="mt-4">{{disease.name}}</h4>
+                      <ul class="list-group" #section2 *ngIf="disease.items.length >0 ">
+                        <li *ngFor="let item of disease.items; let i = index" class="list-group-item" #listItem>
+                          {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
+                        </li>
+                      </ul>
+                      
+                    </div>
+                    <div *ngIf="loadedItems">
+                      <div *ngIf="disease.items.length ==0">
+                        <p class="mt-4">No items found</p>
+                        <p>
+                          <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
+                              (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="arrow-1 animated hinge infinite zoomIn"></div>
-          </div>
 
 
         </div>
       </div>
     </div>
   </div>
-  <div #section2>
-    <div class="row m-0 pt-5" style="background: #f5f5f5;min-height: 93vh !important;">
+  <div>
+    <!--<div class="row m-0 pt-5" style="background: #f5f5f5;min-height: 93vh !important;">
       <div class="col-sm-12 mb-4 margin-0 text-center">
         <div class="row">
           <div class="offset-md-2 col-md-8 align-items-center text-center">
@@ -120,7 +179,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
 
 

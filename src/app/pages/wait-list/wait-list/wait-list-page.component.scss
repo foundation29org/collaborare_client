@@ -326,11 +326,16 @@ html, body {
   align-items: stretch;
 }
 
-.col-md-6 {
+.mar-custom{
+  margin-top: 8.3rem !important;
+}
+
+.col-custom{
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .flex-column {
   flex-direction: column;
 }
