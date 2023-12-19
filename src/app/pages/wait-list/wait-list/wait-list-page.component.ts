@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,8 +24,6 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   modalReference: NgbModalRef;
   @ViewChild('section1', { static: false }) section1: ElementRef;
   @ViewChild('section2', { static: false }) section2: ElementRef;
-  private currentSectionIndex = 0;
-  private blockScroll = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -54,28 +52,10 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
 
 
   scrollToSection(sectionIndex: number) {
-    this.blockScroll = true;
     const sections = [this.section1, this.section2];
     sections[sectionIndex].nativeElement.scrollIntoView({ behavior: 'smooth' });
   
-    setTimeout(() => {
-      this.blockScroll = false;
-    }, 1000);
   }
-
-
-  @HostListener('window:wheel', ['$event'])
-onWindowScroll(event) {
-  if (this.blockScroll) return;
-  if (event.deltaY > 0) {
-    this.currentSectionIndex++;
-  } else {
-    this.currentSectionIndex--;
-  }
-
-  this.currentSectionIndex = Math.max(0, Math.min(this.currentSectionIndex, 2 - 1));
-  this.scrollToSection(this.currentSectionIndex);
-}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -101,6 +81,7 @@ onWindowScroll(event) {
 
 
   onKey2(event: any): void {
+    this.haveInfo = false;
     // Emite el valor actual del campo de búsqueda
     this.searchSubject.next(this.searchDiseaseField);
   }
@@ -132,7 +113,16 @@ onWindowScroll(event) {
 
   selectDisease(index){
     this.disease = this.listOfFilteredDiseases[index];
+    if(this.disease.items.length>0){
+      this.haveInfo = true;
+    }else{
+      this.haveInfo = false;
+    }
     this.clearsearchDiseaseField();
+    //wait 500ms to scroll to section 2
+    setTimeout(() => {
+      this.scrollToSection(1);
+    }, 200);
   }
 
   clearsearchDiseaseField(){

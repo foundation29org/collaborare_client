@@ -6,6 +6,10 @@ body {
   background-color: #fff !important;
 }
 
+.list-custom{
+  max-width: 500px;
+}
+
 .fa-1_7x{
   font-size: 1.7em !important;
 }
@@ -222,6 +226,10 @@ i{
   .img-fluid{
     margin-top: 4.5rem !important;
   }
+
+  .list-custom{
+    max-width: initial;
+  }
 }
 @media (max-width: 604px) {
 
@@ -326,11 +334,16 @@ html, body {
   align-items: stretch;
 }
 
-.col-md-6 {
+.mar-custom{
+  margin-top: 8.3rem !important;
+}
+
+.col-custom{
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .flex-column {
   flex-direction: column;
 }
