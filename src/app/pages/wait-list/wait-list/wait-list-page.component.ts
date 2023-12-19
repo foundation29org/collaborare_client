@@ -119,7 +119,10 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       this.haveInfo = false;
     }
     this.clearsearchDiseaseField();
-    this.scrollToSection(1);
+    //wait 500ms to scroll to section 2
+    setTimeout(() => {
+      this.scrollToSection(1);
+    }, 200);
   }
 
   clearsearchDiseaseField(){

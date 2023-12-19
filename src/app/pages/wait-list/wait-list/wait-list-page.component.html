@@ -35,7 +35,7 @@
 
             <div class="row align-items-end justify-content-center">
               <h4 class="col-md-12 mt-4 mb-2">Find your condition</h4>
-              <div class="col-md-12 p-0">
+              <div class="col-md-12 p-0" #section2>
                 <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
                 <input type="text" class="form-control d-inline border-custom" style="border-radius: 25px;
                 height: 45px;width: 80%;max-width: 500px;" [(ngModel)]="searchDiseaseField"
@@ -50,7 +50,7 @@
                   <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
                   <p>{{'generics.Please wait' | translate }}</p>
                 </div>
-                <div class="form-group mt-2" *ngIf="!callListOfDiseases" style="max-width: 500px;">
+                <div class="form-group mt-2 list-custom" *ngIf="!callListOfDiseases">
                   <span *ngIf="listOfFilteredDiseases.length>0">
                     <div class="table-cont">
                       <table class="table mb-0 border" aria-labelledby="rare disease"
@@ -74,12 +74,12 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-12 no-padding">
+              <div  class="col-md-12 no-padding">
                 <div>
-                  <div class="form-group mt-2" *ngIf="!callListOfDiseases" style="max-width: 500px;">
-                    <div *ngIf="disease.name !=''">
+                  <div  class="form-group mt-2 list-custom" *ngIf="!callListOfDiseases">
+                    <div  *ngIf="disease.name !=''">
                       <h4 class="mt-4">{{disease.name}}</h4>
-                      <ul class="list-group" #section2 *ngIf="disease.items.length >0 ">
+                      <ul class="pl-0" *ngIf="disease.items.length >0 ">
                         <li *ngFor="let item of disease.items; let i = index" class="list-group-item" #listItem>
                           {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
                         </li>
