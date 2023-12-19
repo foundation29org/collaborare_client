@@ -5,6 +5,9 @@ body {
 .container-fluid{
   background-color: #fff !important;
 }
+.title-desc{
+  width: 90%;
+}
 
 .list-custom{
   max-width: 500px;
@@ -229,6 +232,10 @@ i{
 
   .list-custom{
     max-width: initial;
+  }
+
+  .title-desc{
+    width: 100%;
   }
 }
 @media (max-width: 604px) {
