@@ -67,7 +67,7 @@
                     </div>
                   </span>
                   <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3 && disease.name ==''">
-                    <p>The disease has not been cured.</p>
+                    <p>The disease has not been validated.</p>
                     <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
                     <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                               (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
