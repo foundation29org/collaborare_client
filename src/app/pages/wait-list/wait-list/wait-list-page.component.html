@@ -28,7 +28,7 @@
       <div class="col-sm-12 col-md-6 flex-column" [ngClass]="(!haveInfo)?'col-custom':''" >
         <div class="box-text">
           <div class="title-desc">
-            <h4>Connecting Communities to Uncover Keys in Rare Diseases</h4>
+            <h4>Connecting communities to uncover keys in rare diseases</h4>
             <p>Welcome to Collaborare, an initiative by EURORDIS to enhance rare disease research through community
               collaboration. Here, patients, healthcare experts, and researchers unite to identify and share ten key
               elements for each rare disease, driving towards deeper understanding and innovative solutions.</p>
@@ -67,7 +67,7 @@
                     </div>
                   </span>
                   <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3 && disease.name ==''">
-                    <p>Nothing found. Try another search.</p>
+                    <p>The disease has not been cured.</p>
                     <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
                     <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                               (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
