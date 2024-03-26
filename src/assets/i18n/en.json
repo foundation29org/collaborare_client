@@ -10,6 +10,8 @@
     "Account activated": "Account activated",
     "Log In": "Log In",
     "almost done": "We're almost done!",
+    "The access link has expired": "The access link has expired",
+    "mesaggeexpired": "Sorry, the link to access your account has expired for security reasons. Please re-enter your email.",
     "login link": "We have sent a login link to your email address.",
     "p1": "Open your inbox and look for an email from Collaborare.",
     "p2": "Click the link within the email to complete the login process. <strong>Please note that this link is valid for 5 minutes only.</strong>",

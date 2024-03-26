@@ -7,7 +7,9 @@ import { catchError, tap } from 'rxjs/operators'
 import * as decode from 'jwt-decode';
 import { ICurrentPatient } from './ICurrentPatient.interface';
 import { InsightsService } from 'app/shared/services/azureInsights.service';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnInit, OnDestroy {
@@ -27,7 +29,7 @@ export class AuthService implements OnInit, OnDestroy {
   private isApp: boolean = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1 && location.hostname != "localhost" && location.hostname != "127.0.0.1";
   private subscription: Subscription = new Subscription();
 
-  constructor(private http: HttpClient, public router: Router, public insightsService: InsightsService) {}
+  constructor(private http: HttpClient, public router: Router, public insightsService: InsightsService, public translate: TranslateService) {}
 
 
   ngOnInit() {
@@ -100,6 +102,17 @@ export class AuthService implements OnInit, OnDestroy {
       tap((res: any) => {
           if(res.message == "You have successfully logged in"){
             this.setEnvironment(res.token);
+          }else if(res.message == "Link expired"){
+            this.isloggedIn = false;
+            Swal.fire({
+              title: this.translate.instant("login.The access link has expired"),
+              html: '<p class="mt-2">'+this.translate.instant("login.mesaggeexpired")+'</p>',
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'Ok'
+            }).then((result) => {
+            })
           }else{
             this.isloggedIn = false;
           }
