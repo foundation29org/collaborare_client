@@ -11,6 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { WaitListPageComponent } from "./wait-list/wait-list-page.component";
 import { AboutUsPageComponent } from "./about-us/about-us-page.component";
+import { BehindPageComponent } from "./behind/behind-page.component";
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -46,7 +47,8 @@ import { SharedModule } from "app/shared/shared.module";
     ],
     declarations: [
         WaitListPageComponent,
-        AboutUsPageComponent
+        AboutUsPageComponent,
+        BehindPageComponent
     ]
 })
 export class WaitListPageModule { }

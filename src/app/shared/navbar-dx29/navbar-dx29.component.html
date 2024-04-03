@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light header-navbar"
 style="margin-left: 0px; width: 100% !important; background-color: #fff; box-shadow: 0 6px 0 0 rgba(0,0,0,.01),0 15px 32px 0 rgba(0,0,0,.06); min-height: 4.3rem;">
 <div class="container-fluid">
-  <div class="d-none d-sm-block"><span class="navbar-header-logos">
+  <div class="d-none d-md-block"><span class="navbar-header-logos">
       <img src="assets/img/logo-lg-white.png" routerlink="/." class="logo-img-big pointer" style="cursor: pointer;"
         tabindex="0" alt="logo dxgpt" width="185px" height="46px">
     </span>
@@ -18,6 +18,11 @@ style="margin-left: 0px; width: 100% !important; background-color: #fff; box-sha
             <li class="nav-item mr-2">
               <a class="nav-link" [ngClass]="(!isAboutPage)?'black':'black text-bold-700'" routerLink="/aboutus">
                 <span>About collaborare</span>
+              </a>
+            </li>
+            <li class="nav-item mr-2">
+              <a class="nav-link" [ngClass]="(!isBehingPage)?'black':'black text-bold-700'" routerLink="/behind">
+                <span>Who is behind?</span>
               </a>
             </li>
           </ul>
