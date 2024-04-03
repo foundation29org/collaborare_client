@@ -1,25 +1,4 @@
 <div class="container-fluid d-flex flex-column">
-  <nav class="navbar navbar-expand-lg navbar-light header-navbar"
-    style="margin-left: 0px; width: 100% !important; background-color: #fff; box-shadow: 0 6px 0 0 rgba(0,0,0,.01),0 15px 32px 0 rgba(0,0,0,.06); min-height: 4.3rem;">
-    <div class="container-fluid">
-      <div><span class="navbar-header-logos">
-          <img src="assets/img/logo-lg-white.png" routerlink="/." class="logo-img-big pointer" style="cursor: pointer;"
-            tabindex="0" alt="logo dxgpt" width="185px" height="46px">
-        </span>
-      </div>
-      <div class="navbar-container pl-0">
-        <div id="navbarSupportedContent">
-          <ul class="navbar-nav mr-0">
-            <li class="nav-item mr-2">
-              <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
-                (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
-              <!--<a class="btn btn-dark mb-0 btn-navbar mr-2" href="javascript:;" (click)="share()">{{'generics.Share' | translate }}</a>-->
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
   <div #section1 class="mt-4" [ngClass]="(haveInfo)?'mar-custom':''">
     <div class="row m-0" style="min-height: 100vh !important;">
       <div class="col-md-6" [ngClass]="(!haveInfo)?'col-custom':''">
