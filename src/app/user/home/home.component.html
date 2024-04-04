@@ -24,7 +24,7 @@
                                        (keyup.enter)="addNewItem()" placeholder="Name of the new element">
                             </div>
                             <div class="col-12 col-sm-3 col-add">
-                                <button class="btn btn-primary">Add</button>
+                                <button class="btn btn-primary" (click)="addNewItem()">Add</button>
                             </div>
                         </div>
                             <div cdkDropList class="list-group" (cdkDropListDropped)="drop($event)">
