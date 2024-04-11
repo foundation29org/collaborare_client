@@ -7,7 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgApexchartsModule } from "ng-apexcharts";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { WaitListPageComponent } from "./wait-list/wait-list-page.component";
 import { AboutUsPageComponent } from "./about-us/about-us-page.component";
@@ -43,6 +44,8 @@ import { SharedModule } from "app/shared/shared.module";
         NgApexchartsModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
         SharedModule
     ],
     declarations: [

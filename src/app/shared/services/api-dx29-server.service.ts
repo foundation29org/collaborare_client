@@ -85,4 +85,56 @@ export class ApiDx29ServerService {
         })
       );
     }
+
+    getValidator(userId){
+      return this.http.get(environment.api+'/api/validator/'+userId).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
+    sendMsgValidator(userId, info){
+      return this.http.post(environment.api+'/api/validator/'+userId, info).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
+    getProfile(userId){
+      return this.http.get(environment.api+'/api/profile/'+userId).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
+    setProfile(userId, info){
+      return this.http.put(environment.api+'/api/profile/'+userId, info).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
 }

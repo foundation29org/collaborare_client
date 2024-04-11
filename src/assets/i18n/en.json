@@ -1,6 +1,7 @@
 {
   "menu":{
     "Dashboard": "Home",
+    "Profile": "Profile",
     "Login": "Login"
   },
   "login":{

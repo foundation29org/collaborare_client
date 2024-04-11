@@ -19,6 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -66,6 +67,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ],
     declarations: [
         HomeComponent,
+        ProfileComponent,
         MyFilterPipe
     ]
 })

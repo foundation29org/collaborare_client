@@ -5,6 +5,7 @@ import { AuthGuard } from 'app/shared/auth/auth-guard.service';
 import { RoleGuard } from 'app/shared/auth/role-guard.service';
 
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,15 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       title: 'menu.Dashboard',
+      expectedRole: ['User']
+    },
+    canActivate: [AuthGuard, RoleGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    data: {
+      title: 'menu.Profile',
       expectedRole: ['User']
     },
     canActivate: [AuthGuard, RoleGuard]

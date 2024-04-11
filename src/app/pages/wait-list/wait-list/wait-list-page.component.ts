@@ -18,7 +18,7 @@ import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.servic
 })
 
 export class WaitListPageComponent implements OnInit, OnDestroy {
-  myForm: FormGroup;
+  contactForm: FormGroup;
   submitPressed = false;  // Añade esta línea
   sending: boolean = false;
   modalReference: NgbModalRef;
@@ -33,7 +33,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
 
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
-  disease: any = { "id": "", "name": "", "items": []} ;
+  disease: any = { "id": "", "name": "", "items": [] };
   searchSubject = new Subject<string>();
   listOfFilteredDiseases: any = [];
   constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService) {
@@ -44,9 +44,10 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.myForm = this.fb.group({
+    this.contactForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      userType: ['', Validators.required]
+      subject: ['', Validators.required],
+      message: ['', [Validators.required, Validators.maxLength(1500)]]
     });
   }
 
@@ -54,7 +55,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   scrollToSection(sectionIndex: number) {
     const sections = [this.section1, this.section2];
     sections[sectionIndex].nativeElement.scrollIntoView({ behavior: 'smooth' });
-  
+
   }
 
   ngOnDestroy() {
@@ -64,7 +65,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  share(){
+  share() {
     this.clipboard.copy('https://nav29.org');
     Swal.fire({
       icon: 'success',
@@ -85,22 +86,22 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     // Emite el valor actual del campo de búsqueda
     this.searchSubject.next(this.searchDiseaseField);
   }
-  
+
   loadItemsFromDatabase(searchText: string): void {
     if (!searchText) {
       // Manejar el estado cuando no hay texto
       return;
     }
-    this.disease = { "id": "", "name": "", "items": []} ;
+    this.disease = { "id": "", "name": "", "items": [] };
     this.callListOfDiseases = true;
     this.listOfFilteredDiseases = [];
     this.apiDx29ServerService.searchItems(searchText)
       .subscribe((res: any) => {
         this.callListOfDiseases = false;
         console.log(res)
-        if(res.diseases){
+        if (res.diseases) {
           this.listOfFilteredDiseases = res.diseases;
-        }else{
+        } else {
           this.listOfFilteredDiseases = [];
         }
       }, (err) => {
@@ -111,21 +112,37 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  selectDisease(index){
+  selectDisease(index) {
     this.disease = this.listOfFilteredDiseases[index];
-    if(this.disease.items.length>0){
+    if (this.disease.items.length > 0) {
       this.haveInfo = true;
-    }else{
+    } else {
       this.haveInfo = false;
     }
     this.clearsearchDiseaseField();
+    this.getProfile(this.disease.id);
     //wait 500ms to scroll to section 2
     setTimeout(() => {
       this.scrollToSection(1);
     }, 200);
   }
 
-  clearsearchDiseaseField(){
+  getProfile(id) {
+    this.subscription.add(this.apiDx29ServerService.getValidator(id)
+      .subscribe((res: any) => {
+        if (res && res.user) {
+          if (res.user.organization && res.user.organization != "") {
+            this.disease.organization = res.user.organization;
+            this.disease.web = res.user.web;
+          } else {
+          }
+        }
+      }, (err) => {
+        console.log(err);
+      }));
+  }
+
+  clearsearchDiseaseField() {
     this.searchDiseaseField = "";
     this.listOfFilteredDiseases = [];
     this.callListOfDiseases = false;
@@ -135,20 +152,49 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.nothingFoundDisease = false;
     this.loadedItems = false;
     this.haveInfo = false;
-    this.disease = { "id": "", "name": "", "items": []} ;
+    this.disease = { "id": "", "name": "", "items": [] };
   }
 
-  openPolicy(policyPanel){
-      let ngbModalOptions: NgbModalOptions = {
-            windowClass: 'ModalClass-lg'// xl, lg, sm
-      };
-      this.modalReference = this.modalService.open(policyPanel, ngbModalOptions);
+  openPolicy(policyPanel) {
+    let ngbModalOptions: NgbModalOptions = {
+      windowClass: 'ModalClass-lg'// xl, lg, sm
+    };
+    this.modalReference = this.modalService.open(policyPanel, ngbModalOptions);
   }
 
   closeModal() {
     if (this.modalReference != undefined) {
-        this.modalReference.close()
+      this.modalReference.close()
     }
-} 
+  }
+  openContactForm(content) {
+    this.modalReference = this.modalService.open(content);
+  }
+
+  get f() { return this.contactForm.controls; }
+
+  onSubmit() {
+    if (this.contactForm.invalid) {
+
+      // Si el formulario es inválido, detén la ejecución y muestra errores.
+      return;
+    } else {
+      this.sending = true;
+      this.subscription.add(this.apiDx29ServerService.sendMsgValidator(this.disease.id, this.contactForm.value)
+        .subscribe((res: any) => {
+          this.sending = false;
+          this.toastr.success('Message sent successfully');
+          if (this.modalReference != undefined) {
+            this.modalReference.close()
+          }
+        }, (err) => {
+          console.log(err);
+          this.sending = false;
+          this.toastr.error('Error sending message');
+        }));
+    }
+    console.log(this.contactForm.value);
+    // Aquí implementas la lógica de envío, como enviar a un backend.
+  }
 
 }

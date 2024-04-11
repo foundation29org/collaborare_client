@@ -62,10 +62,32 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadingOneDisease: boolean = false;
   gettingItems: boolean = false;
   bodyElement: HTMLElement = document.body;
-
+  loading = false; 
+  hasData = false;
   constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
     this.orphacode = this.authService.getOrphacode()
+    this.getProfile();
+  }
+
+  getProfile() {
+    this.subscription.add(this.apiDx29ServerService.getProfile(this.authService.getIdUser())
+        .subscribe((res: any) => {
+            if (res && res.user) {
+                if(res.user.organization && res.user.organization != "" && res.user.contactEmail && res.user.contactEmail != ""){
+                    this.hasData = true;
+                }else{
+                    this.hasData = false;
+                }
+            }else{
+                this.hasData = false;
+            }
+            this.loading = true;
+        }, (err) => {
+        console.log(err);
+        this.loading = true;
+        this.hasData = false;
+        }));
   }
 
   drop(event: CdkDragDrop<string[]>) {
