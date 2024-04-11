@@ -58,11 +58,19 @@
                   <div  class="form-group mt-2 list-custom" *ngIf="!callListOfDiseases">
                     <div  *ngIf="disease.name !=''">
                       <h4 class="mt-4">{{disease.name}}</h4>
-                      <ul class="pl-0" *ngIf="disease.items.length >0 ">
+                      <ul class="pl-0 mb-0" *ngIf="disease.items.length >0 ">
                         <li *ngFor="let item of disease.items; let i = index" class="list-group-item" #listItem>
                           {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
                         </li>
                       </ul>
+                      <p class="mb-3">Updated on {{disease.updated | date}} </p>
+                      <div class="mb-4">
+                        <p class="mb-0"><strong>Who has validated the list</strong></p>
+                        <p class="mb-0" *ngIf="disease.organization">{{disease.organization}}</p>
+                        <p class="mb-0" *ngIf="disease.web"><a href="{{disease.web}}" target="_blank">{{disease.web}}</a></p>
+                        <p class="mb-0"><em class="fa fa-envelope mr-1 primary"> </em><a class="primary" (click)="openContactForm(panelcontactForm)">Contact the validator</a></p>
+                      </div>
+                      
                       
                     </div>
                     <div *ngIf="loadedItems">
@@ -249,5 +257,45 @@
           </div>
         </div>
       </div>
+    </div>
+  </ng-template>
+
+  <ng-template #panelcontactForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title primary">Contact the validator</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="f.email.errors?.required">Email is required.</mat-error>
+          <mat-error *ngIf="f.email.errors?.email">Please enter a valid email.</mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Subject</mat-label>
+          <input matInput formControlName="subject">
+          <mat-error *ngIf="f.subject.errors?.required">Subject is required.</mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Message</mat-label>
+          <textarea matInput formControlName="message" rows="5" maxlength="1500"></textarea>
+          <mat-hint align="end">{{ contactForm.get('message').value.length }} / 1500</mat-hint>
+          <mat-error *ngIf="f.message.errors?.required">Message is required.</mat-error>
+          <mat-error *ngIf="f.message.errors?.maxlength">The message cannot exceed 500 characters.</mat-error>
+        </mat-form-field>
+        <div *ngIf="!sending" class="mt-2 col-md-12 center-elements">
+          <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+        <div *ngIf="sending" class="mt-2 col-md-12 center-elements">
+          <em class="fa fa-spinner fa-spin fa-2x fa-fw primary"></em>
+        </div>
+        
+      </form>
     </div>
   </ng-template>
