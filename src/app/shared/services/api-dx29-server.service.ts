@@ -34,8 +34,22 @@ export class ApiDx29ServerService {
       );
     }
 
-    getItems(orphacode){
-      return this.http.get(environment.api+'/api/disease/'+orphacode).pipe(
+    selectDisease(orphacode){
+      return this.http.get(environment.api+'/api/selectdisease/'+orphacode).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
+
+    getItems(userId){
+      return this.http.get(environment.api+'/api/disease/'+userId).pipe(
         map((res: any) => {
           return res;
         }),
@@ -75,19 +89,6 @@ export class ApiDx29ServerService {
 
     deleteDisease(_id, info){
       return this.http.post(environment.api+'/api/deletedisease/'+_id, info).pipe(
-        map((res: any) => {
-          return res;
-        }),
-        catchError((err) => {
-          console.log(err);
-          this.insightsService.trackException(err);
-          return err;
-        })
-      );
-    }
-
-    getValidator(userId){
-      return this.http.get(environment.api+'/api/validator/'+userId).pipe(
         map((res: any) => {
           return res;
         }),

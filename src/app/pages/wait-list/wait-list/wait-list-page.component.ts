@@ -120,26 +120,10 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       this.haveInfo = false;
     }
     this.clearsearchDiseaseField();
-    this.getProfile(this.disease.id);
     //wait 500ms to scroll to section 2
     setTimeout(() => {
       this.scrollToSection(1);
     }, 200);
-  }
-
-  getProfile(id) {
-    this.subscription.add(this.apiDx29ServerService.getValidator(id)
-      .subscribe((res: any) => {
-        if (res && res.user) {
-          if (res.user.organization && res.user.organization != "") {
-            this.disease.organization = res.user.organization;
-            this.disease.web = res.user.web;
-          } else {
-          }
-        }
-      }, (err) => {
-        console.log(err);
-      }));
   }
 
   clearsearchDiseaseField() {
@@ -187,6 +171,19 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
           if (this.modalReference != undefined) {
             this.modalReference.close()
           }
+          //reset form
+          setTimeout(() => {
+            if (this.contactForm) {
+              this.contactForm.reset();
+            } else {
+                console.error('Intento de resetear un formulario no inicializado.');
+            }
+          }, 500); // espera 500 milisegundos antes de resetear el formulario
+          /*this.contactForm.patchValue({
+            email: '',
+            subject: '',
+            message: ''
+          })*/
         }, (err) => {
           console.log(err);
           this.sending = false;

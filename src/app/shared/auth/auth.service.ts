@@ -19,7 +19,6 @@ export class AuthService implements OnInit, OnDestroy {
   private isloggedIn: boolean = false;
   private message: string;
   private iduser: string;
-  private orphacode: string;
   private role: string;
   private subrole: string;
   private group: string;
@@ -49,7 +48,6 @@ export class AuthService implements OnInit, OnDestroy {
       this.setExpToken(tokenPayload.exp);
       this.setRole(tokenPayload.role);
       this.setSubRole(tokenPayload.subrole);
-      this.setOrphacode(tokenPayload.orphacode)
       this.setRedirectUrl('/home')
       //this.setGroup(tokenPayload.group);
       return true;
@@ -66,7 +64,6 @@ export class AuthService implements OnInit, OnDestroy {
     this.setExpToken(tokenPayload.exp);
     this.setRole(tokenPayload.role);
     this.setSubRole(tokenPayload.subrole);
-    this.setOrphacode(tokenPayload.orphacode)
     this.setRedirectUrl('/home')
     //this.setGroup(tokenPayload.group);
     //save localStorage
@@ -146,7 +143,6 @@ export class AuthService implements OnInit, OnDestroy {
       this.currentPatient = null;
       this.patientList = null;
       this.iduser = null;
-      this.orphacode = null;
   }
 
   getToken() {
@@ -186,12 +182,6 @@ export class AuthService implements OnInit, OnDestroy {
   }
   setSubRole(subrole: string): void {
     this.subrole = subrole;
-  }
-  setOrphacode(orphacode: string): void {
-    this.orphacode = orphacode;
-  }
-  getOrphacode(): string {
-    return this.orphacode;
   }
   getSubRole(): string {
     return this.subrole;
