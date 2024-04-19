@@ -44,7 +44,6 @@ import { CdkDragDrop, moveItemInArray, CdkDragStart } from '@angular/cdk/drag-dr
 export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   idUser: string;
-  orphacode: string;
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
   trash = [];
@@ -66,22 +65,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   hasData = false;
   constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
-    this.orphacode = this.authService.getOrphacode()
     this.getProfile();
   }
 
   getProfile() {
     this.subscription.add(this.apiDx29ServerService.getProfile(this.authService.getIdUser())
         .subscribe((res: any) => {
-            if (res && res.user) {
-                if(res.user.organization && res.user.organization != "" && res.user.contactEmail && res.user.contactEmail != ""){
-                    this.hasData = true;
-                }else{
-                    this.hasData = false;
-                }
+          console.log(res)
+          if(res.message == "The user does not exis"){
+            this.hasData = false;
+          }else if(res && res.validatorInfo!=null){
+            if(res.validatorInfo.organization && res.validatorInfo.organization != "" && res.validatorInfo.contactEmail && res.validatorInfo.contactEmail != ""){
+                this.hasData = true;
             }else{
                 this.hasData = false;
             }
+          }
             this.loading = true;
         }, (err) => {
         console.log(err);
@@ -172,10 +171,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadItemsFromDatabase() {
-    this.subscription.add(this.apiDx29ServerService.getItems(this.orphacode)
+    this.subscription.add(this.apiDx29ServerService.getItems(this.authService.getIdUser())
       .subscribe((res: any) => {
         console.log(res)
-        if(res.disease){
+        if(res.message=="The disease does not exist"){
+          this.disease = { "id": "", "name": "", "items": []} ;
+          this.loadedItems = true;
+          this.haveInfo = false;
+        }else if(res.disease.id != ""){
           this.disease = res.disease;
           this.haveInfo = true;
           this.loadedItems = true;
@@ -276,10 +279,10 @@ showMoreInfoDiagnosePopup(index){
 
 cheackDisease(id) {
   this.gettingItems = true;
-  this.subscription.add(this.apiDx29ServerService.getItems(id)
+  this.subscription.add(this.apiDx29ServerService.selectDisease(id)
     .subscribe((res: any) => {
       console.log(res)
-      if(res.disease){
+      /*if(res.disease){
         this.gettingItems = false;
         Swal.fire({
           title: 'We are sorry',
@@ -296,7 +299,8 @@ cheackDisease(id) {
         );
       }else{
         this.saveItems();
-      }
+      }*/
+      this.saveItems();
     }, (err) => {
       console.log(err);
       this.gettingItems = false;
@@ -312,13 +316,8 @@ saveItems() {
     .subscribe((res: any) => {
       this.gettingItems = false;
       console.log(res)
-      if(res.message == "You have successfully logged in"){
-        this.authService.setEnvironment(res.token);
-        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
-        if(res.eventdb){
-          this.authService.setOrphacode(res.eventdb);
-          this.orphacode = res.eventdb;
-        }      
+      if(res.message == "Data saved successfully"){
+        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));    
         this.loadItemsFromDatabase();
       }else{
         this.authService.logout();
@@ -370,13 +369,8 @@ confirmDeleteDisease(){
   this.subscription.add(this.apiDx29ServerService.deleteDisease(this.authService.getIdUser(), info)
     .subscribe((res: any) => {
       console.log(res)
-      if(res.message == "You have successfully logged in"){
-        this.authService.setEnvironment(res.token);
-        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
-        if(res.eventdb){
-          this.authService.setOrphacode(res.eventdb);
-          this.orphacode = res.eventdb;
-        }      
+      if(res.message == "Deleted disease successfully"){
+        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));     
         this.loadItemsFromDatabase();
       }else{
         this.authService.logout();

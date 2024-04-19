@@ -14,7 +14,8 @@
                 <p>As the administrator tasked to bring your organisations consensus voice into the tool, your knowledge and expertise are invaluable to our collaborative network. The form below is designed to capture essential information about your organization, facilitating connections with other entities and individuals working in the  rare diseases ecosystem.</p>
                 <ul>
                     <li><strong>Organization name:</strong> This field helps us identify your organization within our community, allowing other collaborators and patients to find your profile and learn more about your organisation.</li>
-                    <li><strong>Contact email:</strong> By providing a way for us to reach you directly, this ensures that we can facilitate smooth and efficient communication. Rest assured, your email <strong>will not be publicly displayed;</strong> it will only be used for necessary communications regarding your involvement and interest within Collaborare platform.</li>
+                    <li><strong>Country:</strong> Identifying your country aids in regional networking and compliance, helping us connect you with nearby stakeholders and initiatives.</li>
+                    <li><strong>Contact email:</strong> By providing a way for us to reach you directly, this ensures that we can facilitate smooth and efficient communication.</li>
                     <li><strong>Website:</strong> Providing your website address offers direct access to detailed information about your projects, research, and achievements, enhancing transparency and trust in your work.</li>
                 </ul>
                 <p>The information provided will be securely stored and, with the exception of your email address, included in a publicly accessible directory. This is designed to strengthen support networks, promote interdisciplinary collaboration, and accelerate advances in research and development of treatments of rare diseases. We thank you for sharing these details and for your commitment to this initiative.</p>
@@ -27,6 +28,17 @@
                   <mat-error *ngIf="submitted && profileForm.get('organization')?.invalid">This field is required.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-12" appearance="fill">
+                  <mat-label>Country</mat-label>
+                  <mat-select matInput formControlName="country">
+                      <mat-option *ngFor="let country of countries" [value]="country.name">
+                          {{ country.name }}
+                      </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="submitted && profileForm.get('country')?.invalid">
+                      This field is required.
+                  </mat-error>
+              </mat-form-field>
+                <mat-form-field class="col-md-12" appearance="fill">
                   <mat-label>Contact email</mat-label>
                   <input matInput formControlName="contactEmail">
                   <mat-error *ngIf="submitted && profileForm.get('contactEmail')?.invalid">
@@ -38,6 +50,16 @@
                     <input matInput formControlName="web">
                     <mat-error *ngIf="profileForm.get('web')?.errors?.['pattern']">Please enter a valid URL.</mat-error>
                   </mat-form-field>
+
+                  <div class="terms" class="mb-3">
+                    <mat-checkbox [disabled]="!openedTerms" formControlName="acceptTerms">I have read and accept the <label><a (click)="showTerms(contentTerms)" class="primary">terms and conditions</a></label> of email use</mat-checkbox>
+                    <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && openedTerms" >
+                        Must accept terms and conditions to proceed.
+                    </mat-error>
+                    <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && !openedTerms" >
+                      Must read terms and conditions to proceed.
+                  </mat-error>
+                </div>
             
                 <button class="btn btn-primary" type="submit" ><em class="fa fa-save mr-1"></em> Save and go to home page</button>
               </form>
@@ -46,4 +68,26 @@
     </div>
     
   </div>
+
+  <ng-template #contentTerms let-c="close" let-d="dismiss" appendTo="body">
+    <div class="modal-header" id="idHeader">
+      <h4 class="mb-0">Terms and conditions of email use</h4> 
+      <button type="button" class="close" aria-label="Close" (click)="closeModal();">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row text-left">
+        <div class="card-body col-md-12">
+          <p>Rest assured, your email <strong>will not be publicly displayed;</strong> it will only be used for necessary communications regarding your involvement and interest within Collaborare platform.</p>
+          <p>If you wish to opt out of receiving non-essential communications, please send an email to support@foudnation29.org, and we will promptly update your preferences.</p>         
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="col-md-12 center-elements">
+        <button type="button" class="btn btn-dark" (click)="acceptConsent();">I accept the terms and conditions</button>
+      </div>
+    </div>
+  </ng-template>
   

@@ -37,6 +37,8 @@
                             <td class="col-md-12 dropdown-item" id="{{disease.id}}"
                               (click)="selectDisease(i);" style="cursor: pointer;">
                               <span>{{disease.name}}</span>
+                              <span class="d-block font-small-3"><strong>Organization:</strong> {{disease.validatorInfo.organization}}</span>
+                              <span class="d-block font-small-3"><strong>Country:</strong> {{disease.validatorInfo.country}}</span>
                             </td>
                           </tr>
                         </tbody>
@@ -63,10 +65,17 @@
                       </ul>
                       <p class="mb-3">Updated on {{disease.updated | date}} </p>
                       <div class="mb-4">
-                        <p class="mb-0"><strong>Who has validated the list</strong></p>
-                        <p class="mb-0" *ngIf="disease.organization">{{disease.organization}}</p>
-                        <p class="mb-0" *ngIf="disease.web"><a href="{{disease.web}}" target="_blank">{{disease.web}}</a></p>
-                        <p class="mb-0"><em class="fa fa-envelope mr-1 primary"> </em><a class="primary" (click)="openContactForm(panelcontactForm)">Contact the validator</a></p>
+                        <p class=""><strong>Who has validated the list:</strong></p>
+                        <p class="" *ngIf="disease.validatorInfo.organization">
+                          <span><strong class="d-block">Organization</strong>{{disease.validatorInfo.organization}}</span>
+                        </p>
+                        <p class="" *ngIf="disease.validatorInfo.country">
+                          <span><strong class="d-block">Country</strong>{{disease.validatorInfo.country}}</span>
+                        </p>
+                        <p class="" *ngIf="disease.validatorInfo.web">
+                          <span><strong class="d-block">Website</strong><a href="{{disease.validatorInfo.web}}" target="_blank">{{disease.validatorInfo.web}}</a></span>
+                        </p>
+                        <p class=""><em class="fa fa-envelope mr-1 primary"> </em><a class="primary" (click)="openContactForm(panelcontactForm)">Contact the validator</a></p>
                       </div>
                       
                       
@@ -283,7 +292,7 @@
         <mat-form-field class="col-md-12" appearance="fill">
           <mat-label>Message</mat-label>
           <textarea matInput formControlName="message" rows="5" maxlength="1500"></textarea>
-          <mat-hint align="end">{{ contactForm.get('message').value.length }} / 1500</mat-hint>
+          <mat-hint align="end">{{ contactForm.get('message').value?.length || 0 }} / 1500</mat-hint>
           <mat-error *ngIf="f.message.errors?.required">Message is required.</mat-error>
           <mat-error *ngIf="f.message.errors?.maxlength">The message cannot exceed 500 characters.</mat-error>
         </mat-form-field>
