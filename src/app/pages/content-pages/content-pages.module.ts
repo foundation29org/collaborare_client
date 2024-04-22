@@ -10,7 +10,6 @@ import { ErrorPageComponent } from "./error/error-page.component";
 import { LoginPageComponent } from "./login/login-page.component";
 import { TermsConditionsPageComponent } from "./terms-conditions/terms-conditions-page.component";
 import { PrivacyPolicyPageComponent } from "./privacy-policy/privacy-policy.component";
-import { DataProcessingAgreementComponent } from "./data-processing-agreement/data-processing-agreement.component";
 import { SharePageComponent } from './share/share.component';
 import { SharedModule } from "app/shared/shared.module";
 
@@ -66,10 +65,9 @@ export function createTranslateLoader(http: HttpClient) {
     ErrorPageComponent,
     LoginPageComponent,
     TermsConditionsPageComponent,
-    DataProcessingAgreementComponent,
     PrivacyPolicyPageComponent,
     SharePageComponent
   ],
-  entryComponents:[DataProcessingAgreementComponent]
+  entryComponents:[PrivacyPolicyPageComponent]
 })
 export class ContentPagesModule { }

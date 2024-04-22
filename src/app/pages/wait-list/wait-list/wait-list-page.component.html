@@ -117,7 +117,7 @@
             <p class="mt-1 mb-0">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> -
               Collaborare</p>
             <a class="mt-0" href="javascript:;"
-              (click)="openPolicy(policyPanel);trackEventsService.lauchEvent('privacy-policy btn 1')">
+              (click)="openPolicy();trackEventsService.lauchEvent('privacy-policy btn 1')">
               <span>{{'registration.Privacy Policy' | translate }}</span>
             </a>
           </div>
@@ -127,104 +127,6 @@
 
     </div>
   </div>
-
-  <ng-template #policyPanel let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">{{'registration.Privacy Policy' | translate }}</h4>
-      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="px-3">
-        <div class="form-body">
-          <div class="row">
-            <div class="col-sm-12">
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Introduction</h6>
-                <p>
-                  Welcome to Collaborare! We prioritize your privacy and are dedicated to protecting your personal information. This policy details our practices regarding data collection, usage, and protection as you engage with the Collaborare platform
-                </p>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Information We Collect</h6>
-                <ul>
-                  <li>
-                    <strong>Patient contact group information:</strong> We collect your email address, patient organization and country when you register an account or interact with our services. 
-                  </li>
-                  <li>
-                    <strong>Patient health group information:</strong> We collect health information specific to your patient group in an <strong>aggregated</strong> manner (consolidated list at group level), not at an individual patient level. In any case, this information is treated with the highest confidentiality. 
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">How We Use Your Information</h6>
-                <ul>
-                  <li>To manage and maintain your user account.</li>
-                  <li>To communicate with you about platform updates and to offer support.</li>
-                  <li>To facilitate your participation in the platform.</li>
-                  <li>To comply with legal obligations and ensure regulatory compliance.</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Data Management and Storage</h6>
-                <ul>
-                  <li>Only your email, patient organization, country and the list of items associated with your organiation are stored by Collaborare.</li>
-                  <li>The data collected is stored securely in our cloud storage. </li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Sharing of Your Information</h6>
-                <ul>
-                  <li>We do not sell, trade, or otherwise transfer this information to outside parties.</li>
-                  <li>The anonymous medical information collected by Collaborare will be shared only with  Eurordis and EMA.</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Your Rights Under GDPR</h6>
-                <ul>
-                  <li><strong>Right to Access:</strong> You have the right to request copies of the data provided to us.</li>
-                  <li><strong>Right to Rectification:</strong> You may ask us to correct any inaccurate or incomplete data.</li>
-                  <li><strong>Right to Deletion:</strong> You can request the erasure of the data provided to us.</li>
-                  <li><strong>Right to Withdraw Consent:</strong> At any time, you may withdraw your consent for us to use your data.</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Consent</h6>
-                <ul>
-                  <li>By using our platform, you consent to our privacy policy.</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Changes to Our Privacy Policy</h6>
-                <ul>
-                  <li>We reserve the right to modify this policy at any time. Changes will be communicated by updating the "Last updated" date of this policy. We encourage you to periodically review this policy to stay informed.</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Data Controller</h6>
-                <p>
-                  The information provided will be processed by Fundación 29 de Febrero (F29), which is the responsible for data control. Here is the contact information for F29:
-                </p>
-                <ul>
-                  <li><strong>Email:</strong> support@foundation29.org</li>
-                  <li><strong>Address:</strong> Calle Santa Fe 1, 2 E, 28224 – Pozuelo de Alarcón (Madrid)</li>
-                  <li><strong>Identification Number:</strong> G-87894119</li>
-                </ul>
-              </div>
-              <div>
-                <h6 class="pt-2 dark text-bold-600">Contact Us</h6>
-                <p>
-                  If you have questions or suggestions about our Privacy Policy, please contact us at support@foundation29.org.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
   <ng-template #panelcontactForm let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title primary">Contact the validator</h4>
