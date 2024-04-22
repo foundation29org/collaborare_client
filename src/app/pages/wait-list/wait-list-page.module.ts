@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { WaitListPageComponent } from "./wait-list/wait-list-page.component";
+import { ValidatedConditionsPageComponent } from "./validated-conditions/validated-conditions-page.component";
 import { AboutUsPageComponent } from "./about-us/about-us-page.component";
 import { BehindPageComponent } from "./behind/behind-page.component";
 
@@ -50,6 +51,7 @@ import { SharedModule } from "app/shared/shared.module";
     ],
     declarations: [
         WaitListPageComponent,
+        ValidatedConditionsPageComponent,
         AboutUsPageComponent,
         BehindPageComponent
     ]

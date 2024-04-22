@@ -1,0 +1,125 @@
+<div class="p-2">
+  <div #section1 class="mt-4">
+    <div class="row">
+      <div class="col-md-12 mt-4 mb-2">
+        <h4 class="mb-0">Validated conditions</h4>
+        <span>Select a condition to see more details</span>
+      </div>
+    </div>
+    <div class="center-elements mt-2" *ngIf="callListOfDiseases">
+      <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+      <p>{{'generics.Please wait' | translate }}</p>
+    </div>
+    <div class="form-group mt-2" *ngIf="!callListOfDiseases">
+      <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Filter diseases by name, orphanet code, organisation, or country">
+      </div>
+      <span *ngIf="listOfFilteredDiseases.length>0" class="row">
+        <div *ngFor="let disease of listOfFilteredDiseases | filterDiseases:searchText; let i = index" class="col-md-4">
+          <div class="card">
+            <div class="p-2">
+              <h4 class="mt-2">{{disease.name}}</h4>
+              <ul class="pl-0 mb-0" *ngIf="disease.items.length >0 ">
+                <li *ngFor="let item of disease.items; let i = index" class="list-group-item" #listItem>
+                  {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
+                </li>
+              </ul>
+              <p class="mb-3">Updated on {{disease.updated | date}} </p>
+              <div class="mb-4">
+                <p class=""><strong>Who has validated the list:</strong></p>
+                <p class="" *ngIf="disease.validatorInfo.organization">
+                  <span><strong class="d-block">Organization</strong>{{disease.validatorInfo.organization}}</span>
+                </p>
+                <p class="" *ngIf="disease.validatorInfo.country">
+                  <span><strong class="d-block">Country</strong>{{disease.validatorInfo.country}}</span>
+                </p>
+                <p class="" *ngIf="disease.validatorInfo.web">
+                  <span><strong class="d-block">Website</strong><a href="{{disease.validatorInfo.web}}"
+                      target="_blank">{{disease.validatorInfo.web}}</a></span>
+                </p>
+                <p class=""><em class="fa fa-envelope mr-1 primary"> </em><a class="primary"
+                    (click)="openContactForm(panelcontactForm)">Contact the validator</a></p>
+              </div>
+            </div>
+           
+          </div>
+          
+        </div>
+      </span>
+      <span *ngIf="listOfFilteredDiseases.length==0">
+        <p>Diseases has not been validated.</p>
+      </span>
+   
+      
+    </div>
+   
+    
+   
+  </div>
+  <div>
+    <div class="flex-shrink-0 col-margin border-top" style="background: #ffffff;">
+      <div class="col-md-12 p-2 mt-2">
+        <div class="col-md-12 align-items-center text-center">
+          <div class="row align-items-end justify-content-center">
+            <a href="https://twitter.com/foundation29feb" target="_blank" type="button"
+              class="btn btn-primary btn-icon round mr-1 mb-1">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/foundation29/" target="_blank" type="button"
+              class="btn btn-primary btn-icon round mr-1 mb-1">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
+          <div class="">
+            <p class="mt-1 mb-0">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> -
+              Collaborare</p>
+            <a class="mt-0" href="javascript:;"
+              (click)="openPolicy();trackEventsService.lauchEvent('privacy-policy btn 1')">
+              <span>{{'registration.Privacy Policy' | translate }}</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <ng-template #panelcontactForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title primary">Contact the validator</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="f.email.errors?.required">Email is required.</mat-error>
+          <mat-error *ngIf="f.email.errors?.email">Please enter a valid email.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Subject</mat-label>
+          <input matInput formControlName="subject">
+          <mat-error *ngIf="f.subject.errors?.required">Subject is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-12" appearance="fill">
+          <mat-label>Message</mat-label>
+          <textarea matInput formControlName="message" rows="5" maxlength="1500"></textarea>
+          <mat-hint align="end">{{ contactForm.get('message').value?.length || 0 }} / 1500</mat-hint>
+          <mat-error *ngIf="f.message.errors?.required">Message is required.</mat-error>
+          <mat-error *ngIf="f.message.errors?.maxlength">The message cannot exceed 500 characters.</mat-error>
+        </mat-form-field>
+        <div *ngIf="!sending" class="mt-2 col-md-12 center-elements">
+          <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+        <div *ngIf="sending" class="mt-2 col-md-12 center-elements">
+          <em class="fa fa-spinner fa-spin fa-2x fa-fw primary"></em>
+        </div>
+
+      </form>
+    </div>
+  </ng-template>
