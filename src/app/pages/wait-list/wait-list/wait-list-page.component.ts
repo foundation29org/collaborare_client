@@ -9,6 +9,7 @@ import { Clipboard } from "@angular/cdk/clipboard"
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
+import { PrivacyPolicyPageComponent } from 'app/pages/content-pages/privacy-policy/privacy-policy.component';
 
 @Component({
   selector: 'app-wait-list-page',
@@ -139,11 +140,11 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.disease = { "id": "", "name": "", "items": [] };
   }
 
-  openPolicy(policyPanel) {
+  openPolicy() {
     let ngbModalOptions: NgbModalOptions = {
       windowClass: 'ModalClass-lg'// xl, lg, sm
     };
-    this.modalReference = this.modalService.open(policyPanel, ngbModalOptions);
+    this.modalReference = this.modalService.open(PrivacyPolicyPageComponent, ngbModalOptions);
   }
 
   closeModal() {
