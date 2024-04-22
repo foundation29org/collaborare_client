@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { PrivacyPolicyPageComponent } from 'app/pages/content-pages/privacy-policy/privacy-policy.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-validated-conditions-page',
@@ -35,8 +36,10 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
   haveInfo: Boolean = false;
   disease: any = { "id": "", "name": "", "items": [] };
   listOfFilteredDiseases: any = [];
+  originalListOfDiseases: any = [];
   searchText: string = '';
-  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService) {
+  id: string | null = null;
+  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private route: ActivatedRoute) {
     this.loadItemsFromDatabase();
   }
 
@@ -47,7 +50,6 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       message: ['', [Validators.required, Validators.maxLength(1500)]]
     });
   }
-
 
   scrollToSection(sectionIndex: number) {
     const sections = [this.section1, this.section2];
@@ -85,19 +87,48 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
     this.apiDx29ServerService.validatedItems()
       .subscribe((res: any) => {
         this.callListOfDiseases = false;
-        console.log(res)
         if (res.diseases) {
-          this.listOfFilteredDiseases = res.diseases;
+          this.originalListOfDiseases = res.diseases;
+          this.listOfFilteredDiseases = [...this.originalListOfDiseases];
         } else {
           this.listOfFilteredDiseases = [];
         }
+        this.route.queryParams.subscribe(params => {
+          this.id = params['id'];
+          if (this.id) {
+            this.searchText = this.id;
+            this.filterDiseases();
+          }
+        });
       }, (err) => {
         this.callListOfDiseases = false;
         this.listOfFilteredDiseases = [];
+        this.originalListOfDiseases = [];
         // Manejar errores aquí
         // ...
       });
   }
+
+  clearSearch(): void {
+    this.searchText = '';
+    this.filterDiseases(); 
+  }
+
+  filterDiseases(): void {
+    if (this.searchText) {
+      const lowerCaseSearchText = this.searchText.toLowerCase();
+      this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
+        disease.name.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.id.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.validatorInfo.organization?.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.validatorInfo.country?.toLowerCase().includes(lowerCaseSearchText)
+      );
+    } else {
+      // Si no hay searchText, muestra todas las enfermedades
+      this.listOfFilteredDiseases = [...this.originalListOfDiseases];
+    }
+  }
+
 
   selectDisease(index) {
     this.disease = this.listOfFilteredDiseases[index];

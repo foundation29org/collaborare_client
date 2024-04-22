@@ -11,6 +11,7 @@ export class FilterDiseasesPipe implements PipeTransform {
     searchText = searchText.toLowerCase();
     return diseases.filter(disease => 
       disease.name.toLowerCase().includes(searchText) ||
+      disease.id.toLowerCase().includes(searchText) ||
       disease.validatorInfo.organization?.toLowerCase().includes(searchText) ||
       disease.validatorInfo.country?.toLowerCase().includes(searchText)
     );
