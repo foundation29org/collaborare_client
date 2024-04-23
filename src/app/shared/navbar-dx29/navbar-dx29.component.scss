@@ -90,6 +90,10 @@ i{
     margin-top: 0.5rem !important;
   }
 
+  .navbar-nav > li {
+    float: initial !important;
+  }
+
 }
 @media (max-width: 604px) {
   .text-logo{
@@ -136,6 +140,3 @@ i{
   }
 
 }
-
-
-
