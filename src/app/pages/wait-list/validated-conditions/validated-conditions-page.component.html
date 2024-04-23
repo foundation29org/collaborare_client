@@ -1,8 +1,8 @@
-<div class="p-2">
+<div class="col-md-12 bg-white">
   <div #section1 class="mt-3">
-    <div class="row">
+    <div class="row col-md-12">
       <div class="col-12 col-md-8 col-lg-6 mx-auto center-elements mt-5">
-        <h4 class="mb-0">Validated conditions</h4>
+        <h4 class="mb-0 mt-3">Validated conditions</h4>
         <span *ngIf="originalListOfDiseases.length>0">{{originalListOfDiseases.length}} have been validated.</span>
         <span class="ml-1">You can filter diseases by name, orphanet code, organization, or country</span>
       </div>
@@ -12,41 +12,55 @@
       <p>{{'generics.Please wait' | translate }}</p>
     </div>
     <div class="form-group mt-2" *ngIf="!callListOfDiseases">
-      <div class="container mt-3">
+      <div class="col-md-12 mt-3">
         <div class="row">
           <div class="col-12 col-md-8 col-lg-6 mx-auto">
             <div class="input-group">
-              <input type="text" class="form-control" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
+              <input type="text" class="form-control" style="border: 2px solid #1f6b91;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
               <button *ngIf="searchText.length>3" class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Remove filter</button>
             </div>
           </div>
         </div>
       </div>
-      <span *ngIf="listOfFilteredDiseases.length>0" class="row">
-        <div *ngFor="let disease of listOfFilteredDiseases | filterDiseases:searchText; let i = index" class="col-md-4">
-          <div class="card">
-            <div class="p-2">
+      <span *ngIf="listOfFilteredDiseases.length>0" class="row mb-5">
+        <div *ngFor="let disease of listOfFilteredDiseases | filterDiseases:searchText; let i = index" class="col-md-6 col-lg-4">
+          <div class="card border round">
+            <div class="p-3">
               <h4 class="mt-2">{{disease.name}}</h4>
-              <ul class="pl-0 mb-0" *ngIf="disease.items.length >0 ">
-                <li *ngFor="let item of disease.items; let i = index" class="list-group-item" #listItem>
+              <div class="pl-2 mb-0" *ngIf="disease.items.length >0 ">
+                <p *ngFor="let item of disease.items; let i = index" class="mb-0" #listItem>
                   {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
-                </li>
-              </ul>
+                </p>
+              </div>
               <p class="mb-3">Updated on {{disease.updated | date}} </p>
-              <div class="mb-4">
-                <p class=""><strong>Who has validated the list:</strong></p>
-                <p class="" *ngIf="disease.validatorInfo.organization">
-                  <span><strong class="d-block">Organization</strong>{{disease.validatorInfo.organization}}</span>
-                </p>
-                <p class="" *ngIf="disease.validatorInfo.country">
-                  <span><strong class="d-block">Country</strong>{{disease.validatorInfo.country}}</span>
-                </p>
-                <p class="" *ngIf="disease.validatorInfo.web">
-                  <span><strong class="d-block">Website</strong><a href="{{disease.validatorInfo.web}}"
-                      target="_blank">{{disease.validatorInfo.web}}</a></span>
-                </p>
-                <p class=""><em class="fa fa-envelope mr-1 primary"> </em><a class="primary"
-                    (click)="openContactForm(panelcontactForm)">Contact the validator</a></p>
+              <div class="">
+                <p class=""><strong>Who has validated the list</strong></p>
+                <div class="row">
+                  <div class="col-6"> 
+                    <p class="" *ngIf="disease.validatorInfo.organization">
+                      <span><strong class="d-block">Organization</strong>{{disease.validatorInfo.organization}}</span>
+                    </p>
+                  </div>
+                  <div class="col-6"> 
+                    <p class="" *ngIf="disease.validatorInfo.country">
+                      <span><strong class="d-block">Country</strong>{{disease.validatorInfo.country}}</span>
+                    </p>
+                  </div>
+                  <div class="col-6"> 
+                    <p class="" *ngIf="disease.validatorInfo.web">
+                      <span><strong class="d-block">Website</strong><a href="{{disease.validatorInfo.web}}"
+                          target="_blank">{{disease.validatorInfo.web}}</a></span>
+                    </p>
+                  </div>
+                  <div class="col-6"> 
+                    <p class=""><em class="fa fa-envelope mr-1 primary"> </em><a class="primary"
+                      (click)="openContactForm(panelcontactForm, disease)">Contact the validator</a></p>
+                  </div>
+                </div>
+                
+                
+                
+                
               </div>
             </div>
            
@@ -54,9 +68,12 @@
           
         </div>
       </span>
-      <span *ngIf="listOfFilteredDiseases.length==0">
-        <p>Diseases has not been validated.</p>
-      </span>
+      <div *ngIf="listOfFilteredDiseases.length==0" class="row col-md-12 mb-5">
+        <div class="mx-auto">
+          <p>Diseases has not been validated.</p>
+        </div>
+        
+      </div>
    
       
     </div>

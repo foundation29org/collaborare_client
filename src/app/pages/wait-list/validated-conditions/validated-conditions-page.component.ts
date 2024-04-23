@@ -34,7 +34,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
 
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
-  disease: any = { "id": "", "name": "", "items": [] };
+  disease: any = { "id": "", "name": "", "items": [], "userId": "" };
   listOfFilteredDiseases: any = [];
   originalListOfDiseases: any = [];
   searchText: string = '';
@@ -81,7 +81,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
 
 
   loadItemsFromDatabase(): void {
-    this.disease = { "id": "", "name": "", "items": [] };
+    this.disease = { "id": "", "name": "", "items": [], "userId": "" };
     this.callListOfDiseases = true;
     this.listOfFilteredDiseases = [];
     this.apiDx29ServerService.validatedItems()
@@ -115,6 +115,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
   }
 
   filterDiseases(): void {
+    this.listOfFilteredDiseases = [...this.originalListOfDiseases];
     if (this.searchText) {
       const lowerCaseSearchText = this.searchText.toLowerCase();
       this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
@@ -123,9 +124,6 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
         disease.validatorInfo.organization?.toLowerCase().includes(lowerCaseSearchText) ||
         disease.validatorInfo.country?.toLowerCase().includes(lowerCaseSearchText)
       );
-    } else {
-      // Si no hay searchText, muestra todas las enfermedades
-      this.listOfFilteredDiseases = [...this.originalListOfDiseases];
     }
   }
 
@@ -154,7 +152,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
     this.nothingFoundDisease = false;
     this.loadedItems = false;
     this.haveInfo = false;
-    this.disease = { "id": "", "name": "", "items": [] };
+    this.disease = { "id": "", "name": "", "items": [], "userId": "" };
   }
 
   openPolicy() {
@@ -169,7 +167,8 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       this.modalReference.close()
     }
   }
-  openContactForm(content) {
+  openContactForm(content, disease) {
+    this.disease = disease;
     this.modalReference = this.modalService.open(content);
   }
 
@@ -182,7 +181,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       return;
     } else {
       this.sending = true;
-      this.subscription.add(this.apiDx29ServerService.sendMsgValidator(this.disease.id, this.contactForm.value)
+      this.subscription.add(this.apiDx29ServerService.sendMsgValidator(this.disease.userId, this.contactForm.value)
         .subscribe((res: any) => {
           this.sending = false;
           this.toastr.success('Message sent successfully');
