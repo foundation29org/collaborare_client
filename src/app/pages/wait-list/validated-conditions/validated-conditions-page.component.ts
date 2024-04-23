@@ -2,24 +2,23 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { Clipboard } from "@angular/cdk/clipboard"
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { PrivacyPolicyPageComponent } from 'app/pages/content-pages/privacy-policy/privacy-policy.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-wait-list-page',
-  templateUrl: './wait-list-page.component.html',
-  styleUrls: ['./wait-list-page.component.scss'],
+  selector: 'app-validated-conditions-page',
+  templateUrl: './validated-conditions-page.component.html',
+  styleUrls: ['./validated-conditions-page.component.scss'],
   providers: [ApiDx29ServerService]
 })
 
-export class WaitListPageComponent implements OnInit, OnDestroy {
+export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
   submitPressed = false;  // Añade esta línea
   sending: boolean = false;
@@ -36,14 +35,12 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
   disease: any = { "id": "", "name": "", "items": [], "userId": "" };
-  searchSubject = new Subject<string>();
   listOfFilteredDiseases: any = [];
-  
-  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private router: Router) {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(searchText => this.loadItemsFromDatabase(searchText));
+  originalListOfDiseases: any = [];
+  searchText: string = '';
+  id: string | null = null;
+  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private route: ActivatedRoute) {
+    this.loadItemsFromDatabase();
   }
 
   ngOnInit(): void {
@@ -53,7 +50,6 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       message: ['', [Validators.required, Validators.maxLength(1500)]]
     });
   }
-
 
   scrollToSection(sectionIndex: number) {
     const sections = [this.section1, this.section2];
@@ -84,45 +80,58 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   }
 
 
-  onKey2(event: any): void {
-    this.haveInfo = false;
-    // Emite el valor actual del campo de búsqueda
-    this.searchSubject.next(this.searchDiseaseField);
-  }
-
-  loadItemsFromDatabase(searchText: string): void {
-    if (!searchText) {
-      // Manejar el estado cuando no hay texto
-      return;
-    }
-    this.disease = { "id": "", "name": "", "items": [], "userId": ""};
+  loadItemsFromDatabase(): void {
+    this.disease = { "id": "", "name": "", "items": [], "userId": "" };
     this.callListOfDiseases = true;
     this.listOfFilteredDiseases = [];
-    this.apiDx29ServerService.searchItems(searchText)
+    this.apiDx29ServerService.validatedItems()
       .subscribe((res: any) => {
         this.callListOfDiseases = false;
-        console.log(res)
         if (res.diseases) {
-          this.listOfFilteredDiseases = res.diseases;
+          this.originalListOfDiseases = res.diseases;
+          this.listOfFilteredDiseases = [...this.originalListOfDiseases];
         } else {
           this.listOfFilteredDiseases = [];
         }
+        this.route.queryParams.subscribe(params => {
+          this.id = params['id'];
+          if (this.id) {
+            this.searchText = this.id;
+            this.filterDiseases();
+          }
+        });
       }, (err) => {
         this.callListOfDiseases = false;
         this.listOfFilteredDiseases = [];
+        this.originalListOfDiseases = [];
         // Manejar errores aquí
         // ...
       });
   }
 
+  clearSearch(): void {
+    this.searchText = '';
+    this.filterDiseases(); 
+  }
+
+  filterDiseases(): void {
+    this.listOfFilteredDiseases = [...this.originalListOfDiseases];
+    if (this.searchText) {
+      const lowerCaseSearchText = this.searchText.toLowerCase();
+      this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
+        disease.name.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.id.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.validatorInfo.organization?.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.validatorInfo.country?.toLowerCase().includes(lowerCaseSearchText)
+      );
+    }
+  }
+
+
   selectDisease(index) {
     this.disease = this.listOfFilteredDiseases[index];
     if (this.disease.items.length > 0) {
       this.haveInfo = true;
-      //goto page /validated, pass the disease id, in the url
-      //this.router.navigate(['/validated', this.disease.id]);  
-      this.router.navigate(['/validated'], { queryParams: { id: this.disease.id } });
-
     } else {
       this.haveInfo = false;
     }
@@ -143,7 +152,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.nothingFoundDisease = false;
     this.loadedItems = false;
     this.haveInfo = false;
-    this.disease = { "id": "", "name": "", "items": [], "userId": ""};
+    this.disease = { "id": "", "name": "", "items": [], "userId": "" };
   }
 
   openPolicy() {
@@ -158,7 +167,8 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       this.modalReference.close()
     }
   }
-  openContactForm(content) {
+  openContactForm(content, disease) {
+    this.disease = disease;
     this.modalReference = this.modalService.open(content);
   }
 

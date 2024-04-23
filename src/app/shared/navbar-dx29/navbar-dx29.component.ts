@@ -34,9 +34,13 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
   isAboutPage: boolean = false;
   isBehingPage: boolean = false;
   isDonaPage: boolean = false;
+  isValidatedConditionsPage: boolean = false;
   role: string = 'Clinical';
   subrole: string = 'null';
   _startTime: any;
+  menuPosition = 'Side';
+  isSmallScreen = false;
+  protected innerWidth: any;
   private subscription: Subscription = new Subscription();
 
   constructor(public translate: TranslateService, private layoutService: LayoutService, private configService: ConfigService, private router: Router, public trackEventsService: TrackEventsService, public insightsService: InsightsService) {
@@ -49,23 +53,31 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
           this.isHomePage = true;
           this.isAboutPage = false;
           this.isBehingPage = false;
+          this.isValidatedConditionsPage = false;
           this.role = 'Clinical';
           this.subrole = 'null';
         } else if (tempUrl.indexOf('/aboutus') != -1) {
           this.isHomePage = false;
           this.isAboutPage = true;
           this.isBehingPage = false;
+          this.isValidatedConditionsPage = false;
         } else if (tempUrl.indexOf('/behind') != -1) {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = true;
+        } else if (tempUrl.indexOf('/validated') != -1) {
+          this.isHomePage = false;
+          this.isAboutPage = false;
+          this.isBehingPage = false;
+          this.isValidatedConditionsPage = true;
         } else {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = true;
+          this.isValidatedConditionsPage = false;
         }
     });
-
+    this.innerWidth = window.innerWidth;
     this.layoutSub = layoutService.toggleSidebar$.subscribe(
       isShow => {
         this.hideSidebar = !isShow;
@@ -76,6 +88,12 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
+    if (this.innerWidth < 1200) {
+      this.isSmallScreen = true;
+    }
+    else {
+      this.isSmallScreen = false;
+    }
   }
 
   ngAfterViewInit() {
@@ -122,6 +140,9 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
 
   goToLogin(){
     this.router.navigate(['/login']);
+  }
+  goHome(){
+    this.router.navigate(['/']);
   }
 
 }

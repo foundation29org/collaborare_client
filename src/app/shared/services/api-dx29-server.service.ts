@@ -34,6 +34,19 @@ export class ApiDx29ServerService {
       );
     }
 
+    validatedItems(){
+      return this.http.get(environment.api+'/api/validateddiseases').pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
+
     selectDisease(orphacode){
       return this.http.get(environment.api+'/api/selectdisease/'+orphacode).pipe(
         map((res: any) => {

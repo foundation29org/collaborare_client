@@ -27,6 +27,7 @@ import { NavbarPagesComponent } from "./navbar-pages/navbar-pages.component";
 import { CustomizerComponent } from './customizer/customizer.component';
 import { NotificationSidebarComponent } from './notification-sidebar/notification-sidebar.component';
 import { SafePipe } from 'app/shared/services/safe.pipe';
+import { FilterDiseasesPipe } from 'app/shared/pipes/listOfFilteredDiseases.pipe';
 
 //DIRECTIVES
 import { ToggleFullscreenDirective } from "./directives/toggle-fullscreen.directive";
@@ -58,6 +59,7 @@ import { TopMenuAnchorToggleDirective } from './directives/topmenu-anchor-toggle
         NgbModule,
         TranslateModule,
         SafePipe,
+        FilterDiseasesPipe,
         FirstCharacterDotPipe,
         FirstCharacterHyphenPipe
     ],
@@ -95,6 +97,7 @@ import { TopMenuAnchorToggleDirective } from './directives/topmenu-anchor-toggle
         TopMenuAnchorToggleDirective,
         TopMenuDirective,
         SafePipe,
+        FilterDiseasesPipe,
         FirstCharacterDotPipe,
         FirstCharacterHyphenPipe
     ]
