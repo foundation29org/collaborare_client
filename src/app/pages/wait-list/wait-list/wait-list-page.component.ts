@@ -119,9 +119,8 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.disease = this.listOfFilteredDiseases[index];
     if (this.disease.items.length > 0) {
       this.haveInfo = true;
-      //goto page /validated, pass the disease id, in the url
-      //this.router.navigate(['/validated', this.disease.id]);  
-      this.router.navigate(['/validated'], { queryParams: { id: this.disease.id } });
+      //this.router.navigate(['/conditions', this.disease.id]);  
+      this.router.navigate(['/conditions'], { queryParams: { id: this.disease.id } });
 
     } else {
       this.haveInfo = false;

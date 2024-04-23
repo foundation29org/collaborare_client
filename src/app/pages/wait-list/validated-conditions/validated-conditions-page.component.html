@@ -17,7 +17,7 @@
           <div class="col-12 col-md-8 col-lg-6 mx-auto">
             <div class="input-group">
               <input type="text" class="form-control" style="border: 2px solid #1f6b91;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
-              <button *ngIf="searchText.length>3" class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Remove filter</button>
+              <button *ngIf="searchText.length>0" class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Remove filter</button>
             </div>
           </div>
         </div>
@@ -68,9 +68,14 @@
           
         </div>
       </span>
-      <div *ngIf="listOfFilteredDiseases.length==0" class="row col-md-12 mb-5">
-        <div class="mx-auto">
-          <p>Diseases has not been validated.</p>
+      <div *ngIf="listOfFilteredDiseases.length==0" class="col-md-12 mb-5">
+        <div class="center-elements">
+          <span>
+            <p>The disease has not been validated.</p>
+            <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+            <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
+                      (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+          </span>
         </div>
         
       </div>

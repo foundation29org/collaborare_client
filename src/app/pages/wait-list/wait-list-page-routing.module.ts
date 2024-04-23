@@ -18,7 +18,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'validated',
+        path: 'conditions',
         component: ValidatedConditionsPageComponent,
         data: {
           title: 'Validated conditions'
