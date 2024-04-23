@@ -40,6 +40,7 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
   _startTime: any;
   menuPosition = 'Side';
   isSmallScreen = false;
+  isMenuExpanded = false;
   protected innerWidth: any;
   private subscription: Subscription = new Subscription();
 
@@ -143,6 +144,13 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
   }
   goHome(){
     this.router.navigate(['/']);
+  }
+
+  toggleMenu() {
+    this.isMenuExpanded = !this.isMenuExpanded;
+  }
+  closeMenu() {
+    this.isMenuExpanded = false;
   }
 
 }
