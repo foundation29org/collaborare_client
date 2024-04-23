@@ -65,7 +65,7 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = true;
-        } else if (tempUrl.indexOf('/validated') != -1) {
+        } else if (tempUrl.indexOf('/conditions') != -1) {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = false;
