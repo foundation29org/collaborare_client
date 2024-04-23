@@ -1,37 +1,37 @@
 <!-- Navbar (Header) Starts -->
-<nav class="navbar navbar-expand-md navbar-light header-navbar"
+<nav class="navbar navbar-expand-lg navbar-light header-navbar"
   style="margin-left: 0px; width: 100% !important; background-color: #fff; box-shadow: 0 6px 0 0 rgba(0,0,0,.01),0 15px 32px 0 rgba(0,0,0,.06); min-height: 4.3rem;">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
   <span class="navbar-toggler-icon"></span>
   </button>
-    <div class="d-none d-md-block"><span class="navbar-header-logos">
+    <div class="d-none d-lg-block"><span class="navbar-header-logos">
         <img src="assets/img/logo-lg-white.png" (click)="goHome()" class="logo-img-big pointer" style="cursor: pointer;"
           tabindex="0" alt="logo dxgpt" width="185px" height="46px">
       </span>
     </div>
     <div class="d-block">
-      <img src="assets/img/logo-lg-white.png" (click)="goHome()" class="mt-1 d-block d-md-none logo-img-big pointer" style="cursor: pointer;"
+      <img src="assets/img/logo-lg-white.png" (click)="goHome()" class="mt-1 d-block d-lg-none logo-img-big pointer" style="cursor: pointer;"
           tabindex="0" alt="logo dxgpt" width="138px" height="34px">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div [class.collapse]="!isMenuExpanded" [class.show]="isMenuExpanded" class="navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav m-r-0">
-          <li class="nav-item mr-2">
+          <li class="nav-item mr-2" (click)="closeMenu()">
             <a class="nav-link" [ngClass]="(!isHomePage)?'black':'black text-bold-700'" routerLink="/.">
               <span>Home</span>
             </a>
           </li>
-          <li class="nav-item mr-2">
+          <li class="nav-item mr-2" (click)="closeMenu()">
             <a class="nav-link" [ngClass]="(!isValidatedConditionsPage)?'black':'black text-bold-700'" routerLink="/conditions">
               <span>Conditions</span>
             </a>
           </li>
-          <li class="nav-item mr-2">
+          <li class="nav-item mr-2" (click)="closeMenu()">
             <a class="nav-link" [ngClass]="(!isAboutPage)?'black':'black text-bold-700'" routerLink="/aboutus">
               <span>About collaborare</span>
             </a>
           </li>
-          <li class="nav-item mr-2">
+          <li class="nav-item mr-2" (click)="closeMenu()">
             <a class="nav-link" [ngClass]="(!isBehingPage)?'black':'black text-bold-700'" routerLink="/behind">
               <span>Who is behind?</span>
             </a>
