@@ -1,5 +1,11 @@
 [
 	{
+		"name": "Europe",
+		"code": "EU",
+		"continent": "Europe",
+		"filename": "Europe"
+	},
+	{
 		"name": "Afghanistan",
 		"code": "AF",
 		"continent": "Asia",
