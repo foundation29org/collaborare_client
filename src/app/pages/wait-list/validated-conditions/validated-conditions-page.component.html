@@ -24,10 +24,10 @@
       </div>
       <span *ngIf="listOfFilteredDiseases.length>0" class="row mb-5">
         <div *ngFor="let disease of listOfFilteredDiseases | filterDiseases:searchText; let i = index" class="col-md-6 col-lg-4">
-          <div class="card border round">
+          <div class="card border round" *ngIf="disease.items.length >0 ">
             <div class="p-3">
               <h4 class="mt-2">{{disease.name}}</h4>
-              <div class="pl-2 mb-0" *ngIf="disease.items.length >0 ">
+              <div class="pl-2 mb-0">
                 <p *ngFor="let item of disease.items; let i = index" class="mb-0" #listItem>
                   {{ i + 1 }}. <span class="item-content">{{ item.name }}</span>
                 </p>
