@@ -25,7 +25,7 @@ export class ProfileComponent {
     organization: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     contactEmail: new FormControl('', [Validators.required, Validators.email]),
-    web: new FormControl('', [Validators.pattern('https?://.+')]),
+    web: new FormControl('', [Validators.pattern(/^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/)]),
     acceptTerms: new FormControl(false, [Validators.requiredTrue])
   });
 

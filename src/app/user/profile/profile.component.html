@@ -48,7 +48,7 @@
                 <mat-form-field class="col-md-12" appearance="fill">
                     <mat-label>Website</mat-label>
                     <input matInput formControlName="web">
-                    <mat-error *ngIf="profileForm.get('web')?.errors?.['pattern']">Please enter a valid URL.</mat-error>
+                    <mat-error *ngIf="profileForm.get('web')?.errors?.['pattern']">Please enter a valid URL, including the protocol (http:// or https://) Ex: https://collaborare.app</mat-error>
                   </mat-form-field>
 
                   <div class="terms" class="mb-3">
