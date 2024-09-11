@@ -99,6 +99,19 @@ export class ApiDx29ServerService {
         })
       );
     }
+    
+    previewDisease(info){
+      return this.http.post(environment.api+'/api/previewDisease/', info).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
 
     deleteDisease(_id, info){
       return this.http.post(environment.api+'/api/deletedisease/'+_id, info).pipe(

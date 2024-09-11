@@ -36,8 +36,16 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   loadedItems: Boolean = false;
   haveInfo: Boolean = false;
   disease: any = { "id": "", "name": "", "items": [], "userId": "" };
+  previewdisease: any = { "id": "", "name": "", "items": [], "userId": "" };
   searchSubject = new Subject<string>();
   listOfFilteredDiseases: any = [];
+  showButtonCreateList: boolean = false;
+  callListOfDiseases2: boolean = false;
+  listOfFilteredDiseases2: any = [];
+  actualInfoOneDisease: any = {};
+  selectedDiseaseIndex: number = -1;
+  gettingItems: boolean = false;
+  fullNameInputValue: string = '';
   
   constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private router: Router) {
     this.searchSubject.pipe(
@@ -91,6 +99,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   }
 
   loadItemsFromDatabase(searchText: string): void {
+    this.showButtonCreateList = false;
     if (!searchText) {
       // Manejar el estado cuando no hay texto
       return;
@@ -105,6 +114,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
         if (res.diseases) {
           this.listOfFilteredDiseases = res.diseases;
         } else {
+          this.showButtonCreateList = true;
           this.listOfFilteredDiseases = [];
         }
       }, (err) => {
@@ -113,6 +123,94 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
         // Manejar errores aquí
         // ...
       });
+  }
+
+  generateTheList(panelPreviewList) {
+    
+    if (this.modalReference != undefined) {
+      this.modalReference.close()
+    }
+    
+    setTimeout(() => {
+      this.searchDiseases(this.searchDiseaseField, panelPreviewList);
+    }, 200);
+    
+  }
+
+  searchDiseases(searchText: string, panelPreviewList) {
+    this.callListOfDiseases2 = true;
+        var tempModelTimp = searchText.trim();
+        var info = {
+            "text": tempModelTimp,
+            "lang": 'en'
+        }
+        this.subscription.add(this.apiDx29ServerService.searchDiseases(info)
+            .subscribe((res: any) => {
+              console.log(res)
+                this.callListOfDiseases2 = false;
+                if(res==null){
+                    this.nothingFoundDisease = true;
+                    this.listOfFilteredDiseases2 = [];
+                }else{
+                    this.nothingFoundDisease = false;
+                    this.listOfFilteredDiseases2 = res;
+                    if(this.listOfFilteredDiseases2.length == 0){
+                        this.nothingFoundDisease = true;
+                    }
+                }
+                this.previewdisease = {};
+                let ngbModalOptions: NgbModalOptions = {
+                  windowClass: 'ModalClass-lg'// xl, lg, sm
+                };
+                this.modalReference = this.modalService.open(panelPreviewList, ngbModalOptions);
+                this.fullNameInputValue = searchText;
+                
+            }, (err) => {
+                console.log(err);
+                this.nothingFoundDisease = false;
+                this.callListOfDiseases2 = false;
+            }));
+  }
+
+  showMoreInfoDiagnosePopup(index){
+    this.gettingItems = true;
+    if(index)
+    {
+      this.selectedDiseaseIndex = index;
+      this.actualInfoOneDisease = this.listOfFilteredDiseases2[this.selectedDiseaseIndex];
+    }else{
+      this.selectedDiseaseIndex = -1;
+      this.actualInfoOneDisease = {id: '', name: this.fullNameInputValue};
+    }
+
+  var info = {
+    "id": this.actualInfoOneDisease.id,
+    "name": this.actualInfoOneDisease.name
+  }
+  this.subscription.add(this.apiDx29ServerService.previewDisease( info)
+    .subscribe((res: any) => {
+      this.gettingItems = false;
+      console.log(res)
+      if(res.disease.items.length > 0){
+        this.searchDiseaseField = this.actualInfoOneDisease.name;
+        this.previewdisease = res.disease;
+        this.listOfFilteredDiseases2 = [];
+      }else{
+        this.toastr.error('No information found');
+      }
+     
+      
+    }, (err) => {
+      console.log(err);
+      this.gettingItems = false;
+    }));
+  }
+
+  goToLogin() {
+    if (this.modalReference != undefined) {
+      this.modalReference.close()
+    }
+    this.router.navigate(['/login']);
   }
 
   selectDisease(index) {
