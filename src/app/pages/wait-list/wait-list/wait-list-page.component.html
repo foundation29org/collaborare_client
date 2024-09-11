@@ -50,6 +50,9 @@
                     <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
                     <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                               (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                              <a class="btn btn-dark mb-0 btn-navbar ml-2" *ngIf="showButtonCreateList" (click)="trackEventsService.lauchEvent('ButtonCreateList');generateTheList(panelPreviewList)">
+                                Preview the list
+                              </a>
                   </span>
                 </div>
               </div>
@@ -164,5 +167,97 @@
         </div>
         
       </form>
+    </div>
+  </ng-template>
+  <ng-template #panelPreviewList let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title primary">Preview list of key elements of {{searchDiseaseField}} </h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="center-elements mt-2" *ngIf="callListOfDiseases || gettingItems">
+        <em class="mt-2 fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+        <p>{{'generics.Please wait' | translate }}</p>
+      </div>
+      <div class="form-group mt-2" *ngIf="!callListOfDiseases && !gettingItems">
+        <span *ngIf="listOfFilteredDiseases2.length>0">
+          <h5 class="modal-title primary">Choose a condition:</h5>
+          <div class="table-cont" style="max-height: 400px; overflow-y: auto;">
+            <table class="table mb-0 border" aria-labelledby="rare disease"
+              style="background-color: #ffffff !important;">
+              <tbody class="tableList">
+                <tr *ngFor="let disease of listOfFilteredDiseases2 ; let i = index" class="d-flex">
+                  <td class="col-md-12 dropdown-item" id="{{disease.id}}"
+                    (click)="showMoreInfoDiagnosePopup(i);" style="cursor: pointer;"
+                    title="{{'generics.More information' | translate }} ({{disease.id}})">
+                    <span>{{disease.name}}</span>
+                    <!--<span *ngIf="disease.source!='synonyms'">{{disease.name}}</span>
+                        <span *ngIf="disease.source=='synonyms'"> {{disease.itemCompared}} ({{'generics.Synonyms' | translate}}: {{disease.name}})</span>-->
+                    <span *ngIf="disease.synonyms">
+                      <span *ngIf="disease.synonyms.length>0">
+                        <span *ngFor="let synonym of disease.synonyms">
+                          <span class="d-block font-small-3" style="font-weight: 200;"> - {{synonym}}</span>
+                        </span>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </span>
+        <div class="mt-3" *ngIf="!previewdisease.items">
+          <h5 class="modal-title primary">If it is not on the list, write the full name and press the generate items button.</h5>
+            <!-- Input para ingresar el nombre completo -->
+        <div class="form-group mt-2">
+          <label for="fullNameInput">Full name of the disease</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="fullNameInput" 
+            placeholder="Enter full name of disease"
+            [(ngModel)]="fullNameInputValue" 
+          />
+        </div>
+        
+        <!-- Botón para generar los ítems -->
+        <div class="mt-2">
+          <button 
+            class="btn btn-primary" [disabled]="fullNameInputValue == ''"
+            (click)="showMoreInfoDiagnosePopup()">
+            Generate items
+          </button>
+        </div>
+        </div>
+        <span *ngIf="previewdisease.items">
+          <div class="list-group">
+            <div *ngFor="let item of previewdisease.items; let i = index" class="list-group-item">
+              <div class="custom-placeholder"></div>
+              <div class="row align-items-center">
+                <div class="col-sm-9">
+                  {{ i + 1 }}. 
+                  <span class="item-content text-wrap">{{ item.name }}</span>
+                 
+              </div>
+              </div>
+            </div>
+          </div>
+        </span>
+        
+        <span *ngIf="nothingFoundDisease">
+          <span *ngIf="(searchDiseaseField).trim().length>3">
+            <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>
+          </span>
+        </span>
+        <div class="mt-3 center-elements" *ngIf="previewdisease.items">
+          <p>The disease has not been validated.</p>
+          <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+          <a class="btn btn-dark mb-0 btn-navbar"
+                    (click)="trackEventsService.lauchEvent('Login btn 3');goToLogin()">{{'login.Login' | translate }}</a>
+        </div>
+       
+      </div>
     </div>
   </ng-template>
