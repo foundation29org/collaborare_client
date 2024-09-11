@@ -99,7 +99,7 @@
                       </div>
                       <div class="form-group mt-2" *ngIf="!callListOfDiseases && !gettingItems">
                         <span *ngIf="listOfFilteredDiseases.length>0">
-                          <div class="table-cont">
+                          <div class="table-cont" style="max-height: 400px; overflow-y: auto;">
                             <table class="table mb-0 border" aria-labelledby="rare disease"
                               style="background-color: #ffffff !important;">
                               <tbody class="tableList">
@@ -123,6 +123,18 @@
                             </table>
                           </div>
                         </span>
+                        <div class="mt-3" *ngIf="!callListOfDiseases && !gettingItems && searchDiseaseField.length>3">
+                          <h5 class="modal-title primary">If it is not on the list, press the generate items button.</h5>
+                        
+                        <!-- Botón para generar los ítems -->
+                        <div class="mt-2">
+                          <button 
+                            class="btn btn-primary" [disabled]="searchDiseaseField == ''"
+                            (click)="showMoreInfoDiagnosePopup()">
+                            Generate items
+                          </button>
+                        </div>
+                        </div>
                         <span *ngIf="nothingFoundDisease">
                           <span *ngIf="(searchDiseaseField).trim().length>3">
                             <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>

@@ -21,6 +21,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { SharedModule } from "app/shared/shared.module";
+import { MyFilterPipe2 } from 'app/shared/services/my-filter2.pipe';
 
 
 
@@ -53,7 +54,8 @@ import { SharedModule } from "app/shared/shared.module";
         WaitListPageComponent,
         ValidatedConditionsPageComponent,
         AboutUsPageComponent,
-        BehindPageComponent
+        BehindPageComponent,
+        MyFilterPipe2
     ]
 })
 export class WaitListPageModule { }
