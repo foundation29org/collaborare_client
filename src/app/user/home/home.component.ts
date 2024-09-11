@@ -252,8 +252,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 showMoreInfoDiagnosePopup(index){
   this.loadingOneDisease = true;
-  this.selectedDiseaseIndex = index;
-  this.actualInfoOneDisease = this.listOfFilteredDiseases[this.selectedDiseaseIndex];
+  if(index){
+    this.selectedDiseaseIndex = index;
+    this.actualInfoOneDisease = this.listOfFilteredDiseases[this.selectedDiseaseIndex];
+  }else{
+    this.selectedDiseaseIndex = -1;
+    this.actualInfoOneDisease = {id: null, name: this.searchDiseaseField};
+  }
+  
   console.log(this.actualInfoOneDisease)
   Swal.fire({
       title: this.translate.instant("generics.Are you sure?"),
@@ -268,8 +274,10 @@ showMoreInfoDiagnosePopup(index){
       allowOutsideClick: false
   }).then((result) => {
       if (result.value) {
-        this.cheackDisease(this.actualInfoOneDisease.id);
-          this.loadingOneDisease = false;
+        this.gettingItems = true;
+        this.saveItems();
+        //this.cheackDisease(this.actualInfoOneDisease.id);
+        this.loadingOneDisease = false;
 
       }
       this.clearsearchDiseaseField();
