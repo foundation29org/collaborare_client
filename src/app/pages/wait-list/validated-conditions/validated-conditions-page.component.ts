@@ -121,6 +121,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
         disease.name.toLowerCase().includes(lowerCaseSearchText) ||
         disease.id?.toLowerCase().includes(lowerCaseSearchText) ||
+        (Array.isArray(disease.synonyms) ? disease.synonyms.join(' ').toLowerCase().includes(lowerCaseSearchText) : false) ||
         disease.validatorInfo.organization?.toLowerCase().includes(lowerCaseSearchText) ||
         disease.validatorInfo.country?.toLowerCase().includes(lowerCaseSearchText)
       );
