@@ -318,7 +318,8 @@ cheackDisease(id) {
 saveItems() {
   var info = {
     "id": this.actualInfoOneDisease.id,
-    "name": this.actualInfoOneDisease.name
+    "name": this.actualInfoOneDisease.name,
+    "synonyms": this.actualInfoOneDisease.synonyms
   }
   this.subscription.add(this.apiDx29ServerService.saveItems(this.authService.getIdUser(), info)
     .subscribe((res: any) => {
