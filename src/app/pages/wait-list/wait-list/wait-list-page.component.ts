@@ -96,6 +96,9 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.haveInfo = false;
     // Emite el valor actual del campo de búsqueda
     this.searchSubject.next(this.searchDiseaseField);
+
+    document.getElementById('searchposition').scrollIntoView({ behavior: 'smooth' });
+    //document.getElementById('searchposition').scrollIntoView(true);
   }
 
   loadItemsFromDatabase(searchText: string): void {
