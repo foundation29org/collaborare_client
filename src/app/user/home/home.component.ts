@@ -252,7 +252,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 showMoreInfoDiagnosePopup(index){
   this.loadingOneDisease = true;
-  if(index){
+  if(index !== null && index !== undefined){
     this.selectedDiseaseIndex = index;
     this.actualInfoOneDisease = this.listOfFilteredDiseases[this.selectedDiseaseIndex];
   }else{
