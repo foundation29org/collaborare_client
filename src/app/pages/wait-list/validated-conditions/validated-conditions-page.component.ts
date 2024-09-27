@@ -120,7 +120,7 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       const lowerCaseSearchText = this.searchText.toLowerCase();
       this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
         disease.name.toLowerCase().includes(lowerCaseSearchText) ||
-        disease.id.toLowerCase().includes(lowerCaseSearchText) ||
+        disease.id?.toLowerCase().includes(lowerCaseSearchText) ||
         disease.validatorInfo.organization?.toLowerCase().includes(lowerCaseSearchText) ||
         disease.validatorInfo.country?.toLowerCase().includes(lowerCaseSearchText)
       );
