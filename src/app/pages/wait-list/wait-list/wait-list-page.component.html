@@ -4,11 +4,13 @@
       <div class="col-md-6" [ngClass]="(!haveInfo)?'col-custom':''">
         <img src="assets/img/header.webp" class="img-fluid round" alt="hero">
       </div>
-      <div class="col-sm-12 col-md-6 flex-column" [ngClass]="(!haveInfo)?'col-custom':''" >
+      <div class="col-sm-12 col-md-6 flex-column mb-4" [ngClass]="(!haveInfo)?'col-custom':''" >
         <div class="box-text">
           <div class="title-desc">
-            <h4>Connecting communities to uncover keys elements in rare diseases</h4>
-            <p>Welcome to Collaborare, an initiative to enhance patient centered rare disease research and drug development through community collaboration. Here, patients, clinicians, sponsors, healthcare experts, and researchers unite are able to identify key elements validated by patients for each rare disease, driving towards deeper understanding and innovative solutions.</p>
+            <h4>Understanding what the patient really cares about</h4>
+            <p>Welcome to Collaborare, an initiative to enhance patient centered rare disease research and drug development through community collaboration. With this tool, patients can indicate the health outcomes that are most important to them. This information is very important for drug developers, researchers and regulatory agencies.</p>
+            <p>To make this process easy Collaborare uses an AI that generates an initial list of these health outcomes. The patient only has to validate this list, change the order or add or modify items. It is a simple process that thanks to the AI takes a couple of minutes.</p>
+            <p>This project is an initiative of the EMA and Eurordis and is a pilot test to capture feedback directly from patients.</p>
           </div>
           <div class="row mb-4">
             <div class="col-md-6">
@@ -21,15 +23,15 @@
                   <img src="assets/img/logos/EURORDIS.webp" alt="EURORDIS" class="img-fluid">
                 </a>
               </div>
-              
-        </div>
-            <div class="row align-items-end justify-content-center">
-              <h4 class="col-md-12 mt-4 mb-2">Find your condition</h4>
+          </div>
+          <a id="searchposition"></a>
+          <div class="row mb-4 col-md-12" style="position: absolute;">
+            <h4 class="col-md-12 mt-4 mb-2 p-0">Search</h4>
               <div class="col-md-12 p-0" #section2>
                 <i class="fa fa-search mr-1 primary fa-1_7x align-middle"></i>
                 <input type="text" class="form-control d-inline border-custom" style="border-radius: 25px;
                 height: 45px;width: 80%;max-width: 500px;" [(ngModel)]="searchDiseaseField"
-                  (keyup)="onKey2($event)" placeholder="Type the name or the orphacode number"
+                  (keyup)="onKey2($event)" placeholder="Type the name of the condition or the orphacode number"
                   >
                   <span *ngIf="searchDiseaseField.length>0" class="pointer" (click)="clearsearchDiseaseField();"
                     style="position: relative;left: -44px;"><i class="fa fa-times ml-1"
@@ -59,8 +61,8 @@
                     </div>
                   </span>
                   <span *ngIf="listOfFilteredDiseases.length==0 && searchDiseaseField.length>3 && disease.name ==''">
-                    <p>The disease has not been validated.</p>
-                    <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+                    <p>The condition has not been validated.</p>
+                    <p>If you are an expert in the condition you are looking for, you can log in and curate the information to make it publicly available.</p>
                     <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                               (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
                               <a class="btn btn-dark mb-0 btn-navbar ml-2" *ngIf="showButtonCreateList" (click)="trackEventsService.lauchEvent('ButtonCreateList');generateTheList(panelPreviewList)">
@@ -116,7 +118,7 @@
     </div>
   </div>
   <div>
-    <div class="flex-shrink-0 col-margin border-top" style="background: #ffffff;">
+    <div class="flex-shrink-0 col-margin border-top mt-3" style="background: #ffffff;">
       <div class="col-md-12 p-2 mt-2">
         <div class="col-md-12 align-items-center text-center">
           <div class="row align-items-end justify-content-center">
