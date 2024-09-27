@@ -174,7 +174,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
 
   showMoreInfoDiagnosePopup(index){
     this.gettingItems = true;
-    if(index)
+    if(index !== null && index !== undefined)
     {
       this.selectedDiseaseIndex = index;
       this.actualInfoOneDisease = this.listOfFilteredDiseases2[this.selectedDiseaseIndex];
@@ -182,7 +182,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       this.selectedDiseaseIndex = -1;
       this.actualInfoOneDisease = {id: '', name: this.fullNameInputValue};
     }
-
+    console.log(this.actualInfoOneDisease)
   var info = {
     "id": this.actualInfoOneDisease.id,
     "name": this.actualInfoOneDisease.name
