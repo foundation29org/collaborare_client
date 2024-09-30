@@ -5,7 +5,7 @@ import { WaitListPageComponent } from "./wait-list/wait-list-page.component";
 import { ValidatedConditionsPageComponent } from "./validated-conditions/validated-conditions-page.component";
 import { AboutUsPageComponent } from "./about-us/about-us-page.component";
 import { BehindPageComponent } from "./behind/behind-page.component";
-
+import { HowItWorksPageComponent } from "./how-it-works/how-it-works-page.component";
 const routes: Routes = [
   {
     path: '',
@@ -36,6 +36,13 @@ const routes: Routes = [
         component: BehindPageComponent,
         data: {
           title: 'Behind collaborare'
+        }
+      },
+      {
+        path: 'how-it-works',
+        component: HowItWorksPageComponent,
+        data: {
+          title: 'How it works'
         }
       }
     ]
