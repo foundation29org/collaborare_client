@@ -70,7 +70,7 @@ html body.layout-dark:not(.layout-transparent) .card {
 }
 
 a {
-  color: #1f6b91;
+  color: #074576;
 }
 
 .close {
@@ -78,7 +78,7 @@ a {
 }
 
 input{
-  accent-color: #1f6b91 !important;
+  accent-color: #074576 !important;
 }
 
 .gradient-red-ocean {
@@ -400,10 +400,10 @@ a:hover, a:focus {
 }
 
 .textExtractedNcr > a > b{
-  background-color: #1f6b91;
+  background-color: #074576;
 }
 .textExtractedNcr >  b{
-  background-color: #1f6b91;
+  background-color: #074576;
 }
 
 .bold {
@@ -416,8 +416,8 @@ a:hover, a:focus {
 
 mark{
   text-decoration: underline;
-  -webkit-text-decoration-color: #1f6b91; /* Safari */  
-  text-decoration-color: #1f6b91;
+  -webkit-text-decoration-color: #074576; /* Safari */  
+  text-decoration-color: #074576;
   background-color: #FFF;
   text-decoration-thickness: 3px;
 }

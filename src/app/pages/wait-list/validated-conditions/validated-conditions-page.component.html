@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-12 col-md-8 col-lg-6 mx-auto">
             <div class="input-group">
-              <input type="text" class="form-control" style="border: 2px solid #1f6b91;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
+              <input type="text" class="form-control" style="border: 2px solid #074576;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
               <button *ngIf="searchText.length>0" class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Remove filter</button>
             </div>
           </div>
