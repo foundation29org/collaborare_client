@@ -14,7 +14,7 @@ import { WaitListPageComponent } from "./wait-list/wait-list-page.component";
 import { ValidatedConditionsPageComponent } from "./validated-conditions/validated-conditions-page.component";
 import { AboutUsPageComponent } from "./about-us/about-us-page.component";
 import { BehindPageComponent } from "./behind/behind-page.component";
-
+import { HowItWorksPageComponent } from "./how-it-works/how-it-works-page.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
@@ -55,6 +55,7 @@ import { MyFilterPipe2 } from 'app/shared/services/my-filter2.pipe';
         ValidatedConditionsPageComponent,
         AboutUsPageComponent,
         BehindPageComponent,
+        HowItWorksPageComponent,
         MyFilterPipe2
     ]
 })

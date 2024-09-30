@@ -35,6 +35,7 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
   isBehingPage: boolean = false;
   isDonaPage: boolean = false;
   isValidatedConditionsPage: boolean = false;
+  isHowIsWorksPage: boolean = false;
   role: string = 'Clinical';
   subrole: string = 'null';
   _startTime: any;
@@ -55,6 +56,7 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
           this.isAboutPage = false;
           this.isBehingPage = false;
           this.isValidatedConditionsPage = false;
+          this.isHowIsWorksPage = false;
           this.role = 'Clinical';
           this.subrole = 'null';
         } else if (tempUrl.indexOf('/aboutus') != -1) {
@@ -62,20 +64,30 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
           this.isAboutPage = true;
           this.isBehingPage = false;
           this.isValidatedConditionsPage = false;
+          this.isHowIsWorksPage = false;
         } else if (tempUrl.indexOf('/behind') != -1) {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = true;
+          this.isHowIsWorksPage = false;
         } else if (tempUrl.indexOf('/conditions') != -1) {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = false;
           this.isValidatedConditionsPage = true;
-        } else {
+          this.isHowIsWorksPage = false;
+        } else if (tempUrl.indexOf('/how-it-works') != -1) {
+          this.isHomePage = false;
+          this.isAboutPage = false;
+          this.isBehingPage = false;
+          this.isValidatedConditionsPage = false;
+          this.isHowIsWorksPage = true;
+        }else {
           this.isHomePage = false;
           this.isAboutPage = false;
           this.isBehingPage = true;
           this.isValidatedConditionsPage = false;
+          this.isHowIsWorksPage = false;
         }
     });
     this.innerWidth = window.innerWidth;

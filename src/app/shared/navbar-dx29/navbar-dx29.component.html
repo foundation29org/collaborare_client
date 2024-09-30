@@ -36,6 +36,12 @@
               <span>Who is behind?</span>
             </a>
           </li>
+          <!-- How It Works -->
+          <li class="nav-item mr-2" (click)="closeMenu()">
+            <a class="nav-link" [ngClass]="(!isHowIsWorksPage)?'black':'black text-bold-700'" routerLink="/how-it-works">
+              <span>How It Works</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
