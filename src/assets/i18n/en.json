@@ -14,7 +14,7 @@
     "The access link has expired": "The access link has expired",
     "mesaggeexpired": "Sorry, the link to access your account has expired for security reasons. Please re-enter your email.",
     "login link": "We have sent a login link to your email address.",
-    "p1": "Open your inbox and look for an email from Collaborare.",
+    "p1": "Open your inbox and look for an email from CollaboRARE.",
     "p2": "Click the link within the email to complete the login process. <strong>Please note that this link is valid for 5 minutes only.</strong>",
     "p3": "If you don't see the email, check your spam or junk folder. If you still can't find it or the link has expired, please login again.",
     "The token is invalid": "The token is invalid or has expired.",
@@ -75,8 +75,8 @@
     "step5": "Assignment of data",
     "step1-1": "In accordance with current regulations, the interested party is informed that the information provided will be processed by Fundación 29 de Febrero (hereinafter, 'F29'), whose contact information is as follows",
     "step1-2": "Registered office",
-    "step2-1": "When users provide personal data through the forms on Collaborare, their personal data will be processed for the following purposes",
-    "step2-2": "When users provide personal data through the user account creation form, the purpose is to manage the registration and administration of the user account registered in the application. For this, your personal data will be processed until you inform us of your wish to cancel your status as a registered user of Collaborare.",
+    "step2-1": "When users provide personal data through the forms on CollaboRARE, their personal data will be processed for the following purposes",
+    "step2-2": "When users provide personal data through the user account creation form, the purpose is to manage the registration and administration of the user account registered in the application. For this, your personal data will be processed until you inform us of your wish to cancel your status as a registered user of CollaboRARE.",
     "step2-3": "Unless you indicate your will against, the legal preservation terms of the personal data indicated above will apply, so it is your responsibility to keep them updated, since they will be used to make communications about the additions, deletions or modifications of accounts registered.",
     "step3-1": "Your data will be treated on the basis of the execution of the contract in the cases of user registration: without the processing of these data we could not carry out the aforementioned services.",
     "step4-1": "The interested party has the right to",
@@ -106,24 +106,24 @@
   },
   "seo":{
     "home":{
-      "keywords": "Decentralized data, health data, Collaborare, rare diseases, disease, epilepsy, seizures, genetic disease",
+      "keywords": "Decentralized data, health data, CollaboRARE, rare diseases, disease, epilepsy, seizures, genetic disease",
       "description": "Decentralized health data container where data is always with the patient. We also help patient groups to collect PROMs in aggregate form, with privacy as a top priority.",
-      "title": "Collaborare: Giving the power of data back to patients."
+      "title": "CollaboRARE: Giving the power of data back to patients."
     }
   },
   "prereg":{
     "title": "This is how we manage data",
     "subtitle": "You need to read the complete text of the Privacy Policy for legal purposes, but we really don't like this requirement so we made a summary for you.",
     "t1": "Which data is shared",
-    "a1": "Collaborare will only know your name, last name and email. Your patient group may receive anonymous medical information to support research in your disease. You can finally participate directly with your knowledge!",
+    "a1": "CollaboRARE will only know your name, last name and email. Your patient group may receive anonymous medical information to support research in your disease. You can finally participate directly with your knowledge!",
     "t2": "Who has access",
     "a2.1": "You may share your medical data anonymously with your Patient Organization by granting access to it. You can also send anonymous copies to whoever you want.",
     "t3": "Where is your data",
-    "a3": "Collaborare will store only name and contact information, while your medical data will be stored where you choose. You can store it in your device or in your cloud storage provider. Collaborare will help you with this. We call this folder your own data container.",
+    "a3": "CollaboRARE will store only name and contact information, while your medical data will be stored where you choose. You can store it in your device or in your cloud storage provider. CollaboRARE will help you with this. We call this folder your own data container.",
     "t4": "Who else uses your data",
     "a4": "Nobody else has access to your data. Your data is yours and is safe.",
     "t6": "What data is shared with F29?",
-    "a6": "Collaborare collects basic user information data. In order to provide you with Collaborare’s services, we collect your name and email. All the other data that you include in Collaborare is stored in your own device or your own cloud storage service, so F29 does not have access to it.",
+    "a6": "CollaboRARE collects basic user information data. In order to provide you with Collaborare’s services, we collect your name and email. All the other data that you include in CollaboRARE is stored in your own device or your own cloud storage service, so F29 does not have access to it.",
     "readPolicy": "Read the full version of the Privacy Policy here"
   },
   "termsDravet":{
@@ -138,7 +138,7 @@
     "a3": "Your personal data container is continuously synchronizing with the aggregated data container stored by DSEF. So new data will be sent once you update your container information. Depending on the situation, it can be sent right away or once a day.",
     "t4": "With what purpose will your anonymous data be treated and for how long?",
     "a4.1": "When users provide anonymous data through the connection established between their personal data container and DSEF’s data container, their anonymous data will be processed for the following purposes:",
-    "a4.2": "Your anonymous data will be aggregated with the data from other Collaborare users.",
+    "a4.2": "Your anonymous data will be aggregated with the data from other CollaboRARE users.",
     "a4.3": "The aggregated data will be used for multiple research projects to identify the key traits of Dravet syndrome patients and to provide evidence about the quality of life of Dravet syndrome families.",
     "t5": "What is the legitimation of the treatment of data?",
     "a5": "Your data will be treated on the basis of your expressed enrollment into the research program.",
