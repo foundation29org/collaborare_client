@@ -7,6 +7,7 @@ import { AuthService } from 'app/shared/auth/auth.service';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -89,6 +90,26 @@ export class ProfileComponent {
             this.toastr.error('Error updating profile');
             this.submitted = false;
             }));
+      }else{
+        if(!this.openedTerms){
+          Swal.fire({
+            icon: 'info',
+            title: 'You need to click and read the terms and conditions link before you can continue.',
+            showConfirmButton: true,
+          });
+        }else if(this.profileForm.get('acceptTerms')?.invalid){
+          Swal.fire({
+            icon: 'info',
+            title: 'Please check the box to accept the terms and conditions before proceeding.',
+            showConfirmButton: true,
+          });
+        }else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Please fill in all the required fields before proceeding.',
+            showConfirmButton: true,
+          });
+        }
       }
   }
 

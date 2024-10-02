@@ -54,10 +54,10 @@
                   <div class="terms" class="mb-3">
                     <mat-checkbox [disabled]="!openedTerms" formControlName="acceptTerms">I have read and accept the <label><a (click)="showTerms(contentTerms)" class="primary">terms and conditions</a></label> of email use</mat-checkbox>
                     <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && openedTerms" >
-                        Must accept terms and conditions to proceed.
+                      Please check the box to accept the terms and conditions before proceeding.
                     </mat-error>
                     <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && !openedTerms" >
-                      Must read terms and conditions to proceed.
+                      You need to click and read the terms and conditions link before you can continue.
                   </mat-error>
                 </div>
             
