@@ -14,7 +14,7 @@ const routes: Routes = [
         path: '.',
         component: WaitListPageComponent,
         data: {
-          title: 'Collaborare'
+          title: 'CollaboRARE'
         },
       },
       {
