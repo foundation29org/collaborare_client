@@ -199,7 +199,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.subscription.add(this.apiDx29ServerService.updateItems(this.disease._id , info)
       .subscribe((res: any) => {
-        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
+        //this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
+        Swal.fire({
+          icon: 'success',
+          title: 'Data saved successfully',
+          showConfirmButton: true,
+        });
       }, (err) => {
         console.log(err);
       }));
@@ -326,7 +331,12 @@ saveItems() {
       this.gettingItems = false;
       console.log(res)
       if(res.message == "Data saved successfully"){
-        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));    
+        //this.toastr.success('', this.translate.instant("generics.Data saved successfully"));  
+        Swal.fire({
+          icon: 'success',
+          title: 'Data saved successfully',
+          showConfirmButton: true,
+        });
         this.loadItemsFromDatabase();
       }else{
         this.authService.logout();
@@ -379,7 +389,12 @@ confirmDeleteDisease(){
     .subscribe((res: any) => {
       console.log(res)
       if(res.message == "Deleted disease successfully"){
-        this.toastr.success('', this.translate.instant("generics.Data saved successfully"));     
+        //this.toastr.success('', this.translate.instant("generics.Data saved successfully"));
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted disease successfully',
+          showConfirmButton: true,
+        });
         this.loadItemsFromDatabase();
       }else{
         this.authService.logout();
