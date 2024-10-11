@@ -15,10 +15,11 @@ import Swal from 'sweetalert2';
 export class AuthService implements OnInit, OnDestroy {
   private token: string;
   private loginUrl: string = '/.';
-  private redirectUrl: string = '/home';
+  private redirectUrl: string = '/mycondition';
   private isloggedIn: boolean = false;
   private message: string;
   private iduser: string;
+  private email: string = null;
   private role: string;
   private subrole: string;
   private group: string;
@@ -40,6 +41,10 @@ export class AuthService implements OnInit, OnDestroy {
     }*/
   }
 
+  isLoggedIn(): boolean {
+    return this.isloggedIn;
+  }
+
   getEnvironment():boolean{
     if(localStorage.getItem('tokencollaborare')){
       this.setAuthenticated(localStorage.getItem('tokencollaborare'));
@@ -47,8 +52,9 @@ export class AuthService implements OnInit, OnDestroy {
       this.setIdUser(tokenPayload.sub);
       this.setExpToken(tokenPayload.exp);
       this.setRole(tokenPayload.role);
+      this.setEmail(tokenPayload.email);
       this.setSubRole(tokenPayload.subrole);
-      this.setRedirectUrl('/home')
+      this.setRedirectUrl('/mycondition')
       //this.setGroup(tokenPayload.group);
       return true;
     }else{
@@ -62,9 +68,10 @@ export class AuthService implements OnInit, OnDestroy {
     const tokenPayload = decode(token);
     this.setIdUser(tokenPayload.sub);
     this.setExpToken(tokenPayload.exp);
+    this.setEmail(tokenPayload.email);
     this.setRole(tokenPayload.role);
     this.setSubRole(tokenPayload.subrole);
-    this.setRedirectUrl('/home')
+    this.setRedirectUrl('/mycondition')
     //this.setGroup(tokenPayload.group);
     //save localStorage
     localStorage.setItem('tokencollaborare', token)
@@ -134,6 +141,7 @@ export class AuthService implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
       }
       this.token = null;
+      this.email = null;
       this.role = null;
       this.subrole = null;
       this.group = null;
@@ -174,6 +182,12 @@ export class AuthService implements OnInit, OnDestroy {
   getMessage(): string {
 		return this.message;
 	}
+  setEmail(email: string): void {
+    this.email = email;
+  }
+  getEmail(): string {
+    return this.email;
+  }
   setRole(role: string): void {
     this.role = role;
   }

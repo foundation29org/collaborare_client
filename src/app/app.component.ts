@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { EventsService } from 'app/shared/services/events.service';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { InsightsService } from 'app/shared/services/azureInsights.service';
+import { AuthService } from 'app/shared/auth/auth.service';
 
 
 @Component({
@@ -22,9 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
     actualPage: string = '';
     tituloEvent: string = '';
 
-    constructor(public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, private eventsService: EventsService, private meta: Meta, public trackEventsService: TrackEventsService, public insightsService: InsightsService) {
+    constructor(public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, private eventsService: EventsService, private meta: Meta, public trackEventsService: TrackEventsService, public insightsService: InsightsService, public authService: AuthService) {
       this.trackEventsService.lauchEvent('App loaded');
       this.translate.use('en');
+      this.authService.getEnvironment();
     }
 
 
