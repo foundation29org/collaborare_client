@@ -28,7 +28,7 @@ export class RoleGuard implements CanActivate {
         }
       }else{
 
-        this.authService.setRedirectUrl('/home');
+        this.authService.setRedirectUrl('/mycondition');
 
       }
       this.router.navigate([this.authService.getLoginUrl()]);
@@ -42,10 +42,10 @@ export class RoleGuard implements CanActivate {
 
         //De momento solo tenemos subrole en usuarios y admin
         if((this.authService.getSubRole() != 'HaveDiagnosis')&&(this.authService.getSubRole() != 'AdminGTP')){
-          this.authService.setRedirectUrl('/home');
+          this.authService.setRedirectUrl('/mycondition');
         }else{
           if(this.authService.getSubRole() != 'AdminGTP'){
-            this.authService.setRedirectUrl('/home');
+            this.authService.setRedirectUrl('/mycondition');
           }
           else{
             this.authService.setRedirectUrl('/admin/dashboard/admingtp')

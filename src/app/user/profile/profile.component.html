@@ -1,15 +1,22 @@
 
 <div class="profile-container">
-    
     <div class="col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6 ng-tns-c320-3">
       <section id="basic-form-layouts">
         <div class="row">
             <div class="col-sm-12">
-                <div class="content-header" style="font-weight: 700;">Profile</div>
+                <div class="content-header" style="font-weight: 700;">My profile</div>
             </div>
         </div>
       </section>
-        <div class="card p-3">
+      <div *ngIf="loading" class="card p-3">
+        <div class="row">
+          <div class="col-sm-12 center-elements">
+            <em class="fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
+            <p class="mb-0">{{'generics.Please wait' | translate }}</p>
+          </div>
+        </div>
+      </div>
+        <div class="card p-3" *ngIf="!loading">
             <div>
                 <p>As the administrator tasked to bring your organisations consensus voice into the tool, your knowledge and expertise are invaluable to our collaborative network. The form below is designed to capture essential information about your organization, facilitating connections with other entities and individuals working in the  rare diseases ecosystem.</p>
                 <ul>
@@ -21,7 +28,7 @@
                 <p>The information provided will be securely stored and, with the exception of your email address, included in a publicly accessible directory. This is designed to strengthen support networks, promote interdisciplinary collaboration, and accelerate advances in research and development of treatments of rare diseases. We thank you for sharing these details and for your commitment to this initiative.</p>
             </div>
             
-            <form class="center-elements mt-3" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <form class="center-elements mt-3" [formGroup]="profileForm" (ngSubmit)="onSubmit(contentTerms)">
                 <mat-form-field class="col-md-12" appearance="fill">
                   <mat-label>Organization name</mat-label>
                   <input matInput formControlName="organization">
@@ -51,7 +58,7 @@
                     <mat-error *ngIf="profileForm.get('web')?.errors?.['pattern']">Please enter a valid URL, including the protocol (http:// or https://) Ex: https://collaborare.app</mat-error>
                   </mat-form-field>
 
-                  <div class="terms" class="mb-3">
+                  <!--<div class="terms" class="mb-3" *ngIf="!openedTerms">
                     <mat-checkbox [disabled]="!openedTerms" formControlName="acceptTerms">I have read and accept the <label><a (click)="showTerms(contentTerms)" class="primary">terms and conditions</a></label> of email use</mat-checkbox>
                     <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && openedTerms" >
                       Please check the box to accept the terms and conditions before proceeding.
@@ -59,22 +66,18 @@
                     <mat-error *ngIf="submitted && profileForm.get('acceptTerms')?.invalid && !openedTerms" >
                       You need to click and read the terms and conditions link before you can continue.
                   </mat-error>
-                </div>
+                </div>-->
             
-                <button class="btn btn-primary" type="submit" ><em class="fa fa-save mr-1"></em> Save and go to home page</button>
+                <button *ngIf="!openedTerms" class="btn btn-primary" type="submit" >Next</button>
+                <button *ngIf="openedTerms && modalReference==undefined" class="btn btn-primary" type="submit" ><em class="fa fa-save mr-1"></em> Save and go to 'My condition'</button>
               </form>
         </div>
-       
     </div>
-    
   </div>
 
   <ng-template #contentTerms let-c="close" let-d="dismiss" appendTo="body">
     <div class="modal-header" id="idHeader">
       <h4 class="mb-0">Terms and conditions of email use</h4> 
-      <button type="button" class="close" aria-label="Close" (click)="closeModal();">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
     <div class="modal-body">
       <div class="row text-left">
@@ -86,7 +89,7 @@
     </div>
     <div class="modal-footer">
       <div class="col-md-12 center-elements">
-        <button type="button" class="btn btn-dark" (click)="acceptConsent();">I accept the terms and conditions</button>
+        <button type="button" class="btn btn-dark" (click)="acceptConsent();">I accept the terms and conditions, save and search my condition</button>
       </div>
     </div>
   </ng-template>

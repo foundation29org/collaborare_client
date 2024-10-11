@@ -8,6 +8,7 @@ import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { InsightsService } from 'app/shared/services/azureInsights.service';
 import { Injectable } from '@angular/core';
 import { filter } from 'rxjs/operators';
+import { AuthService } from 'app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-navbar-dx29',
@@ -44,12 +45,15 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
   isMenuExpanded = false;
   protected innerWidth: any;
   private subscription: Subscription = new Subscription();
+  isLoggedIn: boolean = false;
+  actualUrl: string = '';
 
-  constructor(public translate: TranslateService, private layoutService: LayoutService, private configService: ConfigService, private router: Router, public trackEventsService: TrackEventsService, public insightsService: InsightsService) {
+  constructor(public translate: TranslateService, private layoutService: LayoutService, private configService: ConfigService, private router: Router, public trackEventsService: TrackEventsService, public insightsService: InsightsService, private authService: AuthService) {
 
     this.router.events.pipe(
       filter((event: any) => event instanceof NavigationEnd)
     ).subscribe(event => {
+      this.actualUrl = event.url;
       var tempUrl = (event.url).toString();
         if (tempUrl.indexOf('/.') != -1 || tempUrl == '/') {
           this.isHomePage = true;
@@ -85,10 +89,11 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
         }else {
           this.isHomePage = false;
           this.isAboutPage = false;
-          this.isBehingPage = true;
+          this.isBehingPage = false;
           this.isValidatedConditionsPage = false;
           this.isHowIsWorksPage = false;
         }
+        this.isLoggedIn = this.authService.isLoggedIn();
     });
     this.innerWidth = window.innerWidth;
     this.layoutSub = layoutService.toggleSidebar$.subscribe(
@@ -99,6 +104,11 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
     this._startTime = Date.now();
   }
 
+  getUserInitials(): string {
+    const email = this.authService.getEmail();
+    return email.split('@')[0].substring(0, 2).toUpperCase();
+  }
+
   ngOnInit() {
     this.config = this.configService.templateConf;
     if (this.innerWidth < 1200) {
@@ -107,6 +117,7 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
     else {
       this.isSmallScreen = false;
     }
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   ngAfterViewInit() {

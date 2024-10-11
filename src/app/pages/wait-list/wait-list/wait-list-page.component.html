@@ -1,5 +1,5 @@
 <div class="container-fluid d-flex flex-column">
-  <div #section1 class="mt-4" [ngClass]="(haveInfo)?'mar-custom':''">
+  <div #section1 class="" [ngClass]="(haveInfo)?'mar-custom':''">
     <div class="row m-0" style="min-height: 100vh !important;">
       <div class="col-md-6" [ngClass]="(!haveInfo)?'col-custom':''">
         <img src="assets/img/header.webp" class="img-fluid round" alt="hero">
@@ -24,7 +24,14 @@
                 </a>
               </div>
           </div>
-          <a id="searchposition"></a>
+          <div class="row mb-4" *ngIf="!isLoggedIn">
+            <div class="col-md-12 center-elements">
+              <a class="btn btn-dark btn-navbar" [routerLink]="['/login']"
+              (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+            </div>
+          </div>
+          
+          <!--<a id="searchposition"></a>
           <div class="row align-items-end justify-content-center">
             <h4 class="col-md-12 mt-4 mb-2 p-0">Search</h4>
               <div class="col-md-12 p-0" #section2>
@@ -110,9 +117,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-
+          </div>-->
         </div>
       </div>
     </div>

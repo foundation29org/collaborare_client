@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
-import { FullLayoutComponent } from "./layouts/full/full-layout.component";
+//import { FullLayoutComponent } from "./layouts/full/full-layout.component";
 import { ContentLayoutComponent } from "./layouts/content/content-layout.component";
 import { WaitListPageLayoutComponent } from "./layouts/wait-list/wait-list-page-layout.component";
 
@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   },
   { path: '', component: WaitListPageLayoutComponent, data: { title: 'Wait List Page' }, children: Wait_List_Pages_ROUTES },
   { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES },
-  { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },
+  { path: '', component: WaitListPageLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '.'}
 ];
 

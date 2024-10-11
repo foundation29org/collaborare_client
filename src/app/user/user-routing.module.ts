@@ -9,7 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'mycondition',
     component: HomeComponent,
     data: {
       title: 'menu.Dashboard',

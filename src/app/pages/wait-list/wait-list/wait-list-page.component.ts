@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { PrivacyPolicyPageComponent } from 'app/pages/content-pages/privacy-policy/privacy-policy.component';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wait-list-page',
@@ -46,12 +48,14 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
   selectedDiseaseIndex: number = -1;
   gettingItems: boolean = false;
   fullNameInputValue: string = '';
+  isLoggedIn: boolean = false;
   
-  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private router: Router) {
+  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private router: Router, public authService: AuthService) {
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(searchText => this.loadItemsFromDatabase(searchText));
+
   }
 
   ngOnInit(): void {
@@ -60,6 +64,14 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
       subject: ['', Validators.required],
       message: ['', [Validators.required, Validators.maxLength(1500)]]
     });
+
+    this.router.events.pipe(
+      filter((event: any) => event instanceof NavigationEnd)
+    ).subscribe(event => {
+      this.isLoggedIn = this.authService.isLoggedIn();
+    });
+    
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
 

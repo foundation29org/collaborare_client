@@ -27,7 +27,7 @@ export class ProfileComponent {
     country: new FormControl('', [Validators.required]),
     contactEmail: new FormControl('', [Validators.required, Validators.email]),
     web: new FormControl('', [Validators.pattern(/^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/)]),
-    acceptTerms: new FormControl(false, [Validators.requiredTrue])
+    acceptTerms: new FormControl(false)
   });
 
   countries: any;
@@ -71,11 +71,11 @@ export class ProfileComponent {
         this.loading = false;
         }));
   }
-
-  onSubmit() {
+//contentTerms is optional
+  onSubmit(contentTerms?: any) {
     this.submitted = true; 
-    // Aquí puedes agregar la lógica para procesar los datos del formulario
     if (this.profileForm.valid) {
+      if(this.openedTerms){
         // Lógica para manejar el formulario válido
         console.log(this.profileForm.value);
         this.subscription.add(this.apiDx29ServerService.setProfile(this.authService.getIdUser(), this.profileForm.value)
@@ -83,7 +83,7 @@ export class ProfileComponent {
                 console.log(res)
                 this.toastr.success('Profile updated successfully');
                 //ir a la pagina home
-                this.router.navigate(['/home']);
+                this.router.navigate(['/mycondition']);
                 this.submitted = false;
             }, (err) => {
             console.log(err);
@@ -91,25 +91,15 @@ export class ProfileComponent {
             this.submitted = false;
             }));
       }else{
-        if(!this.openedTerms){
-          Swal.fire({
-            icon: 'info',
-            title: 'You need to click and read the terms and conditions link before you can continue.',
-            showConfirmButton: true,
-          });
-        }else if(this.profileForm.get('acceptTerms')?.invalid){
-          Swal.fire({
-            icon: 'info',
-            title: 'Please check the box to accept the terms and conditions before proceeding.',
-            showConfirmButton: true,
-          });
-        }else {
-          Swal.fire({
-            icon: 'info',
-            title: 'Please fill in all the required fields before proceeding.',
-            showConfirmButton: true,
-          });
-        }
+        this.showTerms(contentTerms);
+      }
+        
+      }else{
+        Swal.fire({
+          icon: 'info',
+          title: 'Please fill in all the required fields before proceeding.',
+          showConfirmButton: true,
+        });
       }
   }
 
@@ -118,6 +108,7 @@ export class ProfileComponent {
       acceptTerms: true
     });
     this.closeModal();
+    this.onSubmit();
   }
 
   showTerms(content) {

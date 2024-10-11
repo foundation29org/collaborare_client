@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }*/
 
 
+.swal2-styled.swal2-confirm{
+  background-color: #074576 !important;
+}
+
 ::ng-deep .swal2-modal .swal2-confirm{
   background-color: #343a40 !important;
 }

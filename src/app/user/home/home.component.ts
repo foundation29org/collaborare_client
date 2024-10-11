@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   bodyElement: HTMLElement = document.body;
   loading = false; 
   hasData = false;
+  editMode = false;
   constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
     this.idUser = this.authService.getIdUser()
     this.getProfile();
@@ -148,15 +149,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   startEdit(item: any) {
     item.isEditing = true;
     item.editedName = item.name;
+    this.editMode = true;
   }
 
   saveEdit(item: any) {
       item.isEditing = false;
       item.name = item.editedName;
+      this.editMode = false;
   }
 
   cancelEdit(item: any) {
       item.isEditing = false;
+      this.editMode = false;
   }
 
 
@@ -204,6 +208,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           icon: 'success',
           title: 'Data saved successfully',
           showConfirmButton: true,
+          html: `
+            <p>Thanks for your contribution.</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <img src="assets/img/logos/EURORDIS.webp" alt="EURORDIS logo" style="height: 75px;">
+              <img src="assets/img/logos/Logo_ema2.webp" alt="EMA logo" style="height: 75px;">
+            </div>
+          `,
         });
       }, (err) => {
         console.log(err);
@@ -334,7 +345,7 @@ saveItems() {
         //this.toastr.success('', this.translate.instant("generics.Data saved successfully"));  
         Swal.fire({
           icon: 'success',
-          title: 'Data saved successfully',
+          title: 'The key condition aspects have been generated. Review them, and edit what you think is necessary.',
           showConfirmButton: true,
         });
         this.loadItemsFromDatabase();
