@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { CdkDragDrop, moveItemInArray, CdkDragStart } from '@angular/cdk/drag-drop';
+import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -63,8 +64,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   bodyElement: HTMLElement = document.body;
   loading = false; 
   hasData = false;
-  editMode = false;
-  constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService) {
+  modalReference: NgbModalRef;
+  editingIndex: number = -1;
+  editingAspect: any = {};
+  constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService ,private modalService: NgbModal) {
     this.idUser = this.authService.getIdUser()
     this.getProfile();
   }
@@ -145,24 +148,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       // Aquí puedes agregar código adicional para manejar la eliminación en tu backend
     }
   }
-
-  startEdit(item: any) {
-    item.isEditing = true;
-    item.editedName = item.name;
-    this.editMode = true;
-  }
-
-  saveEdit(item: any) {
-      item.isEditing = false;
-      item.name = item.editedName;
-      this.editMode = false;
-  }
-
-  cancelEdit(item: any) {
-      item.isEditing = false;
-      this.editMode = false;
-  }
-
 
   async ngOnDestroy() {
     if (this.subscription) {
@@ -414,6 +399,23 @@ confirmDeleteDisease(){
     }, (err) => {
       console.log(err);
     }));
+}
+
+openEditModal(aspect: { name: string }, index: number, editModal: any) {
+  this.editingAspect = { ...aspect };
+  this.editingIndex = index;
+  let ngbModalOptions: NgbModalOptions = {
+    windowClass: 'ModalClass-sm'// xl, lg, sm
+  };
+  this.modalReference = this.modalService.open(editModal, ngbModalOptions);
+
+}
+
+saveEdit() {
+  if (this.editingIndex > -1) {
+    this.disease.items[this.editingIndex] = { ...this.editingAspect };
+    this.modalReference.close();
+  }
 }
     
 }
