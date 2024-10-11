@@ -50,14 +50,11 @@
                                   <div class="col-sm-9">
                                     <span class="mr-1">☰</span>
                                     {{ i + 1 }}. 
-                                    <span *ngIf="!item.isEditing" class="item-content text-wrap">{{ item.name }}</span>
-                                    <input *ngIf="item.isEditing" (keyup.enter)="saveEdit(item)" type="text" class="form-control" [(ngModel)]="item.editedName" />
+                                    <span class="item-content text-wrap" >{{ item.name }}</span>
                                 </div>
                                 <div class="col-buttons col-sm-3 text-right">
-                                    <button class="btn btn-secondary btn-sm mr-1" (click)="startEdit(item)" *ngIf="!item.isEditing"><em class="fa fa-edit"></em></button>
-                                    <button class="btn btn-danger btn-sm" (click)="removeItem(item)" *ngIf="!item.isEditing"><em class="fa fa-trash"></em></button>
-                                    <button class="btn btn-secondary btn-sm mr-1" (click)="cancelEdit(item)" *ngIf="item.isEditing"><em class="fa fa-times"></em></button>
-                                    <button class="btn btn-primary btn-sm" (click)="saveEdit(item)" *ngIf="item.isEditing"><em class="fa fa-save"></em></button>
+                                    <button class="btn btn-secondary btn-sm mr-1" (click)="openEditModal(item, i, editModal)"><em class="fa fa-edit"></em></button>
+                                    <button class="btn btn-danger btn-sm" (click)="removeItem(item)"><em class="fa fa-trash"></em></button>
                                 </div>
                                 </div>
                               </div>
@@ -65,16 +62,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer pt-0 pb-4 center-elements" *ngIf="!editMode">
+                <div class="card-footer pt-0 pb-4 center-elements">
                   <button class="mr-2 btn btn-danger" (click)="deleteDisease()">
                     <i class="fa fa-trash"></i>
                     <span class="ml-1">Delete condition</span>
                   </button>
                   <button class="btn btn-primary" (click)="updateItems()"><i
                       class="fa fa-save"></i> <span class="ml-1">{{'generics.Save changes' | translate }}</span></button>
-                </div>
-                <div class="card-footer pt-0 pb-4 center-elements" *ngIf="editMode">
-                  <p>You are in edit mode for an item. Save the item by clicking the <i class="fa fa-save"></i> button, or click the <i class="fa fa-times"></i> button to cancel and exit edit mode.</p>
                 </div>
             </div>
         </div>
@@ -154,3 +148,18 @@
         </div>
     </div>
 </div>
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit aspect</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input [(ngModel)]="editingAspect.name" class="form-control" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="saveEdit()">Save</button>
+  </div>
+</ng-template>
