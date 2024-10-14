@@ -174,7 +174,7 @@
 </ng-template>
 <ng-template #shareModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Share list of aspects</h4>
+    <h4 class="modal-title">Share the list of aspects with your community</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -198,6 +198,9 @@
       <textarea id="additionalComments" class="form-control" rows="3" 
                 [(ngModel)]="additionalComments" placeholder="Add any additional comments here"></textarea>
     </div>
+  </div>
+  <div class="mt-3 col-md-12">
+    <p><small>Remember, once you've gathered feedback from your community, validate the final list!</small></p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
