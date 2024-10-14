@@ -28,7 +28,7 @@ const routes: Routes = [
         path: 'aboutus',
         component: AboutUsPageComponent,
         data: {
-          title: 'About collaborare'
+          title: 'About CollaboRARE'
         }
       },
       {
