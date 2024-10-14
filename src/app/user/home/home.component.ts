@@ -445,6 +445,14 @@ validateEmail(email: string) {
 }
 
 shareList() {
+  if(this.emails.length == 0){
+    Swal.fire({
+      icon: 'error',
+      title: 'Please enter at least one email address and click on Add button',
+      showConfirmButton: true,
+    });
+    return;
+  }
   this.sending = true; 
 
   const payload = {
