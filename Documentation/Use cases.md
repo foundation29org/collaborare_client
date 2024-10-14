@@ -21,4 +21,4 @@
 19. As a user, I want to be able to see who is behind the CollaboRARE initiative to understand the platform's credibility.
 20. As a user, I want to be able to submit a contact form to ask questions or provide feedback about the platform.
 
-These user stories cover the main functionalities and features of the CollaboRARE project based on the provided information. You can use these stories as a basis to create a more detailed document, adding acceptance criteria, priorities, and estimates as needed.
+These user stories cover the main functionalities and features of the CollaboRARE project.
