@@ -200,6 +200,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           showConfirmButton: true,
           html: `
             <p>Thanks for your contribution.</p>
+            <p>To see how the list has been validated, <a href="javascript:void(0)" onclick="window.location.href='/conditions?id=${this.disease.id}'">click here</a>.</p>
             <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
               <img src="assets/img/logos/EURORDIS.webp" alt="EURORDIS logo" style="height: 75px;">
               <img src="assets/img/logos/Logo_ema2.webp" alt="EMA logo" style="height: 75px;">

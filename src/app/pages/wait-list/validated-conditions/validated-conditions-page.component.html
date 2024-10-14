@@ -4,7 +4,7 @@
       <div class="col-12 col-md-8 col-lg-6 mx-auto center-elements">
         <h4 class="mb-0 mt-3">Validated conditions</h4>
         <span *ngIf="originalListOfDiseases.length>0">{{originalListOfDiseases.length}} have been validated.</span>
-        <span class="ml-1">You can filter diseases by name, orphanet code, organization, or country</span>
+        <span class="ml-1">You can filter conditions by name, orphanet code, organization, or country</span>
       </div>
     </div>
     <div class="center-elements mt-2" *ngIf="callListOfDiseases">
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-12 col-md-8 col-lg-6 mx-auto">
             <div class="input-group">
-              <input type="text" class="form-control" style="border: 2px solid #074576;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter diseases by name, orphanet code, organization, or country">
+              <input type="text" class="form-control" style="border: 2px solid #074576;" [(ngModel)]="searchText" (ngModelChange)="filterDiseases()" placeholder="Filter conditions by name, orphanet code, organization, or country">
               <button *ngIf="searchText.length>0" class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Remove filter</button>
             </div>
           </div>
@@ -75,8 +75,8 @@
       <div *ngIf="listOfFilteredDiseases.length==0" class="col-md-12 mb-5">
         <div class="center-elements">
           <span>
-            <p>The disease has not been validated.</p>
-            <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+            <p>The condition has not been validated.</p>
+            <p>Experts in a condition can log in and curate information to make it publicly accessible.</p>
             <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
                       (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
           </span>
