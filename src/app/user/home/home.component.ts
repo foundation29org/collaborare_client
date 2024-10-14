@@ -463,7 +463,6 @@ shareList() {
 
   this.subscription.add(this.apiDx29ServerService.shareDisease(this.authService.getIdUser(), payload)
   .subscribe((res: any) => {
-    console.log(res)
     this.additionalComments = "";
     this.emails = [];
     this.sending = false;
