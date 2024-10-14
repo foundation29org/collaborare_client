@@ -1,6 +1,6 @@
 # Project Summary: CollaboRARE
 
-CollaboRARE appears to be an Angular-based web application focused on rare diseases. The project aims to create a collaborative platform for sharing and validating information about rare conditions. Here's an overview of its key components and features:
+CollaboRARE is an Angular-based web application focused on rare diseases. The project aims to create a collaborative platform for sharing and validating information about rare conditions. Here's an overview of its key components and features:
 
 ## Angular Framework:
 - The project is built using Angular, currently on version 14.2.0.
@@ -56,7 +56,7 @@ CollaboRARE appears to be an Angular-based web application focused on rare disea
 ## Use Cases:
 - Detailed use cases for the application can be found in the Documentation/Use cases.md file.
 
-The project seems to be a comprehensive platform aimed at improving collaboration and information sharing in the field of rare diseases, with a focus on user engagement, data accuracy, and accessibility.
+The project is a comprehensive platform aimed at improving collaboration and information sharing in the field of rare diseases, with a focus on user engagement, data accuracy, and accessibility.
 
 
 
