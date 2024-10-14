@@ -56,6 +56,14 @@ CollaboRARE is an Angular-based web application focused on rare diseases. The pr
 ## Use Cases:
 - Detailed use cases for the application can be found in the Documentation/Use cases.md file.
 
+## Related Projects
+
+This client application works in conjunction with the CollaboRARE server. For more information about the server-side implementation, please visit:
+
+[CollaboRARE Server Repository](https://github.com/foundation29org/collaborare_server)
+
+The server provides the backend API and database management for this client application.
+
 The project is a comprehensive platform aimed at improving collaboration and information sharing in the field of rare diseases, with a focus on user engagement, data accuracy, and accessibility.
 
 
