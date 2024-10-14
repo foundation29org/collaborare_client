@@ -164,4 +164,17 @@ export class ApiDx29ServerService {
         })
       );
     }
+
+    shareDisease(userId, info){
+      return this.http.post(environment.api+'/api/share/'+userId, info).pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.insightsService.trackException(err);
+          return err;
+        })
+      );
+    }
 }

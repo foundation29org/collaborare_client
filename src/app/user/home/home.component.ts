@@ -67,6 +67,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   modalReference: NgbModalRef;
   editingIndex: number = -1;
   editingAspect: any = {};
+  emails: string[] = [];
+  newEmail: string = '';
+  additionalComments: string = '';
+  sending: boolean = false;
+  
   constructor(public translate: TranslateService, public toastr: ToastrService, private authService: AuthService, private apiDx29ServerService: ApiDx29ServerService ,private modalService: NgbModal) {
     this.idUser = this.authService.getIdUser()
     this.getProfile();
@@ -416,6 +421,53 @@ saveEdit() {
     this.disease.items[this.editingIndex] = { ...this.editingAspect };
     this.modalReference.close();
   }
+}
+
+openShareModal(shareModal) {
+  this.emails = [];
+  this.modalService.open(shareModal);
+}
+
+addEmail() {
+  if (this.newEmail && this.validateEmail(this.newEmail)) {
+    this.emails.push(this.newEmail);
+    this.newEmail = '';
+  }
+}
+
+removeEmail(index: number) {
+  this.emails.splice(index, 1);
+}
+
+validateEmail(email: string) {
+  const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return re.test(email);
+}
+
+shareList() {
+  this.sending = true; 
+
+  const payload = {
+    emails: this.emails,
+    disease: this.disease,
+    comments: this.additionalComments
+  };
+
+  this.subscription.add(this.apiDx29ServerService.shareDisease(this.authService.getIdUser(), payload)
+  .subscribe((res: any) => {
+    console.log(res)
+    this.sending = false;
+    Swal.fire({
+      icon: 'success',
+      title: 'List shared successfully',
+      showConfirmButton: true,
+    });
+    console.log('Lista compartida exitosamente');
+    this.modalService.dismissAll();
+  }, (err) => {
+    console.log(err);
+    this.sending = false;
+  }));
 }
     
 }
