@@ -201,7 +201,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="shareList()" [disabled]="emails.length === 0 || sending">
+    <button type="button" class="btn btn-primary" (click)="shareList()" [disabled]="sending">
       <span *ngIf="sending">
         <em class="fa fa-spinner fa-spin fa-3x fa-fw secondary"></em>
       </span>
