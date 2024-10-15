@@ -116,6 +116,9 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
 
   filterDiseases(): void {
     this.listOfFilteredDiseases = [...this.originalListOfDiseases];
+    this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease => 
+      disease.items && disease.items.length > 0
+    );
     if (this.searchText) {
       const lowerCaseSearchText = this.searchText.toLowerCase();
       this.listOfFilteredDiseases = this.listOfFilteredDiseases.filter(disease =>
