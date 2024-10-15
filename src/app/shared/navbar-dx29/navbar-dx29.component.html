@@ -67,7 +67,7 @@
                 <a class="dropdown-item py-1" routerLink="/profile" [ngClass]="(actualUrl === '/profile')?'black text-bold-700':''">
                   <span>My profile</span>
               </a>
-              <a class="dropdown-item py-1" (click)="authService.logout()">
+              <a class="dropdown-item py-1" (click)="logout()">
                 <span>Logout</span>
             </a>
             </div>

@@ -106,7 +106,17 @@ export class NavbarD29Component implements OnInit, AfterViewInit, OnDestroy {
 
   getUserInitials(): string {
     const email = this.authService.getEmail();
-    return email.split('@')[0].substring(0, 2).toUpperCase();
+    if (email) {
+      return email.substring(0, 2).toUpperCase();
+    }
+    return '';
+  }
+
+  logout(): void {
+    this.authService.logout().then(() => {
+      this.isLoggedIn = false;
+      this.router.navigate(['/']);
+    });
   }
 
   ngOnInit() {
