@@ -88,7 +88,8 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.callListOfDiseases = false;
         if (res.diseases) {
-          this.originalListOfDiseases = res.diseases;
+          //solo coger las disease.items.length >0
+          this.originalListOfDiseases = res.diseases.filter(disease => disease.items.length > 0).sort((a, b) => a.name.localeCompare(b.name));
           this.listOfFilteredDiseases = [...this.originalListOfDiseases];
         } else {
           this.listOfFilteredDiseases = [];
