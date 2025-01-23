@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Clipboard } from "@angular/cdk/clipboard"
@@ -39,7 +40,15 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
   originalListOfDiseases: any = [];
   searchText: string = '';
   id: string | null = null;
-  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private route: ActivatedRoute) {
+  callListOfDiseases2: boolean = false;
+  listOfFilteredDiseases2: any = [];
+  previewdisease: any = {};
+  fullNameInputValue: string = '';
+  gettingItems: boolean = false;
+  selectedDiseaseIndex: number = -1;
+  actualInfoOneDisease: any = {};
+
+  constructor(public translate: TranslateService, public trackEventsService: TrackEventsService, private clipboard: Clipboard, private fb: FormBuilder, public toastr: ToastrService, private modalService: NgbModal, private apiDx29ServerService: ApiDx29ServerService, private route: ActivatedRoute, private router: Router) {
     this.loadItemsFromDatabase();
   }
 
@@ -214,6 +223,82 @@ export class ValidatedConditionsPageComponent implements OnInit, OnDestroy {
     }
     console.log(this.contactForm.value);
     // Aquí implementas la lógica de envío, como enviar a un backend.
+  }
+
+  showDemoList(panelPreviewList) {
+    this.callListOfDiseases2 = true;
+    var tempModelTimp = this.searchText.trim();
+    var info = {
+        "text": tempModelTimp,
+        "lang": 'en'
+    }
+    this.subscription.add(this.apiDx29ServerService.searchDiseases(info)
+        .subscribe((res: any) => {
+          console.log(res)
+            this.callListOfDiseases2 = false;
+            if(res==null){
+                this.nothingFoundDisease = true;
+                this.listOfFilteredDiseases2 = [];
+            }else{
+                this.nothingFoundDisease = false;
+                this.listOfFilteredDiseases2 = res;
+                if(this.listOfFilteredDiseases2.length == 0){
+                    this.nothingFoundDisease = true;
+                }
+            }
+            this.previewdisease = {};
+            let ngbModalOptions: NgbModalOptions = {
+              windowClass: 'ModalClass-lg'// xl, lg, sm
+            };
+            this.modalReference = this.modalService.open(panelPreviewList, ngbModalOptions);
+            this.fullNameInputValue = this.searchText;
+            
+        }, (err) => {
+            console.log(err);
+            this.nothingFoundDisease = false;
+            this.callListOfDiseases2 = false;
+        }));
+  }
+
+  showMoreInfoDiagnosePopup(index){
+    this.gettingItems = true;
+    if(index !== null && index !== undefined)
+    {
+      this.selectedDiseaseIndex = index;
+      this.actualInfoOneDisease = this.listOfFilteredDiseases2[this.selectedDiseaseIndex];
+    }else{
+      this.selectedDiseaseIndex = -1;
+      this.actualInfoOneDisease = {id: '', name: this.fullNameInputValue};
+    }
+    console.log(this.actualInfoOneDisease)
+  var info = {
+    "id": this.actualInfoOneDisease.id,
+    "name": this.actualInfoOneDisease.name
+  }
+  this.subscription.add(this.apiDx29ServerService.previewDisease( info)
+    .subscribe((res: any) => {
+      this.gettingItems = false;
+      console.log(res)
+      if(res.disease.items.length > 0){
+        this.searchDiseaseField = this.actualInfoOneDisease.name;
+        this.previewdisease = res.disease;
+        this.listOfFilteredDiseases2 = [];
+      }else{
+        this.toastr.error('No information found');
+      }
+     
+      
+    }, (err) => {
+      console.log(err);
+      this.gettingItems = false;
+    }));
+  }
+
+  goToLogin() {
+    if (this.modalReference != undefined) {
+      this.modalReference.close()
+    }
+    this.router.navigate(['/login']);
   }
 
 }
