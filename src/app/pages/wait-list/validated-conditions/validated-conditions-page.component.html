@@ -78,7 +78,7 @@
             <p>No validated conditions found matching your search.</p>
             <p>Would you like to see an example of how the information would look once validated?</p>
             <button class="btn btn-primary mb-3" (click)="showDemoList(panelPreviewList)">View demo example</button>
-            <p class="text-muted small">Note: This is just a demonstration example and does not represent validated information.</p>
+            <p class="text-muted danger small"><strong>Note: This is just a demonstration example and does not represent validated information.</strong></p>
             <hr>
             <p>Experts in a condition can log in and curate information to make it publicly accessible.</p>
             <a class="btn btn-dark mb-0 btn-navbar" [routerLink]="['/login']"
@@ -94,31 +94,46 @@
    
   </div>
   <div>
-    <div class="flex-shrink-0 col-margin border-top" style="background: #ffffff;">
-      <div class="col-md-12 p-2 mt-2">
-        <div class="col-md-12 align-items-center text-center">
-          <div class="row align-items-end justify-content-center">
-            <a href="https://twitter.com/foundation29feb" target="_blank" type="button"
-              class="btn btn-primary btn-icon round mr-1 mb-1">
-              <i class="fa fa-twitter"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/foundation29/" target="_blank" type="button"
-              class="btn btn-primary btn-icon round mr-1 mb-1">
-              <i class="fa fa-linkedin"></i>
-            </a>
+    <div class="flex-shrink-0 border-top mt-3" style="background: #ffffff;">
+      <div class="container mt-3">
+        <!-- Texto descriptivo con fondo suave -->
+        <div class="row py-4 text-center round" style="background-color: #f8f9fa;">
+          <div class="col-12">
+            <p class="mb-0">CollaboRARE has been developed by Foundation 29, a non-profit organization dedicated to leveraging data science and technology to tackle issues related to rare diseases.</p>
           </div>
-          <div class="">
-            <p class="mt-1 mb-0">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> -
-              CollaboRARE</p>
-            <a class="mt-0" href="javascript:;"
+        </div>
+
+        <!-- Footer principal con 3 columnas -->
+        <div class="row py-4 align-items-center">
+          <!-- Columna izquierda: Copyright y Privacy -->
+          <div class="col-md-4 text-center text-md-start">
+            <p class="mb-1">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> - CollaboRARE</p>
+            <a href="javascript:;" class="text-decoration-none"
               (click)="openPolicy();trackEventsService.lauchEvent('privacy-policy btn 1')">
               <span>{{'registration.Privacy Policy' | translate }}</span>
             </a>
           </div>
+
+          <!-- Columna central: Logo F29 -->
+          <div class="col-md-4 text-center my-3 my-md-0">
+            <a href="https://foundation29.org/" target="_blank">
+              <img src="assets/img/logos/logo-f29.webp" alt="Foundation29" class="" style="max-width: 160px;">
+            </a>
+          </div>
+
+          <!-- Columna derecha: Redes sociales -->
+          <div class="col-md-4 text-center text-md-end">
+            <a href="https://twitter.com/foundation29feb" target="_blank" type="button"
+              class="btn btn-dark btn-icon round mr-1">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/foundation29/" target="_blank" type="button"
+              class="btn btn-dark btn-icon round ml-1">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
         </div>
-
       </div>
-
     </div>
   </div>
   <ng-template #panelcontactForm let-c="close" let-d="dismiss">
