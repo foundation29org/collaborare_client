@@ -4,13 +4,18 @@
       <div class="col-md-6" [ngClass]="(!haveInfo)?'col-custom':''">
         <img src="assets/img/header.webp" class="img-fluid round" alt="hero">
       </div>
-      <div class="col-sm-12 col-md-6 flex-column" [ngClass]="(!haveInfo)?'col-custom':''" >
+      <div class="col-sm-12 col-md-6 flex-column" [ngClass]="(!haveInfo)?'col-custom':''">
         <div class="box-text">
           <div class="title-desc">
             <h4>Discovering what truly matters to patients</h4>
-            <p>This tool allows patients to specify the health outcomes they value most. This data is crucial for drug developers, researchers, and regulatory bodies.</p>
-            <p>Gathering patient experience data from scratch is challenging. CollaboRARE simplifies this by using an AI language model to create an initial list of health outcomes. The patient just needs to review, reorder, add, or modify items, making the process quick and straightforward, taking only a few minutes thanks to the AI.</p>
-            <p>This project is a collaborative effort between the EMA and Eurordis, serving as a pilot test to gather direct input from patients. </p>
+            <p>This tool allows patients to specify the health outcomes they value most. This data is crucial for drug
+              developers, researchers, and regulatory bodies.</p>
+            <p>Gathering patient experience data from scratch is challenging. CollaboRARE simplifies this by using an AI
+              language model to create an initial list of health outcomes. The patient just needs to review, reorder,
+              add, or modify items, making the process quick and straightforward, taking only a few minutes thanks to
+              the AI.</p>
+            <p>This project is a collaborative effort between the EMA and Eurordis, serving as a pilot test to gather
+              direct input from patients. </p>
           </div>
           <div class="row mb-4">
             <div class="col-md-6">
@@ -18,19 +23,19 @@
                 <img src="assets/img/logos/Logo_ema2.webp" alt="EMA" class="img-fluid">
               </a>
             </div>
-              <div class="col-md-6">
-                <a href="https://www.eurordis.org/" target="_blank">
-                  <img src="assets/img/logos/EURORDIS.webp" alt="EURORDIS" class="img-fluid">
-                </a>
-              </div>
+            <div class="col-md-6">
+              <a href="https://www.eurordis.org/" target="_blank">
+                <img src="assets/img/logos/EURORDIS.webp" alt="EURORDIS" class="img-fluid">
+              </a>
+            </div>
           </div>
           <div class="row mb-4" *ngIf="!isLoggedIn">
             <div class="col-md-12 center-elements">
               <a class="btn btn-dark btn-navbar" [routerLink]="['/login']"
-              (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
+                (click)="trackEventsService.lauchEvent('Login btn 1')">{{'login.Login' | translate }}</a>
             </div>
           </div>
-          
+
           <!--<a id="searchposition"></a>
           <div class="row align-items-end justify-content-center">
             <h4 class="col-md-12 mt-4 mb-2 p-0">Search</h4>
@@ -123,31 +128,46 @@
     </div>
   </div>
   <div>
-    <div class="flex-shrink-0 col-margin border-top mt-3" style="background: #ffffff;">
-      <div class="col-md-12 p-2 mt-2">
-        <div class="col-md-12 align-items-center text-center">
-          <div class="row align-items-end justify-content-center">
-            <a href="https://twitter.com/foundation29feb" target="_blank" type="button"
-            class="btn btn-primary btn-icon round mr-1 mb-1">
-            <i class="fa fa-twitter"></i>
-          </a>
-          <a href="https://www.linkedin.com/company/foundation29/" target="_blank" type="button"
-            class="btn btn-primary btn-icon round mr-1 mb-1">
-            <i class="fa fa-linkedin"></i>
-          </a>
+    <div class="flex-shrink-0 border-top mt-3" style="background: #ffffff;">
+      <div class="container mt-3">
+        <!-- Texto descriptivo con fondo suave -->
+        <div class="row py-4 text-center round" style="background-color: #f8f9fa;">
+          <div class="col-12">
+            <p class="mb-0">CollaboRARE has been developed by Foundation 29, a non-profit organization dedicated to leveraging data science and technology to tackle issues related to rare diseases.</p>
           </div>
-          <div class="">
-            <p class="mt-1 mb-0">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> -
-              CollaboRARE</p>
-            <a class="mt-0" href="javascript:;"
+        </div>
+
+        <!-- Footer principal con 3 columnas -->
+        <div class="row py-4 align-items-center">
+          <!-- Columna izquierda: Copyright y Privacy -->
+          <div class="col-md-4 text-center text-md-start">
+            <p class="mb-1">&copy; 2024 <a href="https://foundation29.org/" target="_blank">Fundación 29</a> - CollaboRARE</p>
+            <a href="javascript:;" class="text-decoration-none"
               (click)="openPolicy();trackEventsService.lauchEvent('privacy-policy btn 1')">
               <span>{{'registration.Privacy Policy' | translate }}</span>
             </a>
           </div>
-        </div>
-        
-      </div>
 
+          <!-- Columna central: Logo F29 -->
+          <div class="col-md-4 text-center my-3 my-md-0">
+            <a href="https://foundation29.org/" target="_blank">
+              <img src="assets/img/logos/logo-f29.webp" alt="Foundation29" class="" style="max-width: 160px;">
+            </a>
+          </div>
+
+          <!-- Columna derecha: Redes sociales -->
+          <div class="col-md-4 text-center text-md-end">
+            <a href="https://twitter.com/foundation29feb" target="_blank" type="button"
+              class="btn btn-dark btn-icon round mr-1">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/foundation29/" target="_blank" type="button"
+              class="btn btn-dark btn-icon round ml-1">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <ng-template #panelcontactForm let-c="close" let-d="dismiss">
@@ -165,13 +185,13 @@
           <mat-error *ngIf="f.email.errors?.required">Email is required.</mat-error>
           <mat-error *ngIf="f.email.errors?.email">Please enter a valid email.</mat-error>
         </mat-form-field>
-      
+
         <mat-form-field class="col-md-12" appearance="fill">
           <mat-label>Subject</mat-label>
           <input matInput formControlName="subject">
           <mat-error *ngIf="f.subject.errors?.required">Subject is required.</mat-error>
         </mat-form-field>
-      
+
         <mat-form-field class="col-md-12" appearance="fill">
           <mat-label>Message</mat-label>
           <textarea matInput formControlName="message" rows="5" maxlength="1500"></textarea>
@@ -185,7 +205,7 @@
         <div *ngIf="sending" class="mt-2 col-md-12 center-elements">
           <em class="fa fa-spinner fa-spin fa-2x fa-fw primary"></em>
         </div>
-        
+
       </form>
     </div>
   </ng-template>
@@ -209,9 +229,8 @@
               style="background-color: #ffffff !important;">
               <tbody class="tableList">
                 <tr *ngFor="let disease of listOfFilteredDiseases2 ; let i = index" class="d-flex">
-                  <td class="col-md-12 dropdown-item" id="{{disease.id}}"
-                    (click)="showMoreInfoDiagnosePopup(i);" style="cursor: pointer;"
-                    title="{{'generics.More information' | translate }} ({{disease.id}})">
+                  <td class="col-md-12 dropdown-item" id="{{disease.id}}" (click)="showMoreInfoDiagnosePopup(i);"
+                    style="cursor: pointer;" title="{{'generics.More information' | translate }} ({{disease.id}})">
                     <span>{{disease.name}}</span>
                     <!--<span *ngIf="disease.source!='synonyms'">{{disease.name}}</span>
                         <span *ngIf="disease.source=='synonyms'"> {{disease.itemCompared}} ({{'generics.Synonyms' | translate}}: {{disease.name}})</span>-->
@@ -229,27 +248,21 @@
           </div>
         </span>
         <div class="mt-3" *ngIf="!previewdisease.items">
-          <h5 class="modal-title primary">If you don't see it on the list, type the full name and click the button below.</h5>
-            <!-- Input para ingresar el nombre completo -->
-        <div class="form-group mt-2">
-          <label for="fullNameInput">Full name of the condition</label>
-          <input 
-            type="text" 
-            class="form-control" 
-            id="fullNameInput" 
-            placeholder="Enter full name of disease"
-            [(ngModel)]="fullNameInputValue" 
-          />
-        </div>
-        
-        <!-- Botón para generar los ítems -->
-        <div class="mt-2">
-          <button 
-            class="btn btn-primary" [disabled]="fullNameInputValue == ''"
-            (click)="showMoreInfoDiagnosePopup()">
-            Generate items
-          </button>
-        </div>
+          <h5 class="modal-title primary">If you don't see it on the list, type the full name and click the button
+            below.</h5>
+          <!-- Input para ingresar el nombre completo -->
+          <div class="form-group mt-2">
+            <label for="fullNameInput">Full name of the condition</label>
+            <input type="text" class="form-control" id="fullNameInput" placeholder="Enter full name of disease"
+              [(ngModel)]="fullNameInputValue" />
+          </div>
+
+          <!-- Botón para generar los ítems -->
+          <div class="mt-2">
+            <button class="btn btn-primary" [disabled]="fullNameInputValue == ''" (click)="showMoreInfoDiagnosePopup()">
+              Generate items
+            </button>
+          </div>
         </div>
         <span *ngIf="previewdisease.items">
           <div class="list-group">
@@ -257,15 +270,15 @@
               <div class="custom-placeholder"></div>
               <div class="row align-items-center">
                 <div class="col-sm-9">
-                  {{ i + 1 }}. 
+                  {{ i + 1 }}.
                   <span class="item-content text-wrap">{{ item.name }}</span>
-                 
-              </div>
+
+                </div>
               </div>
             </div>
           </div>
         </span>
-        
+
         <span *ngIf="nothingFoundDisease">
           <span *ngIf="(searchDiseaseField).trim().length>3">
             <span class="d-block">{{'dashboardpatient.Nothing found. Try again.' | translate }}</span>
@@ -273,11 +286,12 @@
         </span>
         <div class="mt-3 center-elements" *ngIf="previewdisease.items">
           <p>The disease has not been validated.</p>
-          <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make it publicly available.</p>
+          <p>If you are an expert in the disease you are looking for, you can log in and curate the information to make
+            it publicly available.</p>
           <a class="btn btn-dark mb-0 btn-navbar"
-                    (click)="trackEventsService.lauchEvent('Login btn 3');goToLogin()">{{'login.Login' | translate }}</a>
+            (click)="trackEventsService.lauchEvent('Login btn 3');goToLogin()">{{'login.Login' | translate }}</a>
         </div>
-       
+
       </div>
     </div>
   </ng-template>
