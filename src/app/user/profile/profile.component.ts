@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from "@angular/common/http";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -11,9 +17,10 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, TranslatePipe],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  providers: [ApiDx29ServerService]
+  styleUrls: ['./profile.component.scss']
 })
 
 export class ProfileComponent {

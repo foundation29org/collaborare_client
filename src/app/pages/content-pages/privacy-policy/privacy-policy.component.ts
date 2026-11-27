@@ -1,10 +1,13 @@
-import { Component, Optional  } from '@angular/core';
+import { Component, Optional, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from "@angular/router";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-privacy-policy',
+  changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe],
     templateUrl: './privacy-policy.component.html',
     styleUrls: ['./privacy-policy.component.scss']
 })

@@ -1,4 +1,5 @@
-import { Component, ViewChild, OnDestroy, OnInit  } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 import { AuthService } from '../../../../app/shared/auth/auth.service';
@@ -9,6 +10,8 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-login-page',
+  changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe],
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.scss']
 })

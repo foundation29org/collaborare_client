@@ -4,7 +4,7 @@ import { catchError, map} from 'rxjs/operators'
 import { InsightsService } from 'app/shared/services/azureInsights.service';
 import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiDx29ServerService {
     constructor(private http: HttpClient, public insightsService: InsightsService) {}
 

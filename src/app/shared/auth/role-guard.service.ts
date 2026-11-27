@@ -1,11 +1,11 @@
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, CanActivateFn } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-@Injectable()
-export class RoleGuard implements CanActivate {
+@Injectable({ providedIn: 'root' })
+export class RoleGuard {
 
   constructor(public authService: AuthService, public router: Router,  public toastr: ToastrService, public translate: TranslateService) {}
 
@@ -61,3 +61,5 @@ export class RoleGuard implements CanActivate {
     return true;
   }
 }
+
+export const roleGuard: CanActivateFn = (route) => inject(RoleGuard).canActivate(route);

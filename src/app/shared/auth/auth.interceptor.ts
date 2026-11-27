@@ -1,102 +1,61 @@
-import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
+import { inject } from '@angular/core';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
-import { environment } from 'environments/environment';
-
 import { EventsService } from 'app/shared/services/events.service';
 import { InsightsService } from 'app/shared/services/azureInsights.service';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
+// Same behaviour as the old class interceptor: every call to our API carries x-api-key, and once the
+// user is signed in also the bearer token and a timestamp (to defeat caches). 401/403 close the session.
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const tokenService = inject(TokenService);
+  const eventsService = inject(EventsService);
+  const insightsService = inject(InsightsService);
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  constructor(private inj: Injector, public insightsService: InsightsService) { }
+  const isApiCall = !!environment.api && req.url.indexOf(environment.api) !== -1;
+  let authReq = req.clone({});
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    var eventsService = this.inj.get(EventsService);
-
-    let authService = this.inj.get(AuthService); //authservice is an angular service
-        // Get the auth header from the service.
-    /*if(authService.getToken()==undefined){
-      const authReq = req.clone({ headers: req.headers});
-      return next.handle(authReq)
-    }*/
-    if(authService.getToken()==undefined && req.url.indexOf(environment.api)!==-1){
-      const authReq = req.clone({ headers: req.headers
-        .set('x-api-key', environment.Server_Key)
-      });
-      return next.handle(authReq)
-    }else if(authService.getToken()==undefined && req.url.indexOf(environment.api)==-1){
-      const authReq = req.clone({ headers: req.headers});
-      return next.handle(authReq)
+  if (authService.getToken() == undefined) {
+    if (isApiCall) {
+      authReq = req.clone({ headers: req.headers.set('x-api-key', environment.Server_Key) });
     }
-    // Clone the request to add the new header.
-    var token =  authService.getToken();
-    var type = 'Bearer'
+    return next(authReq);
+  }
 
-    // Clone the request to add the new header.
-
-    var isExternalReq = false;
-    var authReq = req.clone({});
-    /*if(req.url.indexOf(environment.api)!==-1){
-      authReq = req.clone({ headers: req.headers.set('authorization',  `${type} ${token}`) });
-      let tokenService = this.inj.get(TokenService);
-      if(!tokenService.isTokenValid()){
-        authService.logout();
-      }
-    }*/
-    if(req.url.indexOf(environment.api)!==-1){
-      let urlWithTimestamp = req.url;
-      const timestamp = Date.now();
-      if (req.url.includes('?')) {
-        urlWithTimestamp += `&t=${timestamp}`;
-      } else {
-        urlWithTimestamp += `?t=${timestamp}`;
-      }
-      authReq = req.clone({
-        url: urlWithTimestamp,
-        headers: req.headers
-        .set('authorization',  `${type} ${token}`)
+  if (isApiCall) {
+    const timestamp = Date.now();
+    const urlWithTimestamp = req.url + (req.url.includes('?') ? '&' : '?') + 't=' + timestamp;
+    authReq = req.clone({
+      url: urlWithTimestamp,
+      headers: req.headers
+        .set('authorization', `Bearer ${authService.getToken()}`)
         .set('x-api-key', environment.Server_Key)
-      });
-      let tokenService = this.inj.get(TokenService);
-      if(!tokenService.isTokenValid()){
-        authService.logout();
-      }
+    });
+    if (!tokenService.isTokenValid()) {
+      authService.logout();
     }
+  }
 
-    // Pass on the cloned request instead of the original request.
-    return next.handle(authReq)
-  .pipe(
+  return next(authReq).pipe(
     catchError((error) => {
-      this.insightsService.trackException(error);
+      insightsService.trackException(error);
       if (error.status === 401 || error.status === 403) {
         authService.logout();
-        return throwError(error);
+        return throwError(() => error);
       }
-
       if (error.status === 404 || error.status === 0) {
-        if (!isExternalReq) {
-          var returnMessage = error.message;
-          if (error.error.message) {
-            returnMessage = error.error;
-          }
-          eventsService.broadcast('http-error', returnMessage);
-        } else {
-          eventsService.broadcast('http-error-external', 'no external conexion');
+        let returnMessage = error.message;
+        if (error.error && error.error.message) {
+          returnMessage = error.error;
         }
-        return throwError(error);
+        eventsService.broadcast('http-error', returnMessage);
+        return throwError(() => error);
       }
-
-      if (error.status === 419) {
-        return throwError(error);
-      }
-
-      //return all others errors
-      return throwError(error);
+      return throwError(() => error);
     })
-  ) as any;
-  }
-}
+  );
+};

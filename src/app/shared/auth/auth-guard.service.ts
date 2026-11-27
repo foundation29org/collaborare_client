@@ -1,13 +1,13 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateFn } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 
-@Injectable()
-export class AuthGuard implements CanActivate {
+@Injectable({ providedIn: 'root' })
+export class AuthGuard {
 
   constructor(private authService: AuthService, private router: Router, public toastr: ToastrService, public translate: TranslateService, private tokenService: TokenService) {}
 
@@ -108,3 +108,6 @@ export class AuthGuard implements CanActivate {
   }
 
 }
+
+// Functional guard used in the routes (class-based guards were removed from the router API).
+export const authGuard: CanActivateFn = (route, state) => inject(AuthGuard).canActivate(route, state);
