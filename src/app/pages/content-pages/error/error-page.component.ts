@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-error-page',
+  changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './error-page.component.html',
     styleUrls: ['./error-page.component.scss']
 })

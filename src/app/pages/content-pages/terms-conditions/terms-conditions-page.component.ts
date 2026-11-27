@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-terms-conditions-page',
+  changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe],
     templateUrl: './terms-conditions-page.component.html',
     styleUrls: ['./terms-conditions-page.component.scss']
 })

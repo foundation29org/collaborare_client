@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import * as decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { AuthService } from './auth.service';
 import { catchError, map } from 'rxjs/operators'
 import { InsightsService } from 'app/shared/services/azureInsights.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TokenService {
   constructor(private http: HttpClient, public authService: AuthService, public insightsService: InsightsService) {}
 
@@ -15,7 +15,7 @@ export class TokenService {
   isTokenValid():boolean{
     if(localStorage.getItem('tokencollaborare') && this.authService.getIdUser()!=undefined){
       if((this.authService.getToken() == localStorage.getItem('tokencollaborare'))&& this.authService.getIdUser()!=undefined){
-        const tokenPayload = decode(localStorage.getItem('tokencollaborare'));
+        const tokenPayload = jwtDecode<any>(localStorage.getItem('tokencollaborare'));
         if(tokenPayload.sub ==this.authService.getIdUser()){
           return true;
         }else{

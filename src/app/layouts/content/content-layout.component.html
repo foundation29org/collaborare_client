@@ -1,4 +1,6 @@
-<app-navbar-pages *ngIf="!isPrivacyPage"></app-navbar-pages>
+@if (!isPrivacyPage) {
+  <app-navbar-pages></app-navbar-pages>
+}
 <div class="wrapper">
   <div class="main-panel">
     <!-- BEGIN : Main Content-->

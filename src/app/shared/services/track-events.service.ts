@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 declare let gtag: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TrackEventsService {
   _startTime: any;
   myuuid: string = uuidv4();

@@ -3,9 +3,11 @@
   <section class="card row mt-0 mb-0">
     <div class="modal-header">
       <h4 class="modal-title">{{'registration.Privacy Policy' | translate }}</h4>
-      <button *ngIf="activeModal" type="button" class="close" aria-label="Close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      @if (activeModal) {
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      }
     </div>
     <div class="modal-body">
       <div>
@@ -19,10 +21,10 @@
         <h6 class="pt-2 dark text-bold-600">Information we collect</h6>
         <ul>
           <li>
-            <strong>Patient contact group information:</strong> We collect just the organization name and country, not personal data, when you validate a condition. Your email is stored solely for updates to the validated list and isn't published on the website. 
+            <strong>Patient contact group information:</strong> We collect just the organization name and country, not personal data, when you validate a condition. Your email is stored solely for updates to the validated list and isn't published on the website.
           </li>
           <li>
-            <strong>Patient health group information:</strong> We gather health data at the group level only, not individual patient details. No identifiable information is collected from you or your organization’s patients. 
+            <strong>Patient health group information:</strong> We gather health data at the group level only, not individual patient details. No identifiable information is collected from you or your organization’s patients.
           </li>
         </ul>
       </div>
@@ -83,10 +85,10 @@
       <div>
         <h6 class="pt-2 dark text-bold-600">Exercise of your rights</h6>
         <p>
-          At any time you may exercise your rights under the legally established terms by sending a written communication to the address: Calle Santa Fe, number 1, 2ºE – Pozuelo de Alarcón, 28224 (Madrid), or by email: privacy@foundation29.org 
+          At any time you may exercise your rights under the legally established terms by sending a written communication to the address: Calle Santa Fe, number 1, 2ºE – Pozuelo de Alarcón, 28224 (Madrid), or by email: privacy@foundation29.org
         </p>
         <p>
-          In this communication you must indicate the right you want to exercise and the data or set of personal data that is the subject of your claim. 
+          In this communication you must indicate the right you want to exercise and the data or set of personal data that is the subject of your claim.
         </p>
         <p>
           Finally, we inform you that you will have the right to file a claim with the Spanish Data Protection Agency, as the control authority. www.aepd.es

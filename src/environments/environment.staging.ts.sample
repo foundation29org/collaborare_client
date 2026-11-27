@@ -1,4 +1,6 @@
 export const environment = {
     production: false,
     api: undefined,  //Server URL: 'http://<direction>:<port>'
+    Server_Key: undefined,  //value sent to the server in the x-api-key header
+    INSTRUMENTATION_KEY: undefined,  //Azure Application Insights instrumentation key
 };

@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, Injector, OnInit, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
-import * as decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { ICurrentPatient } from './ICurrentPatient.interface';
 import { InsightsService } from 'app/shared/services/azureInsights.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,7 +29,13 @@ export class AuthService implements OnInit, OnDestroy {
   private isApp: boolean = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1 && location.hostname != "localhost" && location.hostname != "127.0.0.1";
   private subscription: Subscription = new Subscription();
 
-  constructor(private http: HttpClient, public router: Router, public insightsService: InsightsService, public translate: TranslateService) {}
+  // TranslateService is resolved lazily: it loads its files over HttpClient, whose interceptor needs this
+  // service, so injecting it in the constructor would be a circular dependency.
+  constructor(private http: HttpClient, public router: Router, public insightsService: InsightsService, private injector: Injector) {}
+
+  get translate(): TranslateService {
+    return this.injector.get(TranslateService);
+  }
 
 
   ngOnInit() {
@@ -48,7 +54,7 @@ export class AuthService implements OnInit, OnDestroy {
   getEnvironment():boolean{
     if(localStorage.getItem('tokencollaborare')){
       this.setAuthenticated(localStorage.getItem('tokencollaborare'));
-      const tokenPayload = decode(localStorage.getItem('tokencollaborare'));
+      const tokenPayload = jwtDecode<any>(localStorage.getItem('tokencollaborare'));
       this.setIdUser(tokenPayload.sub);
       this.setExpToken(tokenPayload.exp);
       this.setRole(tokenPayload.role);
@@ -65,7 +71,7 @@ export class AuthService implements OnInit, OnDestroy {
   setEnvironment(token:string):void{
     this.setAuthenticated(token);
     // decode the token to get its payload
-    const tokenPayload = decode(token);
+    const tokenPayload = jwtDecode<any>(token);
     this.setIdUser(tokenPayload.sub);
     this.setExpToken(tokenPayload.exp);
     this.setEmail(tokenPayload.email);

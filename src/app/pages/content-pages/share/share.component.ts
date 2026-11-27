@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 import * as kf from 'app/user/home/keyframes';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +10,8 @@ import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-share',
+  changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe],
     templateUrl: './share.component.html',
     styleUrls: ['./share.component.scss'],
     animations: [
