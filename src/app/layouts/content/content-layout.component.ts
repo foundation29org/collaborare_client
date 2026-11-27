@@ -1,106 +1,41 @@
-import { Component, OnInit, ElementRef, Inject, Renderer2, ViewChild, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { ConfigService } from 'app/shared/services/config.service';
+import { Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CustomizerService } from 'app/shared/services/customizer.service';
-import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
+import { NavbarPagesComponent } from 'app/shared/navbar-pages/navbar-pages.component';
 
+// Layout for login, privacy policy, error and share pages (no sidebar, no footer).
 @Component({
   selector: 'app-content-layout',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterOutlet, NavbarPagesComponent],
   templateUrl: './content-layout.component.html',
-  styleUrls: ['./content-layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ['./content-layout.component.scss']
 })
-
 export class ContentLayoutComponent implements OnInit, OnDestroy {
-  public config: any = {};
-  layoutSub: Subscription;
-  @ViewChild('content-wrapper') wrapper: ElementRef;
   isPrivacyPage: boolean = false;
+  private subscription: Subscription = new Subscription();
 
-  constructor(private configService: ConfigService,
-    public translate: TranslateService,
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2, private cdr: ChangeDetectorRef,
-    private customizerService: CustomizerService,
-    private router: Router
-  ) {
-    this.config = this.configService.templateConf;
-    this.renderer.addClass(this.document.body, "auth-page");
-
-    if((this.router.url).indexOf('/privacy-policy')!=-1){
-      this.isPrivacyPage = true;
-    }else{
-      this.isPrivacyPage = false;
-    }
-
-    this.router.events.pipe(
-      filter((event: any) => event instanceof NavigationEnd)
-    ).subscribe(event => {
-      var tempUrl = (event.url).toString();
-        if (tempUrl.indexOf('privacy-policy') != -1 ) {
-          this.isPrivacyPage = true;
-        } else {
-          this.isPrivacyPage = false;
-        }
-    });
+  constructor(@Inject(DOCUMENT) private document: Document, private router: Router) {
+    this.isPrivacyPage = this.router.url.indexOf('/privacy-policy') != -1;
+    this.subscription.add(
+      this.router.events.pipe(
+        filter((event: any) => event instanceof NavigationEnd)
+      ).subscribe((event: any) => {
+        this.isPrivacyPage = event.url.toString().indexOf('privacy-policy') != -1;
+      })
+    );
   }
 
   ngOnInit() {
-    this.layoutSub = this.configService.templateConf$.subscribe((templateConf) => {
-      if (templateConf) {
-        this.config = templateConf;
-      }
-      this.loadLayout();
-      this.cdr.markForCheck();
-
-    })
-  }
-
-  loadLayout() {
-
-    this.removeTransparentBGClasses();
-
-    if (this.config.layout.variant === "Light") {
-      this.renderer.removeClass(this.document.body, "layout-dark");
-      this.renderer.removeClass(this.document.body, "layout-transparent");
-    }
-    else if (this.config.layout.variant === "Dark") {
-      this.renderer.removeClass(this.document.body, "layout-transparent");
-      this.renderer.addClass(this.document.body, "layout-dark");
-    }
-    else if (this.config.layout.variant === "Transparent") {
-      this.renderer.addClass(this.document.body, "layout-dark");
-      this.renderer.addClass(this.document.body, "layout-transparent");
-      this.renderer.addClass(this.document.body, this.config.layout.sidebar.backgroundColor);
-    }
-
-
-    this.renderer.removeClass(this.document.body, "menu-expanded");
-    this.renderer.removeClass(this.document.body, "navbar-static");
-    this.renderer.removeClass(this.document.body, "menu-open");
-    this.renderer.addClass(this.document.body, "blank-page");
-
-
-  }
-
-  removeTransparentBGClasses() {
-    this.customizerService.transparent_colors.forEach(_ => {
-      this.renderer.removeClass(this.document.body, _.class);
-    });
-
-    this.customizerService.transparent_colors_with_shade.forEach(_ => {
-      this.renderer.removeClass(this.document.body, _.class);
-    });
+    const body = this.document.body;
+    body.classList.remove('layout-dark', 'menu-expanded', 'navbar-static', 'menu-open');
+    body.classList.add('vertical-layout', 'menu-hide', 'navbar-sticky', 'auth-page', 'blank-page');
   }
 
   ngOnDestroy() {
-    this.renderer.removeClass(this.document.body, "auth-page");
-    if (this.layoutSub) {
-      this.layoutSub.unsubscribe();
-    }
+    this.document.body.classList.remove('auth-page');
+    this.subscription.unsubscribe();
   }
-
 }

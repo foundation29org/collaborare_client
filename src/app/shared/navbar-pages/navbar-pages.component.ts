@@ -1,162 +1,37 @@
-import { Component, Output, EventEmitter, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { LayoutService } from '../services/layout.service';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { ConfigService } from '../services/config.service';
-import { TrackEventsService } from 'app/shared/services/track-events.service';
-import { InsightsService } from 'app/shared/services/azureInsights.service';
-import { Injectable } from '@angular/core';
 import { filter } from 'rxjs/operators';
+import { TrackEventsService } from 'app/shared/services/track-events.service';
 
 @Component({
   selector: 'app-navbar-pages',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './navbar-pages.component.html',
   styleUrls: ['./navbar-pages.component.scss']
 })
-
-@Injectable()
-export class NavbarPagesComponent implements OnInit, AfterViewInit, OnDestroy {
-  toggleClass = 'ft-maximize';
-  placement = "bottom-right";
-  hideSidebar: boolean = true;
-  public isCollapsed = true;
-  layoutSub: Subscription;
-  @Output()
-  toggleHideSidebar = new EventEmitter<Object>();
-
-  public config: any = {};
+export class NavbarPagesComponent implements OnDestroy {
   isHomePage: boolean = false;
-  isClinicianPage: boolean = false;
-  isPatientPage: boolean = false;
-  isUndiagnosedPatientPage: boolean = false;
-  isEdHubPage: boolean = false;
-  isAboutPage: boolean = false;
-  isDonaPage: boolean = false;
   isLoginPage: boolean = false;
-  isRegisterPage: boolean = false;
-  role: string = 'Clinical';
-  subrole: string = 'null';
-  _startTime: any;
   private subscription: Subscription = new Subscription();
 
-  constructor(public translate: TranslateService, private layoutService: LayoutService, private configService: ConfigService, private router: Router, public trackEventsService: TrackEventsService, public insightsService: InsightsService) {
-
-    if ((this.router.url).indexOf('/.') != -1 || (this.router.url)== '/') {
-      this.isHomePage = true;
-      this.isAboutPage = false;
-      this.isLoginPage = false;
-      this.isRegisterPage = false;
-      this.role = 'Clinical';
-      this.subrole = 'null';
-    }else if((this.router.url).indexOf('/aboutus')!=-1){
-      this.isHomePage = false;
-          this.isAboutPage = true;
-          this.isLoginPage = false;
-          this.isRegisterPage = false;
-    }else if ((this.router.url).indexOf('/login') != -1) {
-      this.isHomePage = false;
-      this.isAboutPage = false;
-      this.isLoginPage = true;
-      this.isRegisterPage = false;
-    }else{
-      this.isHomePage = false;
-      this.isAboutPage = false;
-      this.isLoginPage = false;
-      this.isRegisterPage = false;
-    }
-
-    this.router.events.pipe(
-      filter((event: any) => event instanceof NavigationEnd)
-    ).subscribe(event => {
-      var tempUrl = (event.url).toString();
-        if (tempUrl.indexOf('/.') != -1 || tempUrl == '/') {
-          this.isHomePage = true;
-          this.isAboutPage = false;
-          this.isLoginPage = false;
-          this.isRegisterPage = false;
-          this.role = 'Clinical';
-          this.subrole = 'null';
-        } else if (tempUrl.indexOf('/aboutus') != -1) {
-          this.isHomePage = false;
-          this.isAboutPage = true;
-          this.isLoginPage = false;
-          this.isRegisterPage = false;
-        }else if (tempUrl.indexOf('/login') != -1) {
-          this.isHomePage = false;
-          this.isAboutPage = false;
-          this.isLoginPage = true;
-          this.isRegisterPage = false;
-        }else {
-          this.isHomePage = false;
-          this.isAboutPage = false;
-          this.isLoginPage = false;
-          this.isRegisterPage = false;
-        }
-    });
-
-    this.layoutSub = layoutService.toggleSidebar$.subscribe(
-      isShow => {
-        this.hideSidebar = !isShow;
-      });
-
-    this._startTime = Date.now();
+  constructor(private router: Router, public trackEventsService: TrackEventsService) {
+    this.updateFlags(this.router.url);
+    this.subscription.add(
+      this.router.events.pipe(
+        filter((event: any) => event instanceof NavigationEnd)
+      ).subscribe((event: any) => this.updateFlags(event.url.toString()))
+    );
   }
 
-  ngOnInit() {
-    this.config = this.configService.templateConf;
-  }
-
-  ngAfterViewInit() {
-    if (this.config.layout.dir) {
-      setTimeout(() => {
-        const dir = this.config.layout.dir;
-        if (dir === "rtl") {
-          this.placement = "bottom-left";
-        } else if (dir === "ltr") {
-          this.placement = "bottom-right";
-        }
-      }, 0);
-
-    }
+  private updateFlags(url: string) {
+    this.isHomePage = url.indexOf('/.') != -1 || url == '/';
+    this.isLoginPage = !this.isHomePage && url.indexOf('/login') != -1;
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    if (this.layoutSub) {
-      this.layoutSub.unsubscribe();
-    }
   }
-
-  ToggleClass() {
-    if (this.toggleClass === "ft-maximize") {
-      this.toggleClass = "ft-minimize";
-    } else {
-      this.toggleClass = "ft-maximize";
-    }
-  }
-
-  toggleNotificationSidebar() {
-    this.layoutService.toggleNotificationSidebar(true);
-  }
-
-  toggleSidebar() {
-    const appSidebar = document.getElementsByClassName("app-sidebar")[0];
-    if (appSidebar.classList.contains("hide-sidebar")) {
-      this.toggleHideSidebar.emit(false);
-    } else {
-      this.toggleHideSidebar.emit(true);
-    }
-  }
-
-  getElapsedSeconds() {
-    var endDate = Date.now();
-    var seconds = (endDate - this._startTime) / 1000;
-    return seconds;
-  };
-
-  goToLogin(){
-    this.router.navigate(['/login']);
-  }
-
 }

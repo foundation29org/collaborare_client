@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EventsService {
   private listeners: {[key: string]: Function[]} = {};
   private subscriptions: {[key: string]: Subscription[]} = {};

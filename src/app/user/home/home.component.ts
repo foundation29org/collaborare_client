@@ -1,4 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 import * as kf from 'app/user/home/keyframes';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,11 +11,13 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
-import { CdkDragDrop, moveItemInArray, CdkDragStart } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, CdkDragStart } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [FormsModule, RouterLink, DragDropModule, MyFilterPipe, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   animations: [
@@ -39,7 +45,6 @@ import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstr
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
-  providers: [ApiDx29ServerService]
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
@@ -213,7 +218,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
-  onKey(event: KeyboardEvent) {
+  onKey(event: any) {
     if(event.key ==='ArrowLeft' || event.key ==='ArrowUp' || event.key ==='ArrowRight' || event.key ==='ArrowDown'){
 
     }else{
@@ -257,7 +262,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 }
 
-showMoreInfoDiagnosePopup(index){
+showMoreInfoDiagnosePopup(index?){
   this.loadingOneDisease = true;
   if(index !== null && index !== undefined){
     this.selectedDiseaseIndex = index;

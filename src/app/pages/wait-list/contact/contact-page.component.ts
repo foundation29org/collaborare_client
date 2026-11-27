@@ -1,4 +1,6 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'environments/environment';
@@ -13,6 +15,8 @@ declare let gtag: any;
 
 @Component({
     selector: 'app-contact-form',
+  changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [FormsModule, TranslatePipe],
     templateUrl: './contact-page.component.html',
     styleUrls: ['./contact-page.component.scss'],
 })

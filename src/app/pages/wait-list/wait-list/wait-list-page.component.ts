@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MyFilterPipe2 } from 'app/shared/services/my-filter2.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrackEventsService } from 'app/shared/services/track-events.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,9 +23,10 @@ import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wait-list-page',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink, NgClass, MyFilterPipe2, TranslatePipe],
   templateUrl: './wait-list-page.component.html',
-  styleUrls: ['./wait-list-page.component.scss'],
-  providers: [ApiDx29ServerService]
+  styleUrls: ['./wait-list-page.component.scss']
 })
 
 export class WaitListPageComponent implements OnInit, OnDestroy {
@@ -187,7 +195,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
             }));
   }
 
-  showMoreInfoDiagnosePopup(index){
+  showMoreInfoDiagnosePopup(index?){
     this.gettingItems = true;
     if(index !== null && index !== undefined)
     {
@@ -251,7 +259,7 @@ export class WaitListPageComponent implements OnInit, OnDestroy {
     this.callListOfDiseases = false;
   }
 
-  onKey(event: KeyboardEvent) {
+  onKey(event: any) {
     this.nothingFoundDisease = false;
     this.loadedItems = false;
     this.haveInfo = false;
